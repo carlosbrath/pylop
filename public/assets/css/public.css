@@ -1,0 +1,95 @@
+:root {
+  --primary-color: #218838;
+  --secondary-color: #e6f3e6;
+  --accent-color: #ffcc00;
+  --danger-color: #e3342f;
+}
+
+
+body {
+    font-family: "Segoe UI", sans-serif;
+    background: #eee;
+}
+
+.top-strip {
+    background-color: #006400;
+    color: white;
+    font-size: 14px;
+    padding: 5px 0;
+    text-align: center;
+}
+
+.top-strip {
+    font-size: 15px;
+    letter-spacing: 0.5px;
+}
+
+.navbar-brand img {
+    height: 50px;
+}
+.blue-gradient {
+    background: linear-gradient(79deg, #4faf65, #1f7e34) !important;
+}
+.form-bg {
+    background: #ffffff;
+}
+
+.hero-section {
+    background: url("https://pmybals.pmyp.gov.pk/assets/ydh/img/graphics/pmybal_title.png");
+    padding: 100px 0;
+    color: white;
+    position: relative;
+}
+
+.hero-section .overlay {
+    position: absolute;
+    inset: 0;
+}
+
+.hero-section::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+}
+
+.form-card {
+    background-color: #ffffff;
+    border-radius: 5px;
+    padding: 20px;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+    height: 100%;
+}
+
+.accordion-button:not(.collapsed) {
+    color: #006400;
+    background-color: #e6f3e6;
+}
+
+.accordion-button:focus {
+    box-shadow: none;
+}
+
+.footer {
+    background-color: #004000;
+    color: white;
+    padding: 20px 0;
+    text-align: center;
+    font-size: 14px;
+}
+
+.btn-green {
+    background-color: #009900;
+    color: white;
+    border: none;
+}
+
+.btn-green:hover {
+    background-color: #007a00;
+}
