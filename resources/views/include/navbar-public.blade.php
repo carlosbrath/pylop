@@ -1,7 +1,7 @@
   <!-- Navbar -->
   <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
     <div class="container">
-      <a class="navbar-brand" href="#">
+      <a class="navbar-brand" href="{{route('home')}}">
         <img src="./images/logo.png" alt="PMYBALS Logo" />
       </a>
       <button
@@ -16,10 +16,10 @@
         id="navbarMenu">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a href="#" class="nav-link active">Home</a>
+            <a href="{{route('home')}}" class="nav-link active">Home</a>
           </li>
           <li class="nav-item">
-            <a href="#apply" class="nav-link">Apply</a>
+            <a href="{{route('newApplicationForm')}}" class="nav-link">Apply</a>
           </li>
           <li class="nav-item">
             <a href="#track" class="nav-link">Track</a>

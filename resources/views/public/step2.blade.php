@@ -43,12 +43,25 @@
 
                 <div class="col-12">
                     <div class="wizard">
-                       <form id="initialForm" class="row g-3 mt-3" method="POST" action="{{ route('storeForm') }}">
+                        <form id="initialForm" class="row g-3 mt-3" method="POST" action="{{ route('storeForm') }}">
                             @csrf
+
+                            {{-- Validation Error Display --}}
+                            @if ($errors->any())
+                                <div class="alert alert-danger w-100">
+                                    <strong>Whoops! Something went wrong:</strong>
+                                    <ul class="mb-0">
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
+
                             <div class="tab-content" id="main_form">
                                 <div class="tab-pane active" role="tabpanel" id="step1">
                                     <!-- Section Header -->
-                                    <div class="bg-primary text-white py-2 px-3 mb-4 rounded">
+                                    <div class="bg-success text-white py-2 px-3 mb-4 rounded">
                                         <div class="row">
                                             <h4 class="col-lg-6">A: PERSONAL INFORMATION</h4>
                                             <h4 class="col-lg-6 text-end"><strong>ذاتی معلومات</strong></h4>
@@ -63,7 +76,7 @@
                                                 <span class="text-end float-end" dir="rtl">درخواست گزار کا نام</span>
                                             </label>
                                             <input type="text" class="form-control" id="name" name="name"
-                                                required>
+                                                value="{{ old('name') }}" required>
                                         </div>
 
                                         <div class="col-md-6">
@@ -72,16 +85,46 @@
                                                 <span class="text-end float-end" dir="rtl">والد کا نام</span>
                                             </label>
                                             <input type="text" class="form-control" id="fatherName" name="fatherName"
-                                                required>
+                                                value="{{ old('fatherName') }}" required>
                                         </div>
 
                                         <div class="col-md-6">
                                             <label for="cnic" class="form-label">
-                                                cnic Number <span class="text-danger">*</span>
+                                                CNIC Number <span class="text-danger">*</span>
                                                 <span class="text-end float-end" dir="rtl">شناختی کارڈ نمبر</span>
                                             </label>
                                             <input type="text" class="form-control" id="cnic" name="cnic"
-                                                placeholder="xxxxx-xxxxxxx-x" required>
+                                                placeholder="xxxxx-xxxxxxx-x" value="{{ old('cnic', $cnic ?? '') }}"
+                                                required>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <label for="cnic_issue_date" class="form-label">
+                                                CNIC Issue Date <span class="text-danger">*</span>
+                                                <span class="float-end text-secondary" dir="rtl">شناختی کارڈ کے اجراء
+                                                    کی تاریخ</span>
+                                            </label>
+                                            <input type="date" name="cnic_issue_date" id="cnic_issue_date"
+                                                class="form-control" value="{{ old('cnic_issue_date', $issueDate ?? '') }}"
+                                                required>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <label for="tier" class="form-label">
+                                                Tier <span class="float-end text-secondary" dir="rtl">درجہ</span>
+                                            </label>
+                                            <select class="form-select" name="tier" id="tier" required>
+                                                <option disabled selected>Select Tier</option>
+                                                <option value="1"
+                                                    {{ old('tier', $tier ?? '') == 1 ? 'selected' : '' }}>Tier 1 (Up to 5
+                                                    Lakhs)</option>
+                                                <option value="2"
+                                                    {{ old('tier', $tier ?? '') == 2 ? 'selected' : '' }}>Tier 2 (5 - 10
+                                                    Lakhs)</option>
+                                                <option value="3"
+                                                    {{ old('tier', $tier ?? '') == 3 ? 'selected' : '' }}>Tier 3 (10 - 20
+                                                    Lakhs)</option>
+                                            </select>
                                         </div>
 
                                         <div class="col-md-6">
@@ -90,7 +133,7 @@
                                                 <span class="text-end float-end" dir="rtl">تاریخ پیدائش</span>
                                             </label>
                                             <input type="date" class="form-control" id="dob" name="dob"
-                                                required>
+                                                value="{{ old('dob') }}" required>
                                         </div>
 
                                         <div class="col-md-6">
@@ -99,10 +142,13 @@
                                                 <span class="text-end float-end" dir="rtl">صنف</span>
                                             </label>
                                             <select class="form-select" id="gender" name="gender" required>
-                                                <option selected disabled value="">Select Gender</option>
-                                                <option value="Male">Male / مرد</option>
-                                                <option value="Female">Female / عورت</option>
-                                                <option value="Other">Other / دیگر</option>
+                                                <option disabled selected value="">Select Gender</option>
+                                                <option value="Male" {{ old('gender') == 'Male' ? 'selected' : '' }}>
+                                                    Male / مرد</option>
+                                                <option value="Female" {{ old('gender') == 'Female' ? 'selected' : '' }}>
+                                                    Female / عورت</option>
+                                                <option value="Other" {{ old('gender') == 'Other' ? 'selected' : '' }}>
+                                                    Other / دیگر</option>
                                             </select>
                                         </div>
 
@@ -112,15 +158,16 @@
                                                 <span class="text-end float-end" dir="rtl">فون نمبر</span>
                                             </label>
                                             <input type="tel" class="form-control" id="phone" name="phone"
-                                                placeholder="03XX-XXXXXXX" required>
+                                                placeholder="03XXXXXXXXX" value="{{ old('phone') }}" required>
                                         </div>
+
                                         <div class="col-md-6">
                                             <label for="businessName" class="form-label">
                                                 Business Name <span class="text-danger">*</span>
                                                 <span class="text-end float-end" dir="rtl">کاروبار کا نام</span>
                                             </label>
                                             <input type="text" class="form-control" id="businessName"
-                                                name="businessName" required>
+                                                name="businessName" value="{{ old('businessName') }}" required>
                                         </div>
 
                                         <div class="col-md-6">
@@ -129,9 +176,12 @@
                                                 <span class="text-end float-end" dir="rtl">کاروبار کی نوعیت</span>
                                             </label>
                                             <select class="form-select" id="businessType" name="businessType" required>
-                                                <option selected disabled value="">Select Type</option>
-                                                <option value="New">New / نیا</option>
-                                                <option value="Running">Running / جاری</option>
+                                                <option disabled selected value="">Select Type</option>
+                                                <option value="New"
+                                                    {{ old('businessType') == 'New' ? 'selected' : '' }}>New / نیا</option>
+                                                <option value="Running"
+                                                    {{ old('businessType') == 'Running' ? 'selected' : '' }}>Running / جاری
+                                                </option>
                                             </select>
                                         </div>
 
@@ -141,17 +191,27 @@
                                                 <span class="text-end float-end" dir="rtl">ضلع</span>
                                             </label>
                                             <select class="form-select" id="district" name="district" required>
-                                                <option selected disabled value="">Select District</option>
-                                                <option value="Muzaffarabad">Muzaffarabad / مظفرآباد</option>
-                                                <option value="Neelum">Neelum / نیلم</option>
-                                                <option value="Hattian Bala">Hattian Bala / ہٹیاں بالا</option>
-                                                <option value="Bagh">Bagh / باغ</option>
-                                                <option value="Haveli">Haveli / حویلی</option>
-                                                <option value="Poonch">Poonch (Rawalakot) / پونچھ (راولا کوٹ)</option>
-                                                <option value="Sudhnoti">Sudhnoti / سدھنوتی</option>
-                                                <option value="Kotli">Kotli / کوٹلی</option>
-                                                <option value="Mirpur">Mirpur / میرپور</option>
-                                                <option value="Bhimber">Bhimber / بھمبر</option>
+                                                <option disabled selected value="">Select District</option>
+                                                @php
+                                                    $districts = [
+                                                        'Muzaffarabad',
+                                                        'Neelum',
+                                                        'Hattian Bala',
+                                                        'Bagh',
+                                                        'Haveli',
+                                                        'Poonch',
+                                                        'Sudhnoti',
+                                                        'Kotli',
+                                                        'Mirpur',
+                                                        'Bhimber',
+                                                    ];
+                                                @endphp
+                                                @foreach ($districts as $district)
+                                                    <option value="{{ $district }}"
+                                                        {{ old('district') == $district ? 'selected' : '' }}>
+                                                        {{ $district }} / {{ __('urdu.' . $district) }}
+                                                    </option>
+                                                @endforeach
                                             </select>
                                         </div>
 
@@ -161,27 +221,34 @@
                                                 <span class="text-end float-end" dir="rtl">کوٹہ</span>
                                             </label>
                                             <select class="form-select" id="quota" name="quota" required>
-                                                <option selected disabled value="">Select Quota</option>
-                                                <option value="Men">Men / مرد</option>
-                                                <option value="Women">Women / خواتین</option>
-                                                <option value="Disabled">Disabled / معذور</option>
-                                                <option value="Transgender">Transgender / خواجہ سرا</option>
+                                                <option disabled selected value="">Select Quota</option>
+                                                <option value="Men" {{ old('quota') == 'Men' ? 'selected' : '' }}>Men /
+                                                    مرد</option>
+                                                <option value="Women" {{ old('quota') == 'Women' ? 'selected' : '' }}>
+                                                    Women / خواتین</option>
+                                                <option value="Disabled"
+                                                    {{ old('quota') == 'Disabled' ? 'selected' : '' }}>Disabled / معذور
+                                                </option>
+                                                <option value="Transgender"
+                                                    {{ old('quota') == 'Transgender' ? 'selected' : '' }}>Transgender /
+                                                    خواجہ سرا</option>
                                             </select>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label for="permanentAddress" class="form-label">
-                                                Permanent Address <span class="text-danger">*</span>
-                                                <span class="text-end float-end" dir="rtl">مستقل پتہ</span>
-                                            </label>
-                                            <textarea class="form-control" id="PermanentAddress" name="PermanentAddress" rows="2" required></textarea>
                                         </div>
 
                                         <div class="col-md-6">
-                                            <label for="currentAddress" class="form-label">
+                                            <label for="PermanentAddress" class="form-label">
+                                                Permanent Address <span class="text-danger">*</span>
+                                                <span class="text-end float-end" dir="rtl">مستقل پتہ</span>
+                                            </label>
+                                            <textarea class="form-control" id="PermanentAddress" name="PermanentAddress" rows="2" required>{{ old('PermanentAddress') }}</textarea>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <label for="CurrentAddress" class="form-label">
                                                 Current Address <span class="text-danger">*</span>
                                                 <span class="text-end float-end" dir="rtl">عارضی پتہ</span>
                                             </label>
-                                            <textarea class="form-control" id="CurrentAddress" name="CurrentAddress" rows="2" required></textarea>
+                                            <textarea class="form-control" id="CurrentAddress" name="CurrentAddress" rows="2" required>{{ old('CurrentAddress') }}</textarea>
                                         </div>
                                     </div>
 
@@ -192,9 +259,9 @@
                                 </div>
                             </div>
                         </form>
-
                     </div>
                 </div>
+
             </div>
         </div>
     </section>
@@ -204,7 +271,7 @@
         <script>
             $(document).ready(function() {
                 $('input[name="cnic"]').mask('00000-0000000-0');
-                $('input[name="phone"]').mask('0000-0000000');
+                $('input[name="phone"]').mask('00000000000');
             });
         </script>
     @endpush

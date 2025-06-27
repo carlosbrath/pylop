@@ -30,11 +30,11 @@
             </p>
             <div class="row text-center">
                 <div class="col-md-4">
-                    <h4>0% – 7% Markup</h4>
-                    <p>Subsidized interest rates for easy repayment</p>
+                    <h4>0% Markup</h4>
+                    <p>Enjoy 0% Markup for stress-free, interest-free repayments!</p>
                 </div>
                 <div class="col-md-4">
-                    <h4>PKR 500K – 7.5 Million</h4>
+                    <h4>PKR 500K – 2 Million</h4>
                     <p>Flexible loan ranges based on tier system</p>
                 </div>
                 <div class="col-md-4">
@@ -56,14 +56,14 @@
                             <h4 class="mt-3">Apply for Loan</h4>
                             <p class="text-muted">Fill online loan application</p>
                         </a>
-                        <a target="_blank" href="/Laptop/Register" style="cursor: pointer">
+                        {{-- <a target="_blank" href="/Laptop/Register" style="cursor: pointer">
                             <h5 class="mt-4">Apply for Laptop</h5>
                             <p class="text-muted">Fill online Laptop application</p>
                         </a>
                         <a target="_blank" href="/POWF/InitialSection" style="cursor: pointer">
                             <h5 class="mt-4">Prospective Overseas Worker Form</h5>
                             <p class="text-muted">Fill online application</p>
-                        </a>
+                        </a> --}}
                     </div>
                 </div>
 

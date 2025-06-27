@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MigrationController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\FilterController;
+use App\Http\Controllers\PublicController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,10 +21,11 @@ Route::get('/', function () {
     // return view('welcome');
     return  Redirect::to('login');
 });
-Route::get('/', [\App\Http\Controllers\PublicController::class, 'home'])->name('home');
-Route::get('/newApplicationForm', [\App\Http\Controllers\PublicController::class, 'step1'])->name('newApplicationForm');
-Route::get('/application/form/{id}', [\App\Http\Controllers\PublicController::class, 'showStep2'])->name('application.step2');
-Route::post('/storeForm', [\App\Http\Controllers\PublicController::class, 'storeForm'])->name('storeForm');
+Route::get('/', [PublicController::class, 'home'])->name('home');
+Route::get('/newApplicationForm', [PublicController::class, 'step1'])->name('newApplicationForm');
+Route::get('/step2', [PublicController::class, 'step2'])->name('application.step2');
+Route::get('/application/{id}/print', [PublicController::class, 'print'])->name('application.print');
+Route::post('/storeForm', [PublicController::class, 'storeForm'])->name('storeForm');
 
 
 

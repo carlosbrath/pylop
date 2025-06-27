@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 
 class PublicController extends Controller
 {
-    //
     function home()
     {
         $title = 'Home';
@@ -15,18 +14,21 @@ class PublicController extends Controller
     }
     function step1()
     {
-        $title = 'Home';
+        $title = 'Application Form';
         return view('public.step1', compact('title'));
     }
-    function step2($id)
+    public function step2(Request $request)
     {
-        $application = Applicant::findOrFail($id);
-        $title = 'Home';
-        return view('public.loanform', compact('title', 'application'));
+        $title = 'Application Form';
+        $cnic = $request->query('cnic');
+        $issueDate = $request->query('issue_date');
+        $tier = $request->query('tier');
+
+        return view('public.step2', compact('title','cnic', 'issueDate', 'tier'));
     }
     public function storeForm(Request $request)
     {
-        // Step 1 logic
+        // Step 1: Just redirect to step2 with validated values
         if (!$request->has('name')) {
             $request->validate([
                 'cnic' => 'required|regex:/^\d{5}-\d{7}-\d{1}$/',
@@ -34,29 +36,19 @@ class PublicController extends Controller
                 'tier' => 'required|in:1,2,3',
             ]);
 
-            // Check if application already exists
-            $application = Applicant::where('cnic', $request->cnic)
-                ->where('cnic_issue_date', $request->issue_date)
-                ->where('tier', $request->tier)
-                ->where('status', 'NotCompleted')
-                ->first();
-
-            if (!$application) {
-                // Create new draft application
-                $application = Applicant::create([
-                    'cnic' => $request->cnic,
-                    'cnic_issue_date' => $request->issue_date,
-                    'tier' => $request->tier,
-                    'status' => 'NotCompleted',
-                ]);
-            }
-
-            // Redirect to step 2 with ID
-            return redirect()->route('application.step2', ['id' => $application->id]);
+            // Redirect to step 2 with parameters in URL
+            return redirect()->route('application.step2', [
+                'cnic' => $request->cnic,
+                'issue_date' => $request->issue_date,
+                'tier' => $request->tier,
+            ]);
         }
 
-        // Step 2 logic
+        // Step 2: Store in database
         $request->validate([
+            'cnic' => 'required|regex:/^\d{5}-\d{7}-\d{1}$/',
+            'cnic_issue_date' => 'required|date',
+            'tier' => 'required|in:1,2,3',
             'name' => 'required|string|max:255',
             'fatherName' => 'required|string|max:255',
             'dob' => 'required|date',
@@ -68,26 +60,30 @@ class PublicController extends Controller
             'quota' => 'required|in:Men,Women,Disabled,Transgender',
             'PermanentAddress' => 'required|string|max:500',
             'CurrentAddress' => 'required|string|max:500',
-            'application_id' => 'required|exists:applicants,id',
         ]);
-
-        // Update the application
-        $application = Applicant::findOrFail($request->application_id);
-        $application->update([
+        $applicant = Applicant::create([
+            'cnic' => $request->cnic,
+            'cnic_issue_date' => $request->cnic_issue_date,
+            'tier' => $request->tier,
             'name' => $request->name,
-            'father_name' => $request->fatherName,
+            'fatherName' => $request->fatherName,
             'dob' => $request->dob,
             'gender' => $request->gender,
             'phone' => $request->phone,
-            'business_name' => $request->businessName,
-            'business_type' => $request->businessType,
+            'businessName' => $request->businessName,
+            'businessType' => $request->businessType,
             'district' => $request->district,
             'quota' => $request->quota,
-            'permanent_address' => $request->PermanentAddress,
-            'current_address' => $request->CurrentAddress,
+            'PermanentAddress' => $request->PermanentAddress,
+            'CurrentAddress' => $request->CurrentAddress,
             'status' => 'Pending',
         ]);
 
-        return redirect()->route('application.success')->with('success', 'Application submitted successfully!');
+        return redirect()->route('application.print', ['id' => $applicant->id])->with('success', 'Application submitted successfully!');
+    }
+    public function print($id)
+    {
+        $applicant = Applicant::findOrFail($id);
+        return view('public.print', compact('applicant'));
     }
 }
