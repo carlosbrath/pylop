@@ -24,6 +24,7 @@ Route::get('/', function () {
 Route::get('/', [PublicController::class, 'home'])->name('home');
 Route::get('/loan/application', [PublicController::class, 'step1'])->name('loan.application');
 Route::get('loan/application/form', [PublicController::class, 'step2'])->name('loan.application.form');
+Route::post('/upload-challan', [PublicController::class, 'uploadChallan'])->name('upload.challan');
 Route::get('/application/{id}/print', [PublicController::class, 'print'])->name('application.print');
 Route::post('/storeForm', [PublicController::class, 'storeForm'])->name('storeForm');
 

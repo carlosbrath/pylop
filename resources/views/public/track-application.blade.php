@@ -33,7 +33,8 @@
                                 <span class="input-group-text"><i class="bi bi-credit-card-2-front"></i></span>
                                 <div class="form-floating flex-grow-1">
                                     <input type="text" name="cnic" id="track_cnic" class="form-control"
-                                        placeholder="xxxxx-xxxxxxx-x" required maxlength="15">
+                                        placeholder="xxxxx-xxxxxxx-x" value="{{ $applicant->cnic ?? old('cnic') }}" required
+                                        maxlength="15">
                                     <label for="track_cnic">CNIC / شناختی کارڈ نمبر</label>
                                 </div>
                             </div>
@@ -44,7 +45,8 @@
                                 <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
                                 <div class="form-floating flex-grow-1">
                                     <input type="date" name="issue_date" id="track_issue_date" class="form-control"
-                                        placeholder="CNIC Issue Date" required>
+                                        placeholder="CNIC Issue Date"
+                                        value="{{ $applicant->cnic_issue_date ?? old('issue_date') }}" required>
                                     <label for="track_issue_date">CNIC Issue Date / اجراء کی تاریخ</label>
                                 </div>
                             </div>
@@ -55,7 +57,7 @@
                                 <span class="input-group-text"><i class="bi bi-calendar-date"></i></span>
                                 <div class="form-floating flex-grow-1">
                                     <input type="date" name="dob" id="track_dob" class="form-control"
-                                        placeholder="Date of Birth" required>
+                                        placeholder="Date of Birth" value="{{ $applicant->dob ?? old('dob') }}" required>
                                     <label for="track_dob">Date of Birth / تاریخ پیدائش</label>
                                 </div>
                             </div>
@@ -156,12 +158,34 @@
                                                 <div class="border-bottom pb-1">{{ $applicant->tier }}</div>
                                             </div>
                                         </div>
+                                        <div class="row mb-3">
+                                            <div class="col-2"><strong>Fee Status:</strong></div>
+                                            <div class="col-9">
+                                                <div class="border-bottom pb-1">
+                                                    @php
+                                                        $feeStatusclass= match(strtolower($applicant->fee_status)){
+                                                            'unpaid'=>'bg-danger',
+                                                            'paid'=>'bg-success',
+                                                        }
+                                                    @endphp
+                                                    <span class="badge {{$feeStatusclass}}">{{ $applicant->fee_status }}</span>
+                                                </div>
+                                            </div>
+                                        </div>
 
                                         <div class="row mb-3">
                                             <div class="col-2"><strong>Status:</strong></div>
                                             <div class="col-9">
                                                 <div class="border-bottom pb-1">
-                                                    <span class="badge bg-primary">{{ $applicant->status }}</span>
+                                                    @php
+                                                        $statusClass = match (strtolower($applicant->status)) {
+                                                            'pending' => 'bg-info',
+                                                            'approved' => 'bg-success',
+                                                            'rejected' => 'bg-danger',
+                                                            default => 'bg-secondary',
+                                                        };
+                                                    @endphp
+                                                    <span class="badge {{$statusClass}}">{{ $applicant->status }}</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -170,6 +194,86 @@
                                 </div>
                             </div>
                         </div>
+
+                        @if ($applicant->fee_status === 'paid')
+                            <div class="my-4 p-4 bg-light border rounded shadow-sm">
+                                <h5 class="mb-3"><i class="bi bi-check-circle-fill text-success me-1"></i> Challan
+                                    Submitted</h5>
+
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <label class="form-label"><i class="bi bi-bank me-1"></i> Branch Name</label>
+                                        <div class="form-control bg-white">{{ $applicant->branch_name ?? '-' }}</div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <label class="form-label"><i class="bi bi-123 me-1"></i> Branch Code</label>
+                                        <div class="form-control bg-white">{{ $applicant->branch_code ?? '-' }}</div>
+                                    </div>
+
+                                    <div class="col-md-12 mt-3">
+                                        <label class="form-label d-block"><i class="bi bi-image me-1"></i> Challan
+                                            Image</label>
+                                        @if ($applicant->challan_image && file_exists(public_path('images/challans/' . $applicant->challan_image)))
+                                            <img src="{{ asset('images/challans/' . $applicant->challan_image) }}"
+                                                alt="Challan Image" class="img-fluid border rounded shadow-sm"
+                                                style="max-height: 500px;">
+                                        @else
+                                            <div class="form-control bg-white">Not Uploaded</div>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+                        @else
+                            <form action="{{ route('upload.challan') }}" method="POST" enctype="multipart/form-data"
+                                class="my-4 p-4 bg-white shadow-sm rounded">
+                                @csrf
+                                <input type="hidden" name="applicant_id" value="{{ $applicant->id }}">
+
+                                <div class="row g-3">
+
+                                    <div class="col-md-6">
+                                        <div class="input-group">
+                                            <span class="input-group-text"><i class="bi bi-bank"></i></span>
+                                            <div class="form-floating flex-grow-1">
+                                                <input type="text" class="form-control" id="branch_name"
+                                                    name="branch_name" placeholder="Branch Name" required>
+                                                <label for="branch_name">Branch Name</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="input-group">
+                                            <span class="input-group-text"><i class="bi bi-123"></i></span>
+                                            <div class="form-floating flex-grow-1">
+                                                <input type="text" class="form-control" id="branch_code"
+                                                    name="branch_code" placeholder="Branch Code" required>
+                                                <label for="branch_code">Branch Code</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="input-group">
+                                            <span class="input-group-text"><i
+                                                    class="bi bi-file-earmark-arrow-up"></i></span>
+                                            <div class="form-floating flex-grow-1">
+                                                <input type="file" class="form-control" id="challan_image"
+                                                    name="challan_image" required>
+                                                <label for="challan_image">Upload Challan Image</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 text-end mt-3">
+                                        <button type="submit" class="btn btn-success">
+                                            <i class="bi bi-upload"></i> Submit Challan
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        @endif
 
 
 

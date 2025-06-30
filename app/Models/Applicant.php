@@ -24,6 +24,10 @@ class Applicant extends Model
         'PermanentAddress',
         'CurrentAddress',
         'amount',
+        'branch_name',
+        'branch_code',
+        'challan_image',
+        'fee_status',
         'status',
     ];
 }

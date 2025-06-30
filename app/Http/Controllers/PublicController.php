@@ -99,6 +99,45 @@ class PublicController extends Controller
             'application_id' => $applicant->id, // or use a custom application number if you have one
         ]);
     }
+    public function uploadChallan(Request $request)
+    {
+        // dd($request->all());
+        $request->validate([
+            'applicant_id' => 'required|exists:applicants,id',
+            'branch_name' => 'required|string|max:255',
+            'branch_code' => 'required|string|max:255',
+            'challan_image' => 'required|image|max:2048',
+        ]);
+        $applicant = Applicant::find($request->applicant_id);
+
+
+         if ($request->hasFile('challan_image')) {
+            $fileName = time() . '.' . $request->challan_image->extension();
+            $request->challan_image->move(public_path('images/challans'), $fileName);
+        } 
+
+        $applicant->update([
+            'branch_name' => $request->branch_name,
+            'branch_code' => $request->branch_code,
+            'challan_image' => $fileName,
+            'fee_status' => 'paid',
+        ]);
+
+         return redirect()->route('track.application')->with([
+            'success',
+            'Application submitted successfully!',
+            'auto_track' => true,
+            'track_data' => [
+                'cnic' => $applicant->cnic,
+                'issue_date' => $applicant->cnic_issue_date,
+                'dob' => $applicant->dob,
+            ],
+            'application_id' => $applicant->id, // or use a custom application number if you have one
+        ]);
+
+        return redirect()->back()->with('success', 'Challan uploaded successfully.');
+    }
+
     public function print($id)
     {
         $applicant = Applicant::findOrFail($id);
