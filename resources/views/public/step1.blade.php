@@ -4,7 +4,7 @@
     <section id="initialSection" class="signup-step-container py-4">
         <div class="container">
             <div class="row d-flex justify-content-center form-bg pb-4">
-                <div class="row justify-content-center bg-primary blue-gradient text-white py-3 mb-4">
+                <div class="row justify-content-center bg-primary green-gradient text-white py-3 mb-4">
                     <div class="col-md-12 d-flex justify-content-between align-items-center">
                         <h2 class="mb-0 text-center w-100">
                             AJK PM Youth Loan Program - Application Form
@@ -28,7 +28,7 @@
                         </ul>
                     </div>
                     <div class="col-md-2 text-center">
-                        <img src="./images/pmyp-01.png" class="img-fluid px-2" alt="PMYP Logo" />
+                        <img src="{{ asset('./images/pmyp-01.png') }}" class="img-fluid px-2" alt="PMYP Logo" />
                     </div>
                     <div class="col-md-5 text-end">
                         <ul class="list-unstyled text-end">
@@ -46,41 +46,53 @@
                     <a href="#" class="btn btn-outline-danger mx-2">Edit Application</a>
                 </div>
 
-                <form id="initialForm" class="row g-3 mt-3" method="POST" action="{{ route('storeForm') }}">
+                <form id="step1" class="row g-3 mt-3" method="POST" action="{{ route('storeForm') }}"
+                    onsubmit="validateForm(event, this, 'step1')">
                     @csrf
+
                     <div class="col-md-4">
-                        <label class="form-label">
-                            cnic <span class="text-danger">*</span>
-                            <span class="float-end text-secondary" dir="rtl">شناختی کارڈ نمبر</span>
-                        </label>
-                        <input type="text" name="cnic" class="form-control" placeholder="xxxxx-xxxxxxx-x"
-                            maxlength="15" />
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-credit-card-2-front"></i></span>
+                            <div class="form-floating flex-grow-1">
+                                <input type="text" name="cnic" id="cnic" class="form-control"
+                                    placeholder="xxxxx-xxxxxxx-x" maxlength="15" />
+                                <label for="cnic">CNIC Number / شناختی کارڈ نمبر</label>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="col-md-4">
-                        <label class="form-label">
-                            cnic Issue Date <span class="text-danger">*</span>
-                            <span class="float-end text-secondary" dir="rtl">شناختی کارڈ کے اجراء کی تاریخ</span>
-                        </label>
-                        <input type="date" name="issue_date" class="form-control" />
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+                            <div class="form-floating flex-grow-1">
+                                <input type="date" name="issue_date" id="issue_date" class="form-control"
+                                    placeholder="CNIC Issue Date" />
+                                <label for="issue_date">CNIC Issue Date / شناختی کارڈ کے اجراء کی تاریخ</label>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="col-md-4">
-                        <label class="form-label">
-                            Tier <span class="float-end text-secondary" dir="rtl">درجہ</span>
-                        </label>
-                        <select class="form-select" name="tier">
-                            <option selected disabled>Select Tier</option>
-                            <option value="1">Tier 1 (Up to 5 Lakhs)</option>
-                            <option value="2">Tier 2 (5 Lakhs - 10 Lakhs)</option>
-                            <option value="3">Tier 3 (10 Lakhs - 20 Lakhs)</option>
-                        </select>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-diagram-3"></i></span>
+                            <div class="form-floating flex-grow-1">
+                                <select class="form-select" name="tier" id="tier">
+                                    <option selected disabled value="">Select Tier</option>
+                                    <option value="1">Tier 1 (Up to 5 Lakhs)</option>
+                                    <option value="2">Tier 2 (5 Lakhs - 10 Lakhs)</option>
+                                    <option value="3">Tier 3 (10 Lakhs - 20 Lakhs)</option>
+                                </select>
+                                <label for="tier">Tier / درجہ</label>
+                            </div>
+                        </div>
                     </div>
 
                     <input type="hidden" name="form_stage" value="step1">
 
                     <div class="col-12 text-center mt-3">
-                        <button type="submit" class="btn btn-success px-5">Submit</button>
+                        <button type="submit" class="btn btn-success px-5">
+                            <i class="bi bi-save2"></i> Submit
+                        </button>
                     </div>
                 </form>
 
@@ -89,13 +101,5 @@
     </section>
 
     @push('scripts')
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
-        <script>
-            $(document).ready(function() {
-                $('input[name="cnic"]').mask('00000-0000000-0');
-                $('input[name="phone"]').mask('0000-0000000');
-            });
-        </script>
     @endpush
 @endsection

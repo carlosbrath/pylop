@@ -23,6 +23,7 @@ class Applicant extends Model
         'quota',
         'PermanentAddress',
         'CurrentAddress',
+        'amount',
         'status',
     ];
 }

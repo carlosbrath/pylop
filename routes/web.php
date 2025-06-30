@@ -22,10 +22,12 @@ Route::get('/', function () {
     return  Redirect::to('login');
 });
 Route::get('/', [PublicController::class, 'home'])->name('home');
-Route::get('/newApplicationForm', [PublicController::class, 'step1'])->name('newApplicationForm');
-Route::get('/step2', [PublicController::class, 'step2'])->name('application.step2');
+Route::get('/loan/application', [PublicController::class, 'step1'])->name('loan.application');
+Route::get('loan/application/form', [PublicController::class, 'step2'])->name('loan.application.form');
 Route::get('/application/{id}/print', [PublicController::class, 'print'])->name('application.print');
 Route::post('/storeForm', [PublicController::class, 'storeForm'])->name('storeForm');
+
+Route::match(['get', 'post'], '/track-application', [PublicController::class, 'trackView'])->name('track.application');
 
 
 

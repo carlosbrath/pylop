@@ -33,6 +33,8 @@ return new class extends Migration
             $table->text('PermanentAddress');
             $table->text('CurrentAddress');
 
+            $table->bigInteger('amount')->nullable();
+
             $table->unsignedTinyInteger('tier'); // 1, 2, or 3
             $table->enum('status', ['NotCompleted','Pending', 'Approved', 'Rejected'])->default('Pending');
 

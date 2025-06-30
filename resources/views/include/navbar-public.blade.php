@@ -2,7 +2,7 @@
   <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
     <div class="container">
       <a class="navbar-brand" href="{{route('home')}}">
-        <img src="./images/logo.png" alt="PMYBALS Logo" />
+        <img src=" {{asset('./images/logo.png')}}" alt="PMYBALS Logo" />
       </a>
       <button
         class="navbar-toggler"
@@ -19,10 +19,10 @@
             <a href="{{route('home')}}" class="nav-link active">Home</a>
           </li>
           <li class="nav-item">
-            <a href="{{route('newApplicationForm')}}" class="nav-link">Apply</a>
+            <a href="{{route('loan.application')}}" class="nav-link">Apply</a>
           </li>
           <li class="nav-item">
-            <a href="#track" class="nav-link">Track</a>
+            <a href="{{route('track.application')}}" class="nav-link">Track</a>
           </li>
         </ul>
       </div>

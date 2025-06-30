@@ -52,18 +52,11 @@
                 <div class="col-lg-4 col-md-6">
                     <div class="link_card border-end h-100 shadow-sm bg-white rounded p-4 text-center">
                         <img src="./images/applyloan.png" class="mb-3" alt="Apply" />
-                        <a target="_blank" href="{{route('newApplicationForm')}}" style="cursor: pointer">
+                        <a target="_blank" href="{{ route('loan.application') }}" style="cursor: pointer">
                             <h4 class="mt-3">Apply for Loan</h4>
                             <p class="text-muted">Fill online loan application</p>
                         </a>
-                        {{-- <a target="_blank" href="/Laptop/Register" style="cursor: pointer">
-                            <h5 class="mt-4">Apply for Laptop</h5>
-                            <p class="text-muted">Fill online Laptop application</p>
-                        </a>
-                        <a target="_blank" href="/POWF/InitialSection" style="cursor: pointer">
-                            <h5 class="mt-4">Prospective Overseas Worker Form</h5>
-                            <p class="text-muted">Fill online application</p>
-                        </a> --}}
+                     
                     </div>
                 </div>
 
@@ -71,7 +64,7 @@
                 <div class="col-lg-4 col-md-6">
                     <div class="link_card border-end h-100 shadow-sm bg-white rounded p-4 text-center">
                         <img src="./images/track.png" class="mb-3" alt="Track" />
-                        <a target="_blank" href="/PMYPHome/TraceApplication" style="cursor: pointer">
+                        <a target="_blank" href="{{ route('track.application') }}" style="cursor: pointer">
                             <h4 class="mt-3">Track</h4>
                             <p class="text-muted">Check status of your loan application</p>
                         </a>
@@ -149,13 +142,11 @@
                             </h2>
                             <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
                                 <div class="accordion-body">
-                                    No physical application form is required. All applications
-                                    must be submitted online:
+                                    Yes, physical application submission is also available.<br>
+                                    Applicants who prefer to apply in person can visit the nearest designated bank branch or
+                                    facilitation center for the PM Youth Loan Program.
                                     <br />
-                                    <a href="https://pmyp.gov.pk/bankform/newapplicantform" target="_blank"
-                                        class="text-success" style="font-size: 14px">
-                                        https://pmyp.gov.pk/bankform/newapplicantform
-                                    </a>
+                                    
                                 </div>
                             </div>
                         </div>
@@ -165,12 +156,12 @@
                             <h2 class="accordion-header" id="headingTwo">
                                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                     data-bs-target="#faq2">
-                                    Can a non-resident Pakistani apply?
+                                    Can a non-resident Azad Kashmir apply?
                                 </button>
                             </h2>
                             <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
                                 <div class="accordion-body">
-                                    No. This scheme is only for resident Pakistanis.
+                                    No. This scheme is only for resident Azad Kashmir.
                                 </div>
                             </div>
                         </div>
@@ -279,8 +270,7 @@
             </div>
         </div>
     </section>
-@push('scripts')
-
-    <script></script>
-@endpush
+    @push('scripts')
+        <script></script>
+    @endpush
 @endsection
