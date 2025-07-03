@@ -45,6 +45,15 @@
                      }
                  }
              }
+             if (input.name === 'declaration_agree') {
+                 if (!input.checked) {
+                     input.classList.add('error');
+                     isValid = false;
+                     showToast('You must accept the declaration to continue.', 'left', 'bottom');
+                 } else {
+                     input.classList.remove('error');
+                 }
+             }
          })
          if (!isValid) {
              const firstInvalid = form.querySelector('.error');
@@ -138,4 +147,8 @@
          }).showToast();
          // }
      }
+     window.onload = function() {
+         var myModal = new bootstrap.Modal(document.getElementById('announcementModal'));
+         myModal.show();
+     };
  </script>

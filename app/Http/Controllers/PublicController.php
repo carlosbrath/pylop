@@ -61,6 +61,7 @@ class PublicController extends Controller
             'PermanentAddress' => 'required|string|max:500',
             'CurrentAddress' => 'required|string|max:500',
             'amount' => 'required|integer|min:1',
+            'declaration_agree' => 'accepted'
         ], [
             'cnic.unique' => 'The CNIC already exists. Please use a different one.',
             'cnic.regex' => 'Please enter a valid CNIC format like 12345-1234567-1.',

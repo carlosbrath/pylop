@@ -34,10 +34,13 @@ body {
 }
 
 .hero-section {
-    background: url("https://pmybals.pmyp.gov.pk/assets/ydh/img/graphics/pmybal_title.png");
+    background: url("../../images/herosections.png");
     padding: 100px 0;
+    height: 90vh;
     color: white;
     position: relative;
+        background-size: cover;
+
 }
 
 .hero-section .overlay {
@@ -45,12 +48,12 @@ body {
     inset: 0;
 }
 
-.hero-section::before {
+/* .hero-section::before {
     content: "";
     position: absolute;
     inset: 0;
     background-color: rgba(0, 0, 0, 0.6);
-}
+} */
 
 .hero-content {
     position: relative;

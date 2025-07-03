@@ -1,53 +1,76 @@
 <!-- Footer -->
-  <footer
-    class="footer text-white pt-4 pb-2"
-    style="background-color: #004000">
+<footer class="footer text-white pt-4 pb-2" style="background-color: #004000">
     <div class="container">
-      <div class="row">
-        <!-- Logo + Info -->
-        <div class="col-md-6 mb-3 mb-md-0">
-          <h5 class="fw-bold">AJK Small Industries PM Youth Loan Program</h5>
-          <p style="font-size: 14px">
-            Empowering youth through access to financial opportunities in
-            business and agriculture across Azad Jammu & Kashmir.
-          </p>
+        <div class="row">
+            <!-- Logo + Info -->
+            <div class="col-md-6 mb-3 mb-md-0">
+                <h5 class="fw-bold">PM Youth Loan Program AK Small Industries</h5>
+                <p style="font-size: 14px">
+                    Empowering youth through access to financial opportunities in
+                    business and agriculture across Azad Jammu & Kashmir.
+                </p>
+            </div>
+
+            <!-- Quick Links (Optional) -->
+            <div class="col-md-3">
+                <h6 class="fw-bold">Quick Links</h6>
+                <ul class="list-unstyled">
+                    <li>
+                        <a href="#about" class="text-white text-decoration-none">About</a>
+                    </li>
+                    <li>
+                        <a href="#eligibility" class="text-white text-decoration-none">Eligibility</a>
+                    </li>
+                    <li>
+                        <a href="#loan_links" class="text-white text-decoration-none">Apply</a>
+                    </li>
+                    <li>
+                        <a href="#faq" class="text-white text-decoration-none">FAQs</a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Contact Info (Optional) -->
+            <div class="col-md-3">
+                <h6 class="fw-bold">Contact</h6>
+                <ul class="list-unstyled">
+                    <li><i class="bi bi-envelope me-1"></i> info@ajkloans.gov.pk</li>
+                    <li><i class="bi bi-telephone me-1"></i> 05822 920812</li>
+                    <li><i class="bi bi-telephone me-1"></i> 05822 920813</li>
+                    <li><i class="bi bi-geo-alt me-1"></i> Muzaffarabad, AJK</li>
+                </ul>
+            </div>
         </div>
 
-        <!-- Quick Links (Optional) -->
-        <div class="col-md-3">
-          <h6 class="fw-bold">Quick Links</h6>
-          <ul class="list-unstyled">
-            <li>
-              <a href="#about" class="text-white text-decoration-none">About</a>
-            </li>
-            <li>
-              <a href="#eligibility" class="text-white text-decoration-none">Eligibility</a>
-            </li>
-            <li>
-              <a href="#loan_links" class="text-white text-decoration-none">Apply</a>
-            </li>
-            <li>
-              <a href="#faq" class="text-white text-decoration-none">FAQs</a>
-            </li>
-          </ul>
+        <hr class="border-light" />
+
+        <div class="text-center small">
+            &copy; 2025 AJK Small Industries. Developed with 💚 by
+            <strong>IT Board</strong>.
         </div>
-
-        <!-- Contact Info (Optional) -->
-        <div class="col-md-3">
-          <h6 class="fw-bold">Contact</h6>
-          <ul class="list-unstyled">
-            <li><i class="bi bi-envelope me-1"></i> info@ajkloans.gov.pk</li>
-            <li><i class="bi bi-telephone me-1"></i> +92 5822 123456</li>
-            <li><i class="bi bi-geo-alt me-1"></i> Muzaffarabad, AJK</li>
-          </ul>
-        </div>
-      </div>
-
-      <hr class="border-light" />
-
-      <div class="text-center small">
-        &copy; 2025 AJK Small Industries. Developed with 💚 by
-        <strong>Ahsan Danish</strong>.
-      </div>
     </div>
-  </footer>
+</footer>
+<!-- Popup Modal -->
+<div class="modal fade" id="announcementModal" tabindex="-1" aria-labelledby="announcementLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content border-success">
+            <div class="modal-header bg-success text-white">
+                <h5 class="modal-title" id="announcementLabel">📢 اہم اطلاع</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-justify" dir="rtl" style="line-height: 2;">
+                آزاد کشمیر سمال انڈسٹریز درخواست قرضہ فارم کا ابتدائی سطح پر جائزہ لیکر بینک آف آزاد جموں و کشمیر کو
+                ارسال کی جائیں گی <br>۔درخواست دہندگان بینک آف آزاد جموں و کشمیر کی قریب ترین برانچ سے رابطہ کریں۔
+                آن لائن درخواست ھاء کے علاؤہ قرضہ فارم بینک آف آزاد جموں و کشمیر کی تمام برانچز سے حاصل کرتے جا سکتے ہیں
+                ۔بعداز تکمیل قرضہ فارم بذیل ایڈریس پر ارسال کی جائیں:۔
+                <ul>
+                    <li><strong>مظفرآباد ڈویژن:</strong>باالمقابل ڈسٹرکٹ ہیڈکوارٹر اولڈ سیکریٹ مظفرآباد 05822 920812 05822 920813</li>
+                    <li><strong>پونچھ ڈویژن:</strong> 03445529532 03445529541  ڈویژنل آفیسر، کھڑک روڈ نزد ووکیشنل ٹریننگ انسٹی ٹیوٹ AJKTEVTA
+                        راولاکوٹ</li>
+                    <li><strong>میرپور ڈویژن:</strong> 0311 8656142, 03435050388 D-I انڈسٹریل ایریا میررپور ڈویژنل آفس</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

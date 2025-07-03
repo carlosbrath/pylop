@@ -3,7 +3,7 @@
     <div class="container">
         <a class="navbar-brand d-flex align-items-center gap-2" href="{{ route('home') }}">
             <img src="{{ asset('./images/logo.png') }}" alt="PMYBALS Logo" style="height: 40px;">
-            <span class="fw-bold text-success">PMYBALS</span>
+            <span class="fw-bold text-success" title="Prime Minister Youth Loan Program">PMYLP</span>
         </a>
 
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMenu">

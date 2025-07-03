@@ -2,7 +2,7 @@
 @section('title', $title ?? 'Dashboard')
 @section('style')
     <style>
-        
+
     </style>
 @endsection
 @section('content')
@@ -276,6 +276,37 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <div class="col-md-12 mt-4">
+                                                    <div class="border rounded p-3 bg-light">
+                                                        <h5 class="text-center mb-3">Declaration / حلف نامہ</h5>
+                                                        <p class="mb-2">
+                                                            <strong>English:</strong> I hereby solemnly declare that I am
+                                                            not a government employee, nor a defaulter of any financial
+                                                            institution. I commit to timely repayment of the loan
+                                                            installments. In case of delay, I will be responsible for paying
+                                                            the additional markup, and I will invest the loan amount solely
+                                                            in the business for which it is provided.
+                                                        </p>
+                                                        <p dir="rtl" class="text-end mb-3">
+                                                            <strong>اردو:</strong> میں اس امر کی حلفاً تصدیق دیتا / دیتی ہوں
+                                                            کہ میں سرکاری ملازم نہیں ہوں، کسی بھی مالیاتی ادارہ کا نا دہندہ
+                                                            نہیں ہوں ۔ قرضہ کی رقم کی اقساط بر وقت ادا کرنے کا پابند ہوں گا
+                                                            / گی۔ تاخیر کی صورت میں زائد مارک اپ کی رقم ادا کرنے کا پابند
+                                                            ہوں گا / گی اور جس کاروبار کے لیے قرضہ فراہم کیا جائے گا، اس
+                                                            کاروبار میں قرضہ کی رقم کی سرمایہ کاری کروں گا / گی۔
+                                                        </p>
+
+                                                        <div class="form-check mt-3">
+                                                            <input class="form-check-input" type="checkbox"
+                                                                name="declaration_agree" id="declarationAgree">
+                                                            <label class="form-check-label" for="declarationAgree">
+                                                                I have read and agree to the above statement / میں اوپر دیے
+                                                                گئے بیان سے متفق ہوں
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
 
                                                 <div class="text-end mt-4">
                                                     <button type="submit" class="btn btn-success">
