@@ -6,8 +6,7 @@
             <div class="col-md-6 mb-3 mb-md-0">
                 <h5 class="fw-bold">PM Youth Loan Program AK Small Industries</h5>
                 <p style="font-size: 14px">
-                    Empowering youth through access to financial opportunities in
-                    business and agriculture across Azad Jammu & Kashmir.
+                    Empowering youth through entrepreneurship under the vision of the Prime Minister.
                 </p>
             </div>
 
@@ -55,22 +54,42 @@
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content border-success">
             <div class="modal-header bg-success text-white">
-                <h5 class="modal-title" id="announcementLabel">📢 اہم اطلاع</h5>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
                     aria-label="Close"></button>
             </div>
-            <div class="modal-body text-justify" dir="rtl" style="line-height: 2;">
-                آزاد کشمیر سمال انڈسٹریز درخواست قرضہ فارم کا ابتدائی سطح پر جائزہ لیکر بینک آف آزاد جموں و کشمیر کو
-                ارسال کی جائیں گی <br>۔درخواست دہندگان بینک آف آزاد جموں و کشمیر کی قریب ترین برانچ سے رابطہ کریں۔
-                آن لائن درخواست ھاء کے علاؤہ قرضہ فارم بینک آف آزاد جموں و کشمیر کی تمام برانچز سے حاصل کرتے جا سکتے ہیں
-                ۔بعداز تکمیل قرضہ فارم بذیل ایڈریس پر ارسال کی جائیں:۔
-                <ul>
-                    <li><strong>مظفرآباد ڈویژن:</strong>باالمقابل ڈسٹرکٹ ہیڈکوارٹر اولڈ سیکریٹ مظفرآباد 05822 920812 05822 920813</li>
-                    <li><strong>پونچھ ڈویژن:</strong> 03445529532 03445529541  ڈویژنل آفیسر، کھڑک روڈ نزد ووکیشنل ٹریننگ انسٹی ٹیوٹ AJKTEVTA
-                        راولاکوٹ</li>
-                    <li><strong>میرپور ڈویژن:</strong> 0311 8656142, 03435050388 D-I انڈسٹریل ایریا میررپور ڈویژنل آفس</li>
+            <h5 class="modal-title" id="announcementLabel" dir="rtl">📢 اہم اطلاع</h5>
+
+            <div class="modal-body text-justify" dir="rtl" style="line-height: 2; font-size: 1rem;">
+                <p>
+                    آزاد کشمیر سمال انڈسٹریز درخواست قرضہ فارم کا ابتدائی سطح پر جائزہ لیکر بینک آف آزاد جموں و کشمیر کو
+                    ارسال کی جائیں گی۔
+                    درخواست دہندگان بینک آف آزاد جموں و کشمیر کی قریب ترین برانچ سے رابطہ کریں۔
+                </p>
+                <p>
+                    آن لائن درخواست ھاء کے علاؤہ، قرضہ فارم بینک آف آزاد جموں و کشمیر کی تمام برانچز سے حاصل کیے جا سکتے
+                    ہیں۔
+                    بعد از تکمیل، قرضہ فارم مندرجہ ذیل پتوں پر ارسال کیے جائیں:
+                </p>
+
+                <ul class="list-unstyled">
+                    <li>
+                        <strong>📍 مظفرآباد ڈویژن:</strong>
+                        باالمقابل ڈسٹرکٹ ہیڈکوارٹر اولڈ سیکریٹریٹ، مظفرآباد<br>
+                        📞 <strong>05822-920812</strong> | <strong>05822-920813</strong>
+                    </li>
+                    <li class="mt-3">
+                        <strong>📍 پونچھ ڈویژن:</strong>
+                        ڈویژنل آفیسر، کھڑک روڈ نزد ووکیشنل ٹریننگ انسٹی ٹیوٹ AJKTEVTA، راولاکوٹ<br>
+                        📞 <strong>0344-5529532</strong> | <strong>0344-5529541</strong>
+                    </li>
+                    <li class="mt-3">
+                        <strong>📍 میرپور ڈویژن:</strong>
+                        D-I انڈسٹریل ایریا، میرپور ڈویژنل آفس<br>
+                        📞 <strong>0311-8656142</strong> | <strong>0343-5050388</strong>
+                    </li>
                 </ul>
             </div>
+
         </div>
     </div>
 </div>

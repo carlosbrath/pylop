@@ -497,6 +497,11 @@
         </div>
     </section>
     @push('scripts')
-        <script></script>
+        <script>
+            window.onload = function() {
+                var myModal = new bootstrap.Modal(document.getElementById('announcementModal'));
+                myModal.show();
+            };
+        </script>
     @endpush
 @endsection
