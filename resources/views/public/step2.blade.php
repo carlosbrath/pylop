@@ -48,7 +48,8 @@
                 <div class="col-12">
                     <div class="wizard">
                         <form id="initialForm" class="row g-3 mt-3 mx-2 px-3 pb-3 shadow-lg" method="POST"
-                            action="{{ route('storeForm') }}" onsubmit="validateForm(event, this, 'step2')">
+                            action="{{ route('storeForm') }}" onsubmit="validateForm(event, this, 'step2')"
+                            enctype="multipart/form-data">
                             @csrf
 
                             @if ($errors->any())
@@ -65,11 +66,13 @@
                             <div class="tab-content" id="main_form">
                                 <div class="tab-pane active" role="tabpanel" id="step1">
                                     <div class="card shadow-sm border-0 mb-4">
-                                        <div class="card-header bg-success text-white d-flex justify-content-between">
-                                            <h5><i class="bi bi-person-badge-fill me-2"></i> Personal Information</h5>
-                                            <h5 dir="rtl">ذاتی معلومات</h5>
-                                        </div>
+
                                         <div class="card-body">
+                                            <div
+                                                class="card-header bg-success mb-3 text-white d-flex justify-content-between">
+                                                <h5><i class="bi bi-person-badge-fill me-2"></i> Personal Information</h5>
+                                                <h5 dir="rtl">ذاتی معلومات</h5>
+                                            </div>
                                             <div class="row g-3">
                                                 @php
                                                     $formFields = [
@@ -128,7 +131,7 @@
                                                         ],
                                                         [
                                                             'id' => 'amount',
-                                                            'icon' => 'currency-rupee',
+                                                            'icon' => 'cash-coin',
                                                             'type' => 'number',
                                                             'label' => 'Loan Amount',
                                                             'urdu' => 'قرض کی رقم',
@@ -141,9 +144,9 @@
                                                             'label' => 'Tier / درجہ',
                                                             'icon' => 'diagram-3',
                                                             'options' => [
-                                                                ['value' => '1', 'label' => 'Tier 1 (Up to 5 Lakhs)'],
-                                                                ['value' => '2', 'label' => 'Tier 2 (5 - 10 Lakhs)'],
-                                                                ['value' => '3', 'label' => 'Tier 3 (10 - 20 Lakhs)'],
+                                                                ['value' => '1', 'label' => 'Tier 1 (Up to 5 Lakh)'],
+                                                                ['value' => '2', 'label' => 'Tier 2 (5 - 10 Lakh)'],
+                                                                ['value' => '3', 'label' => 'Tier 3 (10 - 20 Lakh)'],
                                                             ],
                                                         ],
                                                         [
@@ -157,6 +160,41 @@
                                                             ],
                                                         ],
                                                         [
+                                                            'id' => 'district_id',
+                                                            'label' => 'District / ضلع',
+                                                            'icon' => 'geo',
+                                                            'options' => $districts
+                                                                ->map(
+                                                                    fn($d) => [
+                                                                        'value' => $d->id,
+                                                                        'label' => $d->name . ' / ' . $d->name_ur,
+                                                                    ],
+                                                                )
+                                                                ->toArray(),
+                                                        ],
+                                                        [
+                                                            'id' => 'tehsil_id',
+                                                            'label' => 'Tehsil / تحصیل',
+                                                            'icon' => 'geo-fill',
+                                                            'options' => [], // Will be populated via AJAX
+                                                        ],
+                                                        [
+                                                            'id' => 'business_category_id',
+                                                            'label' => 'Business Category / کاروباری زمرہ',
+                                                            'icon' => 'briefcase',
+                                                            'options' => $categories
+                                                                ->map(
+                                                                    fn($c) => ['value' => $c->id, 'label' => $c->name],
+                                                                )
+                                                                ->toArray(),
+                                                        ],
+                                                        [
+                                                            'id' => 'business_sub_category_id',
+                                                            'label' => 'Business Subcategory / ذیلی زمرہ',
+                                                            'icon' => 'list-task',
+                                                            'options' => [], // Will be populated via AJAX
+                                                        ],
+                                                        [
                                                             'id' => 'businessType',
                                                             'label' => 'Business Info / کاروبار کی نوعیت',
                                                             'icon' => 'building',
@@ -164,31 +202,6 @@
                                                                 ['value' => 'New', 'label' => 'New / نیا'],
                                                                 ['value' => 'Running', 'label' => 'Running / جاری'],
                                                             ],
-                                                        ],
-                                                        [
-                                                            'id' => 'district',
-                                                            'label' => 'District / ضلع',
-                                                            'icon' => 'geo',
-                                                            'options' => array_map(
-                                                                function ($d) {
-                                                                    return [
-                                                                        'value' => $d,
-                                                                        'label' => $d . ' / ' . __('urdu.' . $d),
-                                                                    ];
-                                                                },
-                                                                [
-                                                                    'Muzaffarabad',
-                                                                    'Neelum',
-                                                                    'Hattian Bala',
-                                                                    'Bagh',
-                                                                    'Haveli',
-                                                                    'Poonch',
-                                                                    'Sudhnoti',
-                                                                    'Kotli',
-                                                                    'Mirpur',
-                                                                    'Bhimber',
-                                                                ],
-                                                            ),
                                                         ],
                                                         [
                                                             'id' => 'quota',
@@ -247,7 +260,6 @@
                                                         </div>
                                                     </div>
                                                 @endforeach
-                                                <div class="col-md-6"></div>
 
                                                 <div class="col-md-6">
                                                     <label for="PermanentAddress" class="form-label">Permanent Address /
@@ -276,6 +288,177 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <div class="col-md-12 mt-4">
+                                                    <div
+                                                        class="card-header bg-success mb-3 text-white d-flex justify-content-between">
+                                                        <h5><i class="bi bi-person-badge-fill me-2"></i> Educational
+                                                            Background</h5>
+                                                        <h5 dir="rtl">تعلیمی معلومات</h5>
+                                                    </div>
+                                                    <div class="border rounded p-3 bg-white" id="educationSection">
+
+                                                        <p class="text-muted text-center">
+                                                            Add your highest level of education.
+                                                        </p>
+
+                                                        <div id="educationRepeater">
+                                                            <div class="row g-3 mb-3 education-entry">
+                                                                <div class="col-md-6">
+                                                                    <div class="input-group">
+                                                                        <span class="input-group-text"><i
+                                                                                class="bi bi-mortarboard"></i></span>
+                                                                        <div class="form-floating flex-grow-1">
+                                                                            <select name="educations[0][education_level]"
+                                                                                class="form-select">
+                                                                                <option value="">Select</option>
+                                                                                <option value="Primary">Primary / پرائمری
+                                                                                </option>
+                                                                                <option value="Middle">Middle / مڈل
+                                                                                </option>
+                                                                                <option value="Matric">Matric / میٹرک
+                                                                                </option>
+                                                                                <option value="Intermediate">Intermediate /
+                                                                                    انٹرمیڈیٹ</option>
+                                                                                <option value="Diploma">Diploma / ڈپلومہ
+                                                                                </option>
+                                                                                <option value="Bachelor">Bachelor / بیچلر
+                                                                                </option>
+                                                                                <option value="Master">Master / ماسٹر
+                                                                                </option>
+                                                                            </select>
+                                                                            <label>Education Level / تعلیمی سطح</label>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <!-- Degree Title -->
+                                                                <div class="col-md-6">
+                                                                    <div class="input-group">
+                                                                        <span class="input-group-text"><i
+                                                                                class="bi bi-journal-text"></i></span>
+                                                                        <div class="form-floating flex-grow-1">
+                                                                            <input type="text"
+                                                                                name="educations[0][degree_title]"
+                                                                                class="form-control"
+                                                                                placeholder="Degree Title">
+                                                                            <label>Degree Title / ڈگری کا عنوان</label>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <!-- Institute -->
+                                                                <div class="col-md-3">
+                                                                    <div class="input-group">
+                                                                        <span class="input-group-text"><i
+                                                                                class="bi bi-bank"></i></span>
+                                                                        <div class="form-floating flex-grow-1">
+                                                                            <input type="text"
+                                                                                name="educations[0][institute]"
+                                                                                class="form-control"
+                                                                                placeholder="Institute Name">
+                                                                            <label>Institute / ادارہ</label>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                                <!-- Passing Year -->
+                                                                <div class="col-md-3">
+                                                                    <div class="input-group">
+                                                                        <span class="input-group-text"><i
+                                                                                class="bi bi-calendar2-check"></i></span>
+                                                                        <div class="form-floating flex-grow-1">
+                                                                            <input type="text"
+                                                                                name="educations[0][passing_year]"
+                                                                                class="form-control" placeholder="Year">
+                                                                            <label>Passing Year / سال</label>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <!-- Grade or Percentage -->
+                                                                <div class="col-md-4">
+                                                                    <div class="input-group">
+                                                                        <span class="input-group-text"><i
+                                                                                class="bi bi-graph-up"></i></span>
+                                                                        <div class="form-floating flex-grow-1">
+                                                                            <input type="text"
+                                                                                name="educations[0][grade_or_percentage]"
+                                                                                class="form-control"
+                                                                                placeholder="Grade or Percentage">
+                                                                            <label>Grade / Percentage / گریڈ یا فیصد</label>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-md-1 d-flex align-items-end">
+                                                                    <button type="button"
+                                                                        class="btn btn-danger remove-education d-none">
+                                                                        <i class="bi bi-trash"></i>
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="text-end">
+                                                            <button type="button" class="btn btn-success"
+                                                                id="addMoreEducation">
+                                                                <i class="bi bi-plus-circle"></i>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12 mt-4">
+                                                    <div
+                                                        class="card-header bg-success mb-3 text-white d-flex justify-content-between">
+                                                        <h5><i class="bi bi-file-earmark-image me-2"></i> CNIC Upload</h5>
+                                                        <h5 dir="rtl">شناختی کارڈ اپلوڈ کریں</h5>
+                                                    </div>
+
+                                                    <div class="border rounded p-3 bg-white" id="cnic section">
+                                                        <div class="row g-3">
+                                                            <!-- CNIC Front -->
+                                                            <div class="col-md-6">
+                                                                <label for="cnic_front" class="form-label">CNIC Front Side
+                                                                    /
+                                                                    سامنے</label>
+                                                                <div class="border p-3 rounded text-center bg-light dropzone"
+                                                                    ondragover="event.preventDefault();"
+                                                                    ondrop="handleDrop(event, 'cnic_front')"
+                                                                    onclick="document.getElementById('cnic_front').click();">
+                                                                    <div>
+                                                                        <i class="bi bi-upload display-1"></i>
+                                                                        <p class="mb-2">Drag & Drop or Click to Upload</p>
+                                                                    </div>
+                                                                    <img id="cnic_front_preview" src="#"
+                                                                        alt="" class="img-fluid d-none"
+                                                                        style="max-height: 350px;">
+                                                                    <input type="file" name="cnic_front"
+                                                                        id="cnic_front" class="d-none" accept="image/*"
+                                                                        onchange="previewImage(this, 'cnic_front_preview')">
+                                                                </div>
+                                                            </div>
+
+                                                            <!-- CNIC Back -->
+                                                            <div class="col-md-6">
+                                                                <label for="cnic_back" class="form-label">CNIC Back Side /
+                                                                    پیچھے</label>
+                                                                <div class="border p-3 rounded text-center bg-light dropzone"
+                                                                    ondragover="event.preventDefault();"
+                                                                    ondrop="handleDrop(event, 'cnic_back')"
+                                                                    onclick="document.getElementById('cnic_back').click();">
+                                                                    <i class="bi bi-upload display-1"></i>
+                                                                    <p class="mb-2">Drag & Drop or Click to Upload</p>
+                                                                    <img id="cnic_back_preview" src="#"
+                                                                        alt="" class="img-fluid d-none"
+                                                                        style="max-height: 150px;">
+                                                                    <input type="file" name="cnic_back" id="cnic_back"
+                                                                        class="d-none" accept="image/*"
+                                                                        onchange="previewImage(this, 'cnic_back_preview')">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+
                                                 <div class="col-md-12 mt-4">
                                                     <div class="border rounded p-3 bg-light">
                                                         <h5 class="text-center mb-3">Declaration / حلف نامہ</h5>
@@ -328,5 +511,95 @@
         </div>
     </section>
     @push('scripts')
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const districtSelect = document.getElementById('district_id');
+                const tehsilSelect = document.getElementById('tehsil_id');
+
+                districtSelect.addEventListener('change', function() {
+                    fetch(`/get-tehsils/${this.value}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            tehsilSelect.innerHTML = '<option value="">Select Tehsil</option>';
+                            data.forEach(tehsil => {
+                                tehsilSelect.innerHTML +=
+                                    `<option value="${tehsil.id}">${tehsil.name} / ${tehsil.name_ur}</option>`;
+                            });
+                        });
+                });
+
+                const categorySelect = document.getElementById('business_category_id');
+                const subcategorySelect = document.getElementById('business_sub_category_id');
+
+                categorySelect.addEventListener('change', function() {
+                    fetch(`/get-subcategories/${this.value}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            subcategorySelect.innerHTML = '<option value="">Select Subcategory</option>';
+                            data.forEach(sub => {
+                                subcategorySelect.innerHTML +=
+                                    `<option value="${sub.id}">${sub.name}</option>`;
+                            });
+                        });
+                });
+            });
+
+            let educationIndex = 1;
+
+            document.getElementById('addMoreEducation').addEventListener('click', function() {
+                const template = document.querySelector('.education-entry');
+                const clone = template.cloneNode(true);
+                const inputs = clone.querySelectorAll('input, select');
+
+                // Update names with new index
+                inputs.forEach(input => {
+                    const name = input.getAttribute('name');
+                    if (name) {
+                        input.setAttribute('name', name.replace(/\[\d+\]/, `[${educationIndex}]`));
+                        input.value = '';
+                    }
+                });
+
+                // Show remove button
+                const removeBtn = clone.querySelector('.remove-education');
+                removeBtn.classList.remove('d-none');
+                removeBtn.addEventListener('click', function() {
+                    clone.remove();
+                });
+
+                document.getElementById('educationRepeater').appendChild(clone);
+                educationIndex++;
+            });
+
+            // Initial remove handler (optional if you use only one row first)
+            document.querySelectorAll('.remove-education').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    btn.closest('.education-entry').remove();
+                });
+            });
+
+            function previewImage(input, previewId) {
+                const file = input.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const preview = document.getElementById(previewId);
+                        preview.src = e.target.result;
+                        preview.classList.remove('d-none');
+                    };
+                    reader.readAsDataURL(file);
+                }
+            }
+
+            function handleDrop(event, inputId) {
+                event.preventDefault();
+                const fileInput = document.getElementById(inputId);
+                const files = event.dataTransfer.files;
+                if (files.length > 0) {
+                    fileInput.files = files;
+                    previewImage(fileInput, inputId + '_preview');
+                }
+            }
+        </script>
     @endpush
 @endsection

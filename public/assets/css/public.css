@@ -1,6 +1,6 @@
 :root {
-    --primary-color: #218838;
-    --secondary-color: #e6f3e6;
+    --primary-color: #054829;
+    --secondary-color: #f0a017;
     --accent-color: #ffcc00;
     --danger-color: #e3342f;
 }
@@ -9,7 +9,18 @@ body {
     font-family: "Segoe UI", sans-serif;
     background: #eee;
 }
-
+a {
+    text-decoration: none;
+}
+.text-secondary {
+    color: var(--secondary-color) !important;
+}
+.btn-primary {
+    background-color: var(--primary-color) !important;
+}
+.btn-secondary {
+    background-color: var(--secondary-color) !important;
+}
 .top-strip {
     background-color: #006400;
     color: white;
@@ -33,32 +44,27 @@ body {
     background: #ffffff;
 }
 
-.hero-section {
-    background: url("../../images/herosections.png");
-    padding: 100px 0;
-    height: 90vh;
-    color: white;
-    position: relative;
-        background-size: cover;
-
+.left-hero {
+    background: url("../../images/primeminister.png") no-repeat center center;
+    background-size: cover;
+    min-height: 400px;
 }
 
-.hero-section .overlay {
-    position: absolute;
-    inset: 0;
-}
-
-/* .hero-section::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background-color: rgba(0, 0, 0, 0.6);
-} */
-
-.hero-content {
-    position: relative;
-    z-index: 2;
+.right-hero {
+    background-color: var(--primary-color);
+    padding: 40px 20px;
     text-align: center;
+}
+
+.ajk-logo {
+    max-width: 120px;
+    margin: 20px auto;
+}
+
+.bottom-logos img {
+    max-width: 100px;
+    background: #fff;
+    padding: 5px;
 }
 
 .form-card {
@@ -151,4 +157,35 @@ input.error,
 select.error,
 textarea.error {
     border: 1px solid red !important;
+}
+
+/* // X-Small devices (portrait phones, less than 576px) */
+/* // No media query for `xs` since this is the default in Bootstrap */
+
+/* // Small devices (landscape phones, 576px and up) */
+@media  (max-width: 767px) {
+    .input-group .form-floating > label {
+            font-size: 0.7rem;
+            left: 1rem;
+    }
+}
+
+/* // Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+
+}
+
+/* // Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+   
+}
+
+/* // X-Large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+    
+}
+
+/* // XX-Large devices (larger desktops, 1400px and up) */
+@media (min-width: 1400px) {
+    
 }

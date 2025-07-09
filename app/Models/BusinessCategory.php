@@ -5,18 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Location extends Model
+class BusinessCategory extends Model
 {
     use HasFactory;
-      protected $fillable = ['parent_id', 'type', 'name', 'name_ur'];
-
     public function parent()
     {
-        return $this->belongsTo(Location::class, 'parent_id');
+        return $this->belongsTo(BusinessCategory::class, 'parent_id');
     }
 
     public function children()
     {
-        return $this->hasMany(Location::class, 'parent_id');
+        return $this->hasMany(BusinessCategory::class, 'parent_id');
     }
 }

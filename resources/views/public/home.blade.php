@@ -2,19 +2,47 @@
 @section('title', $title ?? 'Dashboard')
 @section('content')
     <!-- Hero Section -->
-    <section class="hero-section d-flex align-items-center">
-        {{-- <div class="overlay"></div> --}}
+    {{-- <section class="hero-section d-flex align-items-center"> --}}
+    {{-- <div class="overlay"></div> --}}
+    {{-- </section> --}}
+    <section>
+        <div class="container-fluid">
+            <div class="row" style="height: 100vh;">
+                <!-- Left Column with Background Image -->
+                <div class="col-md-5  left-hero d-none d-md-block d-sm-none"></div>
+
+                <!-- Right Column -->
+                <div class="col-md-7 right-hero d-flex flex-column justify-content-center">
+                    <h1 class="mb-3 text-secondary">Prime Minister Youth Loan Program</h1>
+                    <!-- AJK Logo in Center -->
+                    <img src="{{ asset('/images/ajklogo.png') }}" alt="AJK Logo" class="ajk-logo">
+
+                    <h3 class="mt-3 text-white">
+                        Subsidized Financing By Azad Kashmir Small Industries &<br> Bank of Azad Jammu and Kashmir
+                    </h3>
+                    <!-- Apply Now Button -->
+                    <a href="{{ route('loan.application') }}" class="btn btn-secondary mt-4 px-4 py-2 w-20 fw-bold btn-lg">
+                        Apply Now
+                    </a>
+
+                    <!-- Bottom Logos Row -->
+                    <div class="d-flex justify-content-between align-items-center mt-5 bottom-logos">
+                        <img src="{{ asset('/images/logo.png') }}" alt="Small Industries Logo">
+                        <img src="{{ asset('/images/bankajk.png') }}" alt="BAJK Logo">
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
 
 
     <!-- About Section -->
-    <!-- About Section -->
     <section id="about" class="py-5 bg-light">
         <div class="container">
-            <h2 class="text-center mb-4 fw-bold">About the Program</h2>
+            <h2 class="text-center mb-4 fw-bold">Feature of the Program</h2>
             <p class="text-center mb-5 fs-5 text-muted">
                 The Prime Minister Youth Loan Program aims to empower the youth of Azad Jammu & Kashmir through
-                subsidized business and agriculture loans. It encourages innovation, boosts local industries, and
+                subsidized financing. It encourages innovation, boost local industries, and
                 supports self-employment opportunities.
             </p>
 
@@ -25,7 +53,7 @@
                     <div class="card h-100 border-0 shadow-sm text-center">
                         <div class="card-body">
                             <h5 class="card-title fw-bold text-success">💸 0% Markup</h5>
-                            <p class="card-text">Enjoy interest-free repayment with zero markup burden on loans.</p>
+                            <p class="card-text">Interest-free financing subsidized by GOVT of AJK.</p>
                         </div>
                     </div>
                 </div>
@@ -35,7 +63,8 @@
                     <div class="card h-100 border-0 shadow-sm text-center">
                         <div class="card-body">
                             <h5 class="card-title fw-bold text-success">📊 PKR 1 – 20 Lakh</h5>
-                            <p class="card-text">Flexible loan amounts under a structured tier system.</p>
+                            <p class="card-text">Loan limits under a structured tier system.</p>
+                            <a href="#tier-info" class="btn btn-outline-success mt-3">View More</a>
                         </div>
                     </div>
                 </div>
@@ -57,8 +86,12 @@
                 <div class="col-md-4">
                     <div class="card h-100 border-0 shadow-sm text-center">
                         <div class="card-body">
-                            <h5 class="card-title fw-bold text-success">🌍 Population Quota</h5>
-                            <p class="card-text">Loan distribution based on district-wise population ratio.</p>
+                            <div>
+
+                                <h5 class="card-title fw-bold text-success">🌍 Population Quota</h5>
+                                <p class="card-text">Loan distribution based on district-wise population ratio.</p>
+                            </div>
+                            <a href="#population-quota" class="btn btn-outline-success mt-3">View More</a>
                         </div>
                     </div>
                 </div>
@@ -68,8 +101,8 @@
                     <div class="card h-100 border-0 shadow-sm text-center">
                         <div class="card-body">
                             <h5 class="card-title fw-bold text-success">🏪 Business Nature</h5>
-                            <p class="card-text mb-1">New Ventures – 75%</p>
-                            <p class="card-text">Startups/Branches – 25%</p>
+                            <p class="card-text mb-1">New business – 75%</p>
+                            <p class="card-text">Startup – 25%</p>
                         </div>
                     </div>
                 </div>
@@ -84,11 +117,12 @@
                 <div class="col-md-5">
                     <ul class="list-unstyled">
                         <li class="fw-bold">📌 Eligibility Criteria:</li>
-                        <li>🔸 Loan will be granted to individuals who are residents of Azad Kashmir and whose business is
-                            located within AJK.</li>
+                        <li>🔸 Loan will be granted to youth of Azad jammu & Kashmir having business
+                            juridiction in AJK.</li>
                         <li>🔸 Must hold a valid computerized CNIC (not expired).</li>
                         <li>🔸 Applicant’s age must be between 18 to 40 years.</li>
-                        <li>🔸 Preference will be given to youth with business skills, certified diplomas, or degrees.</li>
+                        <li>🔸 Preference will be given to youth with business skills, certificate diplomas, or degrees.
+                        </li>
                         <li>🔸 Men, Women, Persons with Disabilities, and Transgenders are eligible to apply.</li>
                         <li>🔸 Government/semi-government employees and defaulters of any financial institution are not
                             eligible.</li>
@@ -122,15 +156,17 @@
                         <li class="fw-bold">📌 Loan Details:</li>
                         <li>💰 <strong>Loan Limit:</strong> From PKR 100,000 to PKR 2,000,000, based on the type of
                             business.</li>
-                        <li>💸 <strong>Markup Rate:</strong> The loan is interest-free. The principal amount is provided by
-                            Bank of AJK, and the markup is paid by the Government of AJK through the AJK Small Industries
+                        <li>💸 <strong>Markup Rate:</strong> The loan is interest-free. The principal amount will be
+                            provided by
+                            Bank of AJK, and markup will be paid by the Government of AJK through Azad kashmir Small
+                            Industries
                             Corporation. In case of late repayment, the borrower must pay the additional markup.</li>
                         <li>📊 <strong>Quota:</strong> Loans will be issued based on district-wise population ratio and
                             gender quota.</li>
-                        <li>🏪 <strong>Business Nature:</strong> 75% for new businesses and 25% for startup
-                            expansions/branches.</li>
+                        <li>🏪 <strong>Business Nature:</strong> 75% for new businesses and 25% for startup.
+                        </li>
                         <li>📝 <strong>Form Fee:</strong> For offline applications, the form fee must be deposited in the
-                            name of Managing Director, AJK Small Industries Corporation, Account No. 14027001-040 (Bank of
+                            name of Managing Director, AJK Small Industries Corporation, Account No. 040-14027001 (Bank of
                             AJK). Attach the bank receipt and CNIC copy with the form. For online applications, both must be
                             uploaded.</li>
                     </ul>
@@ -142,7 +178,7 @@
                     <ul class="list-unstyled text-end">
                         <li class="fw-bold">📌 قرضہ کی تفصیلات:</li>
                         <li>💰 <strong>قرضہ کی حد:</strong> 1 لاکھ سے 20 لاکھ روپے، کاروبار کی نوعیت کے مطابق۔</li>
-                        <li>💸 <strong>شرح منافع:</strong> قرضہ بلا سود ہے، اصل رقم بینک آف اے جے کے فراہم کرے گا، مارک
+                        <li>💸 <strong>شرح منافع:</strong> قرضہ بلا سود ہے، اصل رقم بینک آف اے جے کے فراہم کرے گا،
                             جبکہ مارک اپ کی رقم حکومت آزاد کشمیر بذریعہ آزاد کشمیر سمال انڈسٹریز کارپوریشن ادا کرے گی۔قرضہ
                             کی اقساط کی ریکوری میں تاخیر کی صورت میں زائد مارک اپ کی رقم مقروض ادا کرنے کا پابند ہوگا۔</li>
                         <li>📊 <strong>کوٹہ:</strong>
@@ -159,7 +195,7 @@
         </div>
     </section>
 
-    <section class="py-5 bg-light">
+    <section id="business" class="py-5 bg-light">
         <div class="container">
             <div class="text-center mb-4">
                 <h3 class="fw-bold">Loan Scheme Business Categories</h3>
@@ -167,108 +203,26 @@
             </div>
 
             <div class="row">
-                <!-- Category 1 -->
-                <div class="col-md-4 mb-4">
-                    <div class="card h-100 shadow-sm">
-                        <div class="card-body">
-                            <h5 class="card-title">IT & Digital Sector</h5>
-                            <ul class="list-unstyled mb-0">
-                                <li>Information Technology (by professionals)</li>
-                                <li>E-Commerce</li>
-                                <li>Digital Marketing</li>
-                                <li>Software Houses</li>
-                                <li>Call Centres</li>
-                                <li>TEVT Sector</li>
-                            </ul>
+                @foreach ($businessCategories as $category)
+                    <div class="col-md-4 mb-4">
+                        <div class="card h-100 shadow-sm">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ $category->name }}</h5>
+                                @if ($category->children->count())
+                                    <ul class="list-unstyled mb-0">
+                                        @foreach ($category->children as $sub)
+                                            <li>{{ $sub->name }}</li>
+                                        @endforeach
+                                    </ul>
+                                @endif
+                            </div>
                         </div>
                     </div>
-                </div>
-
-                <!-- Category 2 -->
-                <div class="col-md-4 mb-4">
-                    <div class="card h-100 shadow-sm">
-                        <div class="card-body">
-                            <h5 class="card-title">Handicrafts & Cottage Industries</h5>
-                            <ul class="list-unstyled mb-0">
-                                <li>Hand knotted carpet weaving</li>
-                                <li>Walnut wood carving</li>
-                                <li>Kashmiri Shawls & Embroidery</li>
-                                <li>Papier Machie</li>
-                                <li>Chain-stitch, Numda & Gabba</li>
-                                <li>Kangi Making</li>
-                                <li>Phiren & Embroidered Dresses</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Category 3 -->
-                <div class="col-md-4 mb-4">
-                    <div class="card h-100 shadow-sm">
-                        <div class="card-body">
-                            <h5 class="card-title">Agriculture & Livestock</h5>
-                            <ul class="list-unstyled mb-0">
-                                <li>Agri-Businesses</li>
-                                <li>Livestock, Dairy & Poultry Farming</li>
-                                <li>Horticulture & Rose Farming</li>
-                                <li>Olive Plantation</li>
-                                <li>Off-season Vegetable Farming</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Category 4 -->
-                <div class="col-md-4 mb-4">
-                    <div class="card h-100 shadow-sm">
-                        <div class="card-body">
-                            <h5 class="card-title">Tourism & Hospitality</h5>
-                            <ul class="list-unstyled mb-0">
-                                <li>Traditional Food Courts</li>
-                                <li>Paying Guest Units</li>
-                                <li>Hotels & Restaurants</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Category 5 -->
-                <div class="col-md-4 mb-4">
-                    <div class="card h-100 shadow-sm">
-                        <div class="card-body">
-                            <h5 class="card-title">SMEs & Local Industry</h5>
-                            <ul class="list-unstyled mb-0">
-                                <li>Silk Rearing & Processing</li>
-                                <li>Gem Stone Cutting</li>
-                                <li>Stone Carving & Crushing</li>
-                                <li>Sports Goods Manufacturing</li>
-                                <li>Light Engineering Sector</li>
-                                <li>Auto Repair & Workshops</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Category 6 -->
-                <div class="col-md-4 mb-4">
-                    <div class="card h-100 shadow-sm">
-                        <div class="card-body">
-                            <h5 class="card-title">Women Entrepreneurs & Misc.</h5>
-                            <ul class="list-unstyled mb-0">
-                                <li>Boutiques & Tailoring</li>
-                                <li>Home Baking Units</li>
-                                <li>Pickle, Jam & Jelly Making</li>
-                                <li>Garments / Stitching Units</li>
-                                <li>Mineral Water Plants</li>
-                                <li>Soap & Detergent Production</li>
-                                <li>New Innovations</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
+                @endforeach
             </div>
         </div>
     </section>
+
 
     <!-- Loan Links Section -->
     <section id="loan_links" class="py-5 loan_links bg-light">
@@ -334,6 +288,137 @@
             </ul>
         </div>
     </section>
+    <section id="population-quota" class="py-5 bg-white">
+        <div class="container">
+            <h2 class="text-center mb-4">📊 District-wise Population Quota</h2>
+
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover text-center align-middle shadow-sm">
+                    <thead class="table-success">
+                        <tr>
+                            <th scope="col">Sr.#</th>
+                            <th scope="col">District</th>
+                            <th scope="col">Population (%)</th>
+                            <th scope="col">District-wise Quota of Beneficiaries (Proposed)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>Muzaffarabad</td>
+                            <td>16%</td>
+                            <td>449</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Neelum</td>
+                            <td>5%</td>
+                            <td>140</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>Jhelum Valley</td>
+                            <td>6%</td>
+                            <td>168</td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>Bagh</td>
+                            <td>9%</td>
+                            <td>252</td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td>Haveli</td>
+                            <td>4%</td>
+                            <td>112</td>
+                        </tr>
+                        <tr>
+                            <td>6</td>
+                            <td>Poonch</td>
+                            <td>12%</td>
+                            <td>337</td>
+                        </tr>
+                        <tr>
+                            <td>7</td>
+                            <td>Sudhnoti</td>
+                            <td>7%</td>
+                            <td>196</td>
+                        </tr>
+                        <tr>
+                            <td>8</td>
+                            <td>Kotli</td>
+                            <td>19%</td>
+                            <td>533</td>
+                        </tr>
+                        <tr>
+                            <td>9</td>
+                            <td>Mirpur</td>
+                            <td>11%</td>
+                            <td>309</td>
+                        </tr>
+                        <tr>
+                            <td>10</td>
+                            <td>Bhimber</td>
+                            <td>11%</td>
+                            <td>309</td>
+                        </tr>
+                        <tr class="table-light fw-bold">
+                            <td colspan="2">Total</td>
+                            <td>100%</td>
+                            <td>2,805</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+    <!-- Tier Information Section -->
+    <section id="tier-info" class="py-5 bg-light">
+        <div class="container">
+            <h2 class="text-center mb-4">📊 Tiers of Loan Limit</h2>
+
+            <div class="row text-center g-4">
+                <!-- Tier 1 -->
+                <div class="col-md-4">
+                    <div class="card h-100 shadow-sm border-success">
+                        <div class="card-body">
+                            <h4 class="text-success fw-bold">Tier 1</h4>
+                            <p><strong>Loan Range:</strong> PKR 100,000 – 500,000</p>
+                            <p><strong>Markup:</strong> 0% (Interest-Free)</p>
+                            <p><strong>Type:</strong> Clean Loan</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tier 2 -->
+                <div class="col-md-4">
+                    <div class="card h-100 shadow-sm border-success">
+                        <div class="card-body">
+                            <h4 class="text-success fw-bold">Tier 2</h4>
+                            <p><strong>Loan Range:</strong> PKR 500,000 – 1,500,000</p>
+                            <p><strong>Markup:</strong> 0% (Interest-Free)</p>
+                            <p><strong>Type:</strong> Secured Loan</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tier 3 -->
+                <div class="col-md-4">
+                    <div class="card h-100 shadow-sm border-success">
+                        <div class="card-body">
+                            <h4 class="text-success fw-bold">Tier 3</h4>
+                            <p><strong>Loan Range:</strong> PKR 1,500,000 – 2,000,000</p>
+                            <p><strong>Markup:</strong> 0% (Interest-Free)</p>
+                            <p><strong>Type:</strong> Secured Loan</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
 
     <!-- FAQ Section -->
     <section id="faq" class="faq p-0 bg-white">

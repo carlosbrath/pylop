@@ -26,8 +26,6 @@ return new class extends Migration
 
             $table->string('businessName');
             $table->enum('businessType', ['New', 'Running']);
-
-            $table->string('district');
             $table->enum('quota', ['Men', 'Women', 'Disabled', 'Transgender']);
 
             $table->text('PermanentAddress');

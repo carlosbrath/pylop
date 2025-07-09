@@ -4,7 +4,7 @@
         <div class="row">
             <!-- Logo + Info -->
             <div class="col-md-6 mb-3 mb-md-0">
-                <h5 class="fw-bold">PM Youth Loan Program AK Small Industries</h5>
+                <h5 class="fw-bold">PM Youth Loan Program Azad Kasmir Small Industries</h5>
                 <p style="font-size: 14px">
                     Empowering youth through entrepreneurship under the vision of the Prime Minister.
                 </p>

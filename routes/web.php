@@ -28,6 +28,10 @@ Route::post('/upload-challan', [PublicController::class, 'uploadChallan'])->name
 Route::get('/application/{id}/print', [PublicController::class, 'print'])->name('application.print');
 Route::post('/storeForm', [PublicController::class, 'storeForm'])->name('storeForm');
 
+Route::get('/get-tehsils/{district_id}', [PublicController::class, 'getTehsils']);
+Route::get('/get-subcategories/{category_id}', [PublicController::class, 'getSubcategories']);
+
+
 Route::match(['get', 'post'], '/track-application', [PublicController::class, 'trackView'])->name('track.application');
 
 
