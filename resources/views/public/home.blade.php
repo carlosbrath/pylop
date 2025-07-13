@@ -21,9 +21,11 @@
                         Subsidized Financing By Azad Kashmir Small Industries &<br> Bank of Azad Jammu and Kashmir
                     </h3>
                     <!-- Apply Now Button -->
-                    <a href="{{ route('loan.application') }}" class="btn btn-secondary mt-4 px-4 py-2 w-20 fw-bold btn-lg">
-                        Apply Now
-                    </a>
+                    <div class="d-flex justify-content-center">
+                        <a href="{{ route('loan.application') }}" class="btn btn-secondary mt-4 px-4 py-2 w-auto fw-bold btn-lg">
+                            Apply Now
+                        </a>
+                    </div>
 
                     <!-- Bottom Logos Row -->
                     <div class="d-flex justify-content-between align-items-center mt-5 bottom-logos">
@@ -39,7 +41,7 @@
     <!-- About Section -->
     <section id="about" class="py-5 bg-light">
         <div class="container">
-            <h2 class="text-center mb-4 fw-bold">Feature of the Program</h2>
+            <h2 class="text-center mb-4 fw-bold">Features</h2>
             <p class="text-center mb-5 fs-5 text-muted">
                 The Prime Minister Youth Loan Program aims to empower the youth of Azad Jammu & Kashmir through
                 subsidized financing. It encourages innovation, boost local industries, and
@@ -63,7 +65,7 @@
                     <div class="card h-100 border-0 shadow-sm text-center">
                         <div class="card-body">
                             <h5 class="card-title fw-bold text-success">📊 PKR 1 – 20 Lakh</h5>
-                            <p class="card-text">Loan limits under a structured tier system.</p>
+                            <p class="card-text">Loan limit under a structured tier system.</p>
                             <a href="#tier-info" class="btn btn-outline-success mt-3">View More</a>
                         </div>
                     </div>
@@ -89,7 +91,7 @@
                             <div>
 
                                 <h5 class="card-title fw-bold text-success">🌍 Population Quota</h5>
-                                <p class="card-text">Loan distribution based on district-wise population ratio.</p>
+                                <p class="card-text">Loan disbursement based on district-wise population ratio.</p>
                             </div>
                             <a href="#population-quota" class="btn btn-outline-success mt-3">View More</a>
                         </div>
@@ -115,7 +117,7 @@
         <div class="container">
             <div class="row mb-4" id="eligibility">
                 <div class="col-md-5">
-                    <ul class="list-unstyled">
+                    <ul class="list-unstyled lh-lg">
                         <li class="fw-bold">📌 Eligibility Criteria:</li>
                         <li>🔸 Loan will be granted to youth of Azad jammu & Kashmir having business
                             juridiction in AJK.</li>
@@ -133,7 +135,7 @@
                     <img src="{{ asset('./images/logo.png') }}" class="img-fluid px-2" alt="PMYP Logo" />
                 </div>
                 <div class="col-md-5 text-end" dir="rtl">
-                    <ul class="list-unstyled text-end">
+                    <ul class="list-unstyled text-end lh-lg">
 
                         <li class="fw-bold">📌 مطلوبہ معیار اہلیت:</li>
                         <li>🔸 قرضہ ایسے افراد کو دیا جائے گا جو آزاد کشمیر کے شہری ہوں اور مجوزہ کاروبار کا دائرہ کار آزاد
@@ -152,7 +154,7 @@
             </div>
             <div class="row mb-4" id="loanDetails">
                 <div class="col-md-5">
-                    <ul class="list-unstyled">
+                    <ul class="list-unstyled lh-lg">
                         <li class="fw-bold">📌 Loan Details:</li>
                         <li>💰 <strong>Loan Limit:</strong> From PKR 100,000 to PKR 2,000,000, based on the type of
                             business.</li>
@@ -160,7 +162,7 @@
                             provided by
                             Bank of AJK, and markup will be paid by the Government of AJK through Azad kashmir Small
                             Industries
-                            Corporation. In case of late repayment, the borrower must pay the additional markup.</li>
+                            Corporation. In case of late repayment, the borrower must pay the additional markup / penalty.</li>
                         <li>📊 <strong>Quota:</strong> Loans will be issued based on district-wise population ratio and
                             gender quota.</li>
                         <li>🏪 <strong>Business Nature:</strong> 75% for new businesses and 25% for startup.
@@ -175,12 +177,12 @@
                     {{-- <img src="{{ asset('./images/logo.png') }}" class="img-fluid px-2" alt="PMYP Logo" /> --}}
                 </div>
                 <div class="col-md-5 text-end" dir="rtl">
-                    <ul class="list-unstyled text-end">
+                    <ul class="list-unstyled text-end lh-lg">
                         <li class="fw-bold">📌 قرضہ کی تفصیلات:</li>
                         <li>💰 <strong>قرضہ کی حد:</strong> 1 لاکھ سے 20 لاکھ روپے، کاروبار کی نوعیت کے مطابق۔</li>
                         <li>💸 <strong>شرح منافع:</strong> قرضہ بلا سود ہے، اصل رقم بینک آف اے جے کے فراہم کرے گا،
                             جبکہ مارک اپ کی رقم حکومت آزاد کشمیر بذریعہ آزاد کشمیر سمال انڈسٹریز کارپوریشن ادا کرے گی۔قرضہ
-                            کی اقساط کی ریکوری میں تاخیر کی صورت میں زائد مارک اپ کی رقم مقروض ادا کرنے کا پابند ہوگا۔</li>
+                            کی اقساط کی ریکوری میں تاخیر کی صورت میں زائد مارک اپ / جرمانہ کی رقم مقروض ادا کرنے کا پابند ہوگا۔</li>
                         <li>📊 <strong>کوٹہ:</strong>
                             قرضہ کی اجرائیگی ضلع وائز آبادی کے تناسب اور Gender کوٹہ کے مطابق ہوگی ۔</li>
                         <li>🏪 <strong>کاروباری نوعیت:</strong> نیا کاروبار (75 فیصد ) اور سٹارٹ اپ بزنس (25) فیصد )</li>
@@ -288,7 +290,7 @@
             </ul>
         </div>
     </section>
-    <section id="population-quota" class="py-5 bg-white">
+    {{-- <section id="population-quota" class="py-5 bg-white">
         <div class="container">
             <h2 class="text-center mb-4">📊 District-wise Population Quota</h2>
 
@@ -372,7 +374,7 @@
                 </table>
             </div>
         </div>
-    </section>
+    </section> --}}
     <!-- Tier Information Section -->
     <section id="tier-info" class="py-5 bg-light">
         <div class="container">

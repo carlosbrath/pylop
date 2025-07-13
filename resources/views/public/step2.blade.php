@@ -80,69 +80,71 @@
                                                             'id' => 'name',
                                                             'icon' => 'person',
                                                             'type' => 'text',
+                                                            'required'=> true,
                                                             'label' => "Applicant's Name",
                                                             'urdu' => 'درخواست گزار کا نام',
+                                                            'field_type' => 'input',
                                                         ],
                                                         [
                                                             'id' => 'fatherName',
                                                             'icon' => 'person-vcard',
                                                             'type' => 'text',
+                                                            'required'=> true,
                                                             'label' => 'Father Name',
                                                             'urdu' => 'والد کا نام',
+                                                            'field_type' => 'input',
                                                         ],
                                                         [
                                                             'id' => 'cnic',
                                                             'icon' => 'credit-card-2-front',
                                                             'type' => 'text',
+                                                            'required'=> true,
+                                                            'readonly'=>true,
                                                             'label' => 'CNIC Number',
                                                             'urdu' => 'شناختی کارڈ نمبر',
                                                             'placeholder' => 'xxxxx-xxxxxxx-x',
                                                             'value' => old('cnic', $cnic ?? ''),
+                                                            'field_type' => 'input',
                                                         ],
                                                         [
                                                             'id' => 'cnic_issue_date',
                                                             'icon' => 'calendar-event',
                                                             'type' => 'date',
+                                                            'required'=> true,
+                                                            'readonly'=>true,
                                                             'label' => 'CNIC Issue Date',
                                                             'urdu' => 'شناختی کارڈ کے اجراء کی تاریخ',
                                                             'value' => old('cnic_issue_date', $issueDate ?? ''),
+                                                            'field_type' => 'input',
                                                         ],
                                                         [
                                                             'id' => 'dob',
                                                             'icon' => 'calendar-date',
                                                             'type' => 'date',
+                                                            'required'=> true,
                                                             'label' => 'Date of Birth',
                                                             'urdu' => 'تاریخ پیدائش',
+                                                            'field_type' => 'input',
                                                         ],
                                                         [
                                                             'id' => 'phone',
                                                             'icon' => 'telephone',
                                                             'type' => 'tel',
+                                                             'required'=> true,
                                                             'label' => 'Phone Number',
                                                             'urdu' => 'فون نمبر',
                                                             'placeholder' => '03XXXXXXXXX',
+                                                            'field_type' => 'input',
                                                         ],
-                                                        [
-                                                            'id' => 'businessName',
-                                                            'icon' => 'briefcase',
-                                                            'type' => 'text',
-                                                            'label' => 'Business Name',
-                                                            'urdu' => 'کاروبار کا نام',
-                                                        ],
-                                                        [
-                                                            'id' => 'amount',
-                                                            'icon' => 'cash-coin',
-                                                            'type' => 'number',
-                                                            'label' => 'Loan Amount',
-                                                            'urdu' => 'قرض کی رقم',
-                                                        ],
-                                                    ];
 
-                                                    $selectFields = [
                                                         [
                                                             'id' => 'tier',
                                                             'label' => 'Tier / درجہ',
                                                             'icon' => 'diagram-3',
+                                                            'field_type' => 'select',
+                                                            'readonly'=>true,
+                                                            'required'=> true,
+                                                            'select_field' => 'Tier',
                                                             'options' => [
                                                                 ['value' => '1', 'label' => 'Tier 1 (Up to 5 Lakh)'],
                                                                 ['value' => '2', 'label' => 'Tier 2 (5 - 10 Lakh)'],
@@ -150,19 +152,33 @@
                                                             ],
                                                         ],
                                                         [
-                                                            'id' => 'gender',
-                                                            'label' => 'Gender / صنف',
-                                                            'icon' => 'gender-ambiguous',
-                                                            'options' => [
-                                                                ['value' => 'Male', 'label' => 'Male / مرد'],
-                                                                ['value' => 'Female', 'label' => 'Female / عورت'],
-                                                                ['value' => 'Other', 'label' => 'Other / دیگر'],
-                                                            ],
+                                                            'id' => 'amount',
+                                                            'icon' => 'cash-coin',
+                                                            'type' => 'number',
+                                                             'required'=> true,
+                                                            'label' => 'Loan Amount',
+                                                            'urdu' => 'قرض کی رقم',
+                                                            'field_type' => 'input',
                                                         ],
+
+                                                        // [
+                                                        //     'id' => 'gender',
+                                                        //     'label' => 'Gender / صنف',
+                                                        //     'icon' => 'gender-ambiguous',
+                                                        //     'field_type' => 'select',
+                                                        //     'options' => [
+                                                        //         ['value' => 'Male', 'label' => 'Male / مرد'],
+                                                        //         ['value' => 'Female', 'label' => 'Female / عورت'],
+                                                        //         ['value' => 'Other', 'label' => 'Other / دیگر'],
+                                                        //     ],
+                                                        // ],
                                                         [
                                                             'id' => 'district_id',
                                                             'label' => 'District / ضلع',
                                                             'icon' => 'geo',
+                                                            'field_type' => 'select',
+                                                             'required'=> true,
+                                                            'select_field' => 'District',
                                                             'options' => $districts
                                                                 ->map(
                                                                     fn($d) => [
@@ -176,12 +192,39 @@
                                                             'id' => 'tehsil_id',
                                                             'label' => 'Tehsil / تحصیل',
                                                             'icon' => 'geo-fill',
+                                                            'field_type' => 'select',
+                                                             'required'=> true,
                                                             'options' => [], // Will be populated via AJAX
+                                                        ],
+                                                        [
+                                                            'id' => 'businessName',
+                                                            'icon' => 'briefcase',
+                                                            'type' => 'text',
+                                                             'required'=> true,
+                                                            'label' => 'Business Name',
+                                                            'urdu' => 'کاروبار کا نام',
+                                                            'field_type' => 'input',
+                                                        ],
+                                                        [
+                                                            'id' => 'businessType',
+                                                            'label' => 'Business Info / کاروبار کی نوعیت',
+                                                            'icon' => 'building',
+                                                            'field_type' => 'select',
+                                                             'required'=> true,
+                                                             
+                                                            'select_field' => 'Business Type',
+                                                            'options' => [
+                                                                ['value' => 'New', 'label' => 'New / نیا'],
+                                                                ['value' => 'Running', 'label' => 'Running / جاری'],
+                                                            ],
                                                         ],
                                                         [
                                                             'id' => 'business_category_id',
                                                             'label' => 'Business Category / کاروباری زمرہ',
                                                             'icon' => 'briefcase',
+                                                            'field_type' => 'select',
+                                                             'required'=> true,
+                                                            'select_field' => 'Category',
                                                             'options' => $categories
                                                                 ->map(
                                                                     fn($c) => ['value' => $c->id, 'label' => $c->name],
@@ -192,21 +235,18 @@
                                                             'id' => 'business_sub_category_id',
                                                             'label' => 'Business Subcategory / ذیلی زمرہ',
                                                             'icon' => 'list-task',
+                                                            'field_type' => 'select',
+                                                             'required'=> true,
+                                                            'select_field' => 'Sub Category',
                                                             'options' => [], // Will be populated via AJAX
-                                                        ],
-                                                        [
-                                                            'id' => 'businessType',
-                                                            'label' => 'Business Info / کاروبار کی نوعیت',
-                                                            'icon' => 'building',
-                                                            'options' => [
-                                                                ['value' => 'New', 'label' => 'New / نیا'],
-                                                                ['value' => 'Running', 'label' => 'Running / جاری'],
-                                                            ],
                                                         ],
                                                         [
                                                             'id' => 'quota',
                                                             'label' => 'Quota / کوٹہ',
                                                             'icon' => 'people-fill',
+                                                            'field_type' => 'select',
+                                                             'required'=> true,
+                                                            'select_field' => 'Quota',
                                                             'options' => [
                                                                 ['value' => 'Men', 'label' => 'Men / مرد'],
                                                                 ['value' => 'Women', 'label' => 'Women / خواتین'],
@@ -217,6 +257,15 @@
                                                                 ],
                                                             ],
                                                         ],
+                                                        [
+                                                            'id' => 'applicant_choosed_branch',
+                                                            'label' => 'Your Selected Branch / آپ کی منتخب کردہ برانچ',
+                                                            'icon' => 'list-task',
+                                                            'field_type' => 'select',
+                                                             'required'=> true,
+                                                            'select_field' => 'Branch',
+                                                            'options' => [], // Will be populated via AJAX
+                                                        ],
                                                     ];
                                                 @endphp
 
@@ -226,40 +275,49 @@
                                                             <span class="input-group-text"><i
                                                                     class="bi bi-{{ $field['icon'] }}"></i></span>
                                                             <div class="form-floating flex-grow-1">
-                                                                <input type="{{ $field['type'] }}" class="form-control"
-                                                                    id="{{ $field['id'] }}" name="{{ $field['id'] }}"
-                                                                    placeholder="{{ $field['label'] }}"
-                                                                    value="{{ $field['value'] ?? old($field['id']) }}"
-                                                                    {{ isset($field['placeholder']) ? "placeholder='" . $field['placeholder'] . "'" : '' }}>
-                                                                <label for="{{ $field['id'] }}">{{ $field['label'] }} /
-                                                                    {{ $field['urdu'] }}</label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                @endforeach
-
-                                                @foreach ($selectFields as $field)
-                                                    <div class="col-md-6">
-                                                        <div class="input-group">
-                                                            <span class="input-group-text"><i
-                                                                    class="bi bi-{{ $field['icon'] }}"></i></span>
-                                                            <div class="form-floating flex-grow-1">
-                                                                <select class="form-select" id="{{ $field['id'] }}"
-                                                                    name="{{ $field['id'] }}">
-                                                                    <option disabled selected value="">Select</option>
-                                                                    @foreach ($field['options'] as $opt)
-                                                                        <option value="{{ $opt['value'] }}"
-                                                                            {{ old($field['id']) == $opt['value'] ? 'selected' : '' }}>
-                                                                            {{ $opt['label'] }}
+                                                                @if ($field['field_type'] === 'input')
+                                                                    <input type="{{ $field['type'] }}" class="form-control"
+                                                                        id="{{ $field['id'] }}" name="{{ $field['id'] }}"
+                                                                        placeholder="{{ $field['label'] }}"
+                                                                        value="{{ $field['value'] ?? old($field['id']) }}"
+                                                                        {{ isset($field['placeholder']) ? "placeholder='" . $field['placeholder'] . "'" : '' }}
+                                                                        {{ isset($field['readonly']) && $field['readonly'] ? 'readonly' : '' }}>
+                                                                    <label for="{{ $field['id'] }}">{{ $field['label'] }}
+                                                                        / {{ $field['urdu'] ?? '' }} {!!($field['required'])?'<span class="text-danger">*</span>':''!!}</label>
+                                                                @elseif ($field['field_type'] === 'select')
+                                                                    <select class="form-select" id="{{ $field['id'] }}"
+                                                                        name="{{ $field['id'] }}" 
+                                                                        {{ isset($field['readonly']) && $field['readonly'] ? 'readonly' : '' }}>
+                                                                        <option disabled selected value="">Select {{$field['select_field']??''}}
                                                                         </option>
-                                                                    @endforeach
-                                                                </select>
-                                                                <label
-                                                                    for="{{ $field['id'] }}">{{ $field['label'] }}</label>
+                                                                        @foreach ($field['options'] as $opt)
+                                                                            <option value="{{ $opt['value'] }}"
+                                                                                {{ old($field['id'], request($field['id'])) == $opt['value'] ? 'selected' : '' }}>
+                                                                                {{ $opt['label'] }}
+                                                                            </option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                    <label
+                                                                        for="{{ $field['id'] }}">{{ $field['label'] }} {!!($field['required'])?'<span class="text-danger">*</span>':''!!}</label>
+                                                                @endif
                                                             </div>
                                                         </div>
                                                     </div>
                                                 @endforeach
+                                                <div class="col-md-6">
+                                                    <label for="CurrentAddress" class="form-label">Business Address /
+                                                        کاروبار کا
+                                                        پتہ</label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-text"><i
+                                                                class="bi bi-house-door"></i></span>
+                                                        <div class="form-floating flex-grow-1">
+                                                            <textarea class="form-control" id="BusinessAddress" name="BusinessAddress" placeholder="Current Address"
+                                                                style="height: 100px">{{ old('BusinessAddress') }}</textarea>
+                                                            <label for="BusinessAddress">Current Address / عارضی پتہ</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
 
                                                 <div class="col-md-6">
                                                     <label for="PermanentAddress" class="form-label">Permanent Address /
@@ -274,20 +332,6 @@
                                                         </div>
                                                     </div>
                                                 </div>
-
-                                                <div class="col-md-6">
-                                                    <label for="CurrentAddress" class="form-label">Current Address / عارضی
-                                                        پتہ</label>
-                                                    <div class="input-group">
-                                                        <span class="input-group-text"><i
-                                                                class="bi bi-house-door"></i></span>
-                                                        <div class="form-floating flex-grow-1">
-                                                            <textarea class="form-control" id="CurrentAddress" name="CurrentAddress" placeholder="Current Address"
-                                                                style="height: 100px">{{ old('CurrentAddress') }}</textarea>
-                                                            <label for="CurrentAddress">Current Address / عارضی پتہ</label>
-                                                        </div>
-                                                    </div>
-                                                </div>
                                                 <div class="col-md-12 mt-4">
                                                     <div
                                                         class="card-header bg-success mb-3 text-white d-flex justify-content-between">
@@ -297,13 +341,13 @@
                                                     </div>
                                                     <div class="border rounded p-3 bg-white" id="educationSection">
 
-                                                        <p class="text-muted text-center">
-                                                            Add your highest level of education.
-                                                        </p>
+                                                        <span class="text-danger d-block mb-5">
+                                                            * Add your highest level of education.
+                                                        </span>
 
                                                         <div id="educationRepeater">
                                                             <div class="row g-3 mb-3 education-entry">
-                                                                <div class="col-md-6">
+                                                                <div class="col-md-4">
                                                                     <div class="input-group">
                                                                         <span class="input-group-text"><i
                                                                                 class="bi bi-mortarboard"></i></span>
@@ -331,7 +375,7 @@
                                                                     </div>
                                                                 </div>
                                                                 <!-- Degree Title -->
-                                                                <div class="col-md-6">
+                                                                <div class="col-md-4">
                                                                     <div class="input-group">
                                                                         <span class="input-group-text"><i
                                                                                 class="bi bi-journal-text"></i></span>
@@ -360,7 +404,7 @@
                                                                 </div>
 
                                                                 <!-- Passing Year -->
-                                                                <div class="col-md-3">
+                                                                {{-- <div class="col-md-3">
                                                                     <div class="input-group">
                                                                         <span class="input-group-text"><i
                                                                                 class="bi bi-calendar2-check"></i></span>
@@ -371,9 +415,9 @@
                                                                             <label>Passing Year / سال</label>
                                                                         </div>
                                                                     </div>
-                                                                </div>
+                                                                </div> --}}
                                                                 <!-- Grade or Percentage -->
-                                                                <div class="col-md-4">
+                                                                {{-- <div class="col-md-4">
                                                                     <div class="input-group">
                                                                         <span class="input-group-text"><i
                                                                                 class="bi bi-graph-up"></i></span>
@@ -385,7 +429,7 @@
                                                                             <label>Grade / Percentage / گریڈ یا فیصد</label>
                                                                         </div>
                                                                     </div>
-                                                                </div>
+                                                                </div> --}}
 
                                                                 <div class="col-md-1 d-flex align-items-end">
                                                                     <button type="button"
@@ -424,7 +468,8 @@
                                                                     onclick="document.getElementById('cnic_front').click();">
                                                                     <div>
                                                                         <i class="bi bi-upload display-1"></i>
-                                                                        <p class="mb-2">Drag & Drop or Click to Upload</p>
+                                                                        <p class="mb-2">Drag & Drop or Click to Upload
+                                                                        </p>
                                                                     </div>
                                                                     <img id="cnic_front_preview" src="#"
                                                                         alt="" class="img-fluid d-none"
@@ -512,35 +557,23 @@
     </section>
     @push('scripts')
         <script>
+            
             document.addEventListener('DOMContentLoaded', function() {
                 const districtSelect = document.getElementById('district_id');
                 const tehsilSelect = document.getElementById('tehsil_id');
-
-                districtSelect.addEventListener('change', function() {
-                    fetch(`/get-tehsils/${this.value}`)
-                        .then(response => response.json())
-                        .then(data => {
-                            tehsilSelect.innerHTML = '<option value="">Select Tehsil</option>';
-                            data.forEach(tehsil => {
-                                tehsilSelect.innerHTML +=
-                                    `<option value="${tehsil.id}">${tehsil.name} / ${tehsil.name_ur}</option>`;
-                            });
-                        });
-                });
-
                 const categorySelect = document.getElementById('business_category_id');
                 const subcategorySelect = document.getElementById('business_sub_category_id');
+                const chosedBranch = document.getElementById('applicant_choosed_branch');
+
+                districtSelect.addEventListener('change', function() {
+                    fetchonChangeSelect(districtSelect, tehsilSelect, '/get-tehsils/')
+                    fetchonChangeSelect(districtSelect, chosedBranch, '/get-branches/')
+                });
+
+                
 
                 categorySelect.addEventListener('change', function() {
-                    fetch(`/get-subcategories/${this.value}`)
-                        .then(response => response.json())
-                        .then(data => {
-                            subcategorySelect.innerHTML = '<option value="">Select Subcategory</option>';
-                            data.forEach(sub => {
-                                subcategorySelect.innerHTML +=
-                                    `<option value="${sub.id}">${sub.name}</option>`;
-                            });
-                        });
+                    fetchonChangeSelect(categorySelect, subcategorySelect, '/get-subcategories/')
                 });
             });
 

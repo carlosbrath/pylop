@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Applicant;
 use App\Models\ApplicantEducation;
+use App\Models\Branch;
 use App\Models\BusinessCategory;
 use App\Models\Location;
 use Carbon\Carbon;
@@ -57,6 +58,7 @@ class PublicController extends Controller
 
         $districts = Location::where('type', 'district')->get();
         $categories = BusinessCategory::where('parent_id', 0)->with('children')->get();
+        // $categories = Branch::where('parent_id', 0)->with('children')->get();
 
         return view('public.step2', compact('title', 'cnic', 'issueDate', 'tier', 'districts', 'categories'));
     }
@@ -97,7 +99,7 @@ class PublicController extends Controller
             'business_category_id' => 'required',
             'business_sub_category_id' => 'required',
             'PermanentAddress' => 'required|string|max:500',
-            'CurrentAddress' => 'required|string|max:500',
+            'BusinessAddress' => 'required|string|max:500',
             'amount' => 'required|integer|min:1',
             'declaration_agree' => 'accepted',
             'cnic_front' => 'required|image|mimes:jpeg,png,jpg|max:2048',
@@ -107,8 +109,6 @@ class PublicController extends Controller
             'educations.*.education_level' => 'required|string|max:255',
             'educations.*.degree_title' => 'nullable|string|max:255',
             'educations.*.institute' => 'nullable|string|max:255',
-            'educations.*.passing_year' => 'nullable|string|max:4',
-            'educations.*.grade_or_percentage' => 'nullable|string|max:20',
         ], [
             'cnic.unique' => 'The CNIC already exists. Please use a different one.',
             'cnic.regex' => 'Please enter a valid CNIC format like 12345-1234567-1.',
@@ -141,8 +141,8 @@ class PublicController extends Controller
             'cnic_back' => $cnic_backName,
             'business_category_id' => $request->business_category_id,
             'business_sub_category_id' => $request->business_sub_category_id,
-            'PermanentAddress' => $request->PermanentAddress,
-            'CurrentAddress' => $request->CurrentAddress,
+            'permanentAddress' => $request->PermanentAddress,
+            'businessAddress' => $request->BusinessAddress,
             'amount' => $request->amount,
             'status' => 'Pending',
         ]);
@@ -252,10 +252,14 @@ class PublicController extends Controller
         $tehsils = Location::where('type', 'Tehsil')->where('parent_id', $id)->get();
         return response()->json($tehsils);
     }
-
     public function getSubcategories($id)
     {
         $subcategories = BusinessCategory::where('parent_id', $id)->get();
         return response()->json($subcategories);
+    }
+     public function getBranches($id)
+    {
+        $branch = Branch::get();
+        return response()->json($branch);
     }
 }

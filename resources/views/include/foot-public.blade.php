@@ -122,6 +122,35 @@
          }
      }
 
+     function fetchonChangeSelect(select, updateSelect, url) {
+         console.log(updateSelect)
+         fetch(`${url}${select.value}`)
+             .then(response => response.json())
+             .then(data => {
+                 if (updateSelect.name == 'tehsil_id') {
+                     updateSelect.innerHTML = '<option value="">Select Tehsil</option>';
+                     data.forEach(tehsil => {
+                         updateSelect.innerHTML +=
+                             `<option value="${tehsil.id}">${tehsil.name} / ${tehsil.name_ur}</option>`;
+                     });
+                 }
+                 if (updateSelect.name == 'business_sub_category_id') {
+                     updateSelect.innerHTML = '<option value="">Select Subcategory</option>';
+                     data.forEach(sub => {
+                         updateSelect.innerHTML +=
+                             `<option value="${sub.id}">${sub.name}</option>`;
+                     });
+                 }
+                 if (updateSelect.name == 'applicant_choosed_branch') {
+                     updateSelect.innerHTML = '<option value="">Select Branches</option>';
+                     data.forEach(sub => {
+                         updateSelect.innerHTML +=
+                             `<option value="${sub.id}">${sub.branch_name}</option>`;
+                     });
+                 }
+             });
+     }
+
      function showToast(msg, pos, grv) {
          // var existingToast = $(".toastify");
          // if (existingToast.length) {
@@ -147,5 +176,4 @@
          }).showToast();
          // }
      }
-     
  </script>

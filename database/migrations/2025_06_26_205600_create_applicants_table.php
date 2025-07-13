@@ -28,8 +28,8 @@ return new class extends Migration
             $table->enum('businessType', ['New', 'Running']);
             $table->enum('quota', ['Men', 'Women', 'Disabled', 'Transgender']);
 
-            $table->text('PermanentAddress');
-            $table->text('CurrentAddress');
+            $table->text('businessAddress');
+            $table->text('permanentAddress');
 
             $table->bigInteger('amount')->nullable();
 

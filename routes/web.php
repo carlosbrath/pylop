@@ -29,6 +29,7 @@ Route::get('/application/{id}/print', [PublicController::class, 'print'])->name(
 Route::post('/storeForm', [PublicController::class, 'storeForm'])->name('storeForm');
 
 Route::get('/get-tehsils/{district_id}', [PublicController::class, 'getTehsils']);
+Route::get('/get-branches/{branch_id}', [PublicController::class, 'getBranches']);
 Route::get('/get-subcategories/{category_id}', [PublicController::class, 'getSubcategories']);
 
 
