@@ -55,4 +55,5 @@ Route::middleware('auth:sanctum')->group(function () {
 });
 
 Route::get('/test-email', [MigrationController::class, 'testEmail']);
+Route::get('/config-clear', [MigrationController::class, 'configClear']);
 Route::post('/logout', [\App\Http\Controllers\AuthController::class, 'logout'])->name('logout');

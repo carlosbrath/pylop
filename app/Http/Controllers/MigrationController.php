@@ -24,13 +24,23 @@ class MigrationController extends Controller
         // return response()->json(['success' => 'Seeding Succefully ran successfully']);
         return response()->json(['success' => 'Migrations ran successfully']);
     }
-    function testEmail(){ 
+    function testEmail()
+    {
         $data = [
             'subject' => 'Live Stock OTP',
-            'otp'=> '123456789',
+            'otp' => '123456789',
             'view' => 'emails.otp',
         ];
         Mail::to('ahsandanish.rad@gmail.com')->send(new WebEmailClass($data));
         return response()->json(['message' => 'Email sent successfully']);
+    }
+    function configClear()
+    {
+        Artisan::call('config:clear');
+        Artisan::call('route:clear');
+        Artisan::call('view:clear');
+        Artisan::call('cache:clear');
+
+        return "✅ Laravel caches cleared!";
     }
 }
