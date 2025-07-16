@@ -16,7 +16,7 @@
 </head>
 
 <body>
-    @include('include.topstrip-public')
+    @include('include.topStrip-public')
     @include('include.navbar-public')
     @yield('content')
     @include('include.footer-public')

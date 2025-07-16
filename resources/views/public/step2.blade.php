@@ -47,7 +47,7 @@
 
                 <div class="col-12">
                     <div class="wizard">
-                        <form id="initialForm" class="row g-3 mt-3 mx-2 px-3 pb-3 shadow-lg" method="POST"
+                        <form id="initialForm" class="row g-3 mt-3 mx-2 px-3 pb-3 " method="POST"
                             action="{{ route('storeForm') }}" onsubmit="validateForm(event, this, 'step2')"
                             enctype="multipart/form-data">
                             @csrf
@@ -80,7 +80,7 @@
                                                             'id' => 'name',
                                                             'icon' => 'person',
                                                             'type' => 'text',
-                                                            'required'=> true,
+                                                            'required' => true,
                                                             'label' => "Applicant's Name",
                                                             'urdu' => 'درخواست گزار کا نام',
                                                             'field_type' => 'input',
@@ -89,7 +89,7 @@
                                                             'id' => 'fatherName',
                                                             'icon' => 'person-vcard',
                                                             'type' => 'text',
-                                                            'required'=> true,
+                                                            'required' => true,
                                                             'label' => 'Father Name',
                                                             'urdu' => 'والد کا نام',
                                                             'field_type' => 'input',
@@ -98,8 +98,8 @@
                                                             'id' => 'cnic',
                                                             'icon' => 'credit-card-2-front',
                                                             'type' => 'text',
-                                                            'required'=> true,
-                                                            'readonly'=>true,
+                                                            'required' => true,
+                                                            'readonly' => true,
                                                             'label' => 'CNIC Number',
                                                             'urdu' => 'شناختی کارڈ نمبر',
                                                             'placeholder' => 'xxxxx-xxxxxxx-x',
@@ -110,8 +110,8 @@
                                                             'id' => 'cnic_issue_date',
                                                             'icon' => 'calendar-event',
                                                             'type' => 'date',
-                                                            'required'=> true,
-                                                            'readonly'=>true,
+                                                            'required' => true,
+                                                            'readonly' => true,
                                                             'label' => 'CNIC Issue Date',
                                                             'urdu' => 'شناختی کارڈ کے اجراء کی تاریخ',
                                                             'value' => old('cnic_issue_date', $issueDate ?? ''),
@@ -121,7 +121,7 @@
                                                             'id' => 'dob',
                                                             'icon' => 'calendar-date',
                                                             'type' => 'date',
-                                                            'required'=> true,
+                                                            'required' => true,
                                                             'label' => 'Date of Birth',
                                                             'urdu' => 'تاریخ پیدائش',
                                                             'field_type' => 'input',
@@ -130,7 +130,7 @@
                                                             'id' => 'phone',
                                                             'icon' => 'telephone',
                                                             'type' => 'tel',
-                                                             'required'=> true,
+                                                            'required' => true,
                                                             'label' => 'Phone Number',
                                                             'urdu' => 'فون نمبر',
                                                             'placeholder' => '03XXXXXXXXX',
@@ -142,8 +142,8 @@
                                                             'label' => 'Tier / درجہ',
                                                             'icon' => 'diagram-3',
                                                             'field_type' => 'select',
-                                                            'readonly'=>true,
-                                                            'required'=> true,
+                                                            'readonly' => true,
+                                                            'required' => true,
                                                             'select_field' => 'Tier',
                                                             'options' => [
                                                                 ['value' => '1', 'label' => 'Tier 1 (Up to 5 Lakh)'],
@@ -155,7 +155,7 @@
                                                             'id' => 'amount',
                                                             'icon' => 'cash-coin',
                                                             'type' => 'number',
-                                                             'required'=> true,
+                                                            'required' => true,
                                                             'label' => 'Loan Amount',
                                                             'urdu' => 'قرض کی رقم',
                                                             'field_type' => 'input',
@@ -177,7 +177,7 @@
                                                             'label' => 'District / ضلع',
                                                             'icon' => 'geo',
                                                             'field_type' => 'select',
-                                                             'required'=> true,
+                                                            'required' => true,
                                                             'select_field' => 'District',
                                                             'options' => $districts
                                                                 ->map(
@@ -193,14 +193,14 @@
                                                             'label' => 'Tehsil / تحصیل',
                                                             'icon' => 'geo-fill',
                                                             'field_type' => 'select',
-                                                             'required'=> true,
+                                                            'required' => true,
                                                             'options' => [], // Will be populated via AJAX
                                                         ],
                                                         [
                                                             'id' => 'businessName',
                                                             'icon' => 'briefcase',
                                                             'type' => 'text',
-                                                             'required'=> true,
+                                                            'required' => true,
                                                             'label' => 'Business Name',
                                                             'urdu' => 'کاروبار کا نام',
                                                             'field_type' => 'input',
@@ -210,8 +210,8 @@
                                                             'label' => 'Business Info / کاروبار کی نوعیت',
                                                             'icon' => 'building',
                                                             'field_type' => 'select',
-                                                             'required'=> true,
-                                                             
+                                                            'required' => true,
+
                                                             'select_field' => 'Business Type',
                                                             'options' => [
                                                                 ['value' => 'New', 'label' => 'New / نیا'],
@@ -223,7 +223,7 @@
                                                             'label' => 'Business Category / کاروباری زمرہ',
                                                             'icon' => 'briefcase',
                                                             'field_type' => 'select',
-                                                             'required'=> true,
+                                                            'required' => true,
                                                             'select_field' => 'Category',
                                                             'options' => $categories
                                                                 ->map(
@@ -236,7 +236,7 @@
                                                             'label' => 'Business Subcategory / ذیلی زمرہ',
                                                             'icon' => 'list-task',
                                                             'field_type' => 'select',
-                                                             'required'=> true,
+                                                            'required' => true,
                                                             'select_field' => 'Sub Category',
                                                             'options' => [], // Will be populated via AJAX
                                                         ],
@@ -245,7 +245,7 @@
                                                             'label' => 'Quota / کوٹہ',
                                                             'icon' => 'people-fill',
                                                             'field_type' => 'select',
-                                                             'required'=> true,
+                                                            'required' => true,
                                                             'select_field' => 'Quota',
                                                             'options' => [
                                                                 ['value' => 'Men', 'label' => 'Men / مرد'],
@@ -262,7 +262,7 @@
                                                             'label' => 'Your Selected Branch / آپ کی منتخب کردہ برانچ',
                                                             'icon' => 'list-task',
                                                             'field_type' => 'select',
-                                                             'required'=> true,
+                                                            'required' => true,
                                                             'select_field' => 'Branch',
                                                             'options' => [], // Will be populated via AJAX
                                                         ],
@@ -276,19 +276,23 @@
                                                                     class="bi bi-{{ $field['icon'] }}"></i></span>
                                                             <div class="form-floating flex-grow-1">
                                                                 @if ($field['field_type'] === 'input')
-                                                                    <input type="{{ $field['type'] }}" class="form-control"
+                                                                    <input type="{{ $field['type'] }}" class="form-control {{ isset($field['required']) && $field['required'] ? 'required' : '' }} "
                                                                         id="{{ $field['id'] }}" name="{{ $field['id'] }}"
                                                                         placeholder="{{ $field['label'] }}"
                                                                         value="{{ $field['value'] ?? old($field['id']) }}"
                                                                         {{ isset($field['placeholder']) ? "placeholder='" . $field['placeholder'] . "'" : '' }}
-                                                                        {{ isset($field['readonly']) && $field['readonly'] ? 'readonly' : '' }}>
+                                                                        {{ isset($field['readonly']) && $field['readonly'] ? 'readonly' : '' }}
+                                                                        >
                                                                     <label for="{{ $field['id'] }}">{{ $field['label'] }}
-                                                                        / {{ $field['urdu'] ?? '' }} {!!($field['required'])?'<span class="text-danger">*</span>':''!!}</label>
+                                                                        / {{ $field['urdu'] ?? '' }}
+                                                                        {!! $field['required'] ? '<span class="text-danger">*</span>' : '' !!}</label>
                                                                 @elseif ($field['field_type'] === 'select')
-                                                                    <select class="form-select" id="{{ $field['id'] }}"
-                                                                        name="{{ $field['id'] }}" 
+                                                                    <select class="form-select {{ isset($field['required']) && $field['required'] ? 'required' : '' }}" 
+                                                                    id="{{ $field['id'] }}"
+                                                                        name="{{ $field['id'] }}"
                                                                         {{ isset($field['readonly']) && $field['readonly'] ? 'readonly' : '' }}>
-                                                                        <option disabled selected value="">Select {{$field['select_field']??''}}
+                                                                        <option disabled selected value="">Select
+                                                                            {{ $field['select_field'] ?? '' }}
                                                                         </option>
                                                                         @foreach ($field['options'] as $opt)
                                                                             <option value="{{ $opt['value'] }}"
@@ -297,8 +301,8 @@
                                                                             </option>
                                                                         @endforeach
                                                                     </select>
-                                                                    <label
-                                                                        for="{{ $field['id'] }}">{{ $field['label'] }} {!!($field['required'])?'<span class="text-danger">*</span>':''!!}</label>
+                                                                    <label for="{{ $field['id'] }}">{{ $field['label'] }}
+                                                                        {!! $field['required'] ? '<span class="text-danger">*</span>' : '' !!}</label>
                                                                 @endif
                                                             </div>
                                                         </div>
@@ -342,7 +346,7 @@
                                                     <div class="border rounded p-3 bg-white" id="educationSection">
 
                                                         <span class="text-danger d-block mb-5">
-                                                            * Add your highest level of education.
+                                                            * Add your highest level of education only.
                                                         </span>
 
                                                         <div id="educationRepeater">
@@ -355,6 +359,8 @@
                                                                             <select name="educations[0][education_level]"
                                                                                 class="form-select">
                                                                                 <option value="">Select</option>
+                                                                                <option value="Illiterate">Illiterate /
+                                                                                    ناخواندہ</option>
                                                                                 <option value="Primary">Primary / پرائمری
                                                                                 </option>
                                                                                 <option value="Middle">Middle / مڈل
@@ -365,9 +371,17 @@
                                                                                     انٹرمیڈیٹ</option>
                                                                                 <option value="Diploma">Diploma / ڈپلومہ
                                                                                 </option>
-                                                                                <option value="Bachelor">Bachelor / بیچلر
+                                                                                <option value="Bachelor_14">Bachelor (14
+                                                                                    Years) / بیچلر (14 سال)</option>
+                                                                                <option value="Bachelor_16">Bachelor (16
+                                                                                    Years) / بیچلر (16 سال)</option>
+                                                                                <option value="Master_16">Master (16 Years)
+                                                                                    / ماسٹر (16 سال)</option>
+                                                                                <option value="Master_18">Master (18 Years)
+                                                                                    / ماسٹر (18 سال)</option>
+                                                                                <option value="MPhil">MPhil / ایم فل
                                                                                 </option>
-                                                                                <option value="Master">Master / ماسٹر
+                                                                                <option value="PhD">PhD / پی ایچ ڈی
                                                                                 </option>
                                                                             </select>
                                                                             <label>Education Level / تعلیمی سطح</label>
@@ -375,7 +389,7 @@
                                                                     </div>
                                                                 </div>
                                                                 <!-- Degree Title -->
-                                                                <div class="col-md-4">
+                                                                <div class="col-md-4 degree-fields">
                                                                     <div class="input-group">
                                                                         <span class="input-group-text"><i
                                                                                 class="bi bi-journal-text"></i></span>
@@ -389,7 +403,7 @@
                                                                     </div>
                                                                 </div>
                                                                 <!-- Institute -->
-                                                                <div class="col-md-3">
+                                                                <div class="col-md-3 degree-fields">
                                                                     <div class="input-group">
                                                                         <span class="input-group-text"><i
                                                                                 class="bi bi-bank"></i></span>
@@ -440,7 +454,7 @@
                                                             </div>
                                                         </div>
 
-                                                        <div class="text-end">
+                                                        <div class="text-end degree-fields">
                                                             <button type="button" class="btn btn-success"
                                                                 id="addMoreEducation">
                                                                 <i class="bi bi-plus-circle"></i>
@@ -557,7 +571,27 @@
     </section>
     @push('scripts')
         <script>
-            
+            document.querySelectorAll('select[name^="educations"][name$="[education_level]"]').forEach(select => {
+                bindEducationSelect(select);
+            });
+
+            function bindEducationSelect(selectEl) {
+                toggleDegreeFields(selectEl); // Initial state
+                selectEl.addEventListener('change', function() {
+                    toggleDegreeFields(this);
+                });
+            }
+
+            function toggleDegreeFields(selectEl) {
+                const entry = selectEl.closest('.education-entry');
+                const degreeFields = entry.querySelectorAll('.degree-fields');
+
+                if (selectEl.value === 'Illiterate') {
+                    degreeFields.forEach(field => field.classList.add('d-none'));
+                } else {
+                    degreeFields.forEach(field => field.classList.remove('d-none'));
+                }
+            }
             document.addEventListener('DOMContentLoaded', function() {
                 const districtSelect = document.getElementById('district_id');
                 const tehsilSelect = document.getElementById('tehsil_id');
@@ -570,7 +604,7 @@
                     fetchonChangeSelect(districtSelect, chosedBranch, '/get-branches/')
                 });
 
-                
+
 
                 categorySelect.addEventListener('change', function() {
                     fetchonChangeSelect(categorySelect, subcategorySelect, '/get-subcategories/')
@@ -610,7 +644,6 @@
                     btn.closest('.education-entry').remove();
                 });
             });
-
             function previewImage(input, previewId) {
                 const file = input.files[0];
                 if (file) {

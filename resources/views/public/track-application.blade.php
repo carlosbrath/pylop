@@ -114,22 +114,14 @@
 
                                         <div class="row mb-3">
                                             <div class="col-2"><strong>CNIC:</strong></div>
-                                            <div class="col-4">
-                                                @php
-
-                                                    $dob = \Carbon\Carbon::parse($applicant->dob);
-                                                    $age = $dob->diff(\Carbon\Carbon::now());
-                                                @endphp
-                                                <span class="border-bottom pb-1">{{ $applicant->cnic }}</span>
-                                                <strong>Date Of Birth</strong>
-                                                <span
-                                                    class="border-bottom pb-1">{{ \Carbon\Carbon::parse($applicant->dob)->format('d-M-Y') }}</span>
-                                                <strong>Age</strong>
-
-                                                <span class="border-bottom pb-1">{{ $age->y }}</span>
-                                                <strong>Year</strong>
-                                                <span class="border-bottom pb-1">{{ $age->m }}</span>
-                                                <strong>Month</strong>
+                                            <div class="col-9">
+                                                <div class="border-bottom pb-1">{{ $applicant->cnic }}</div>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <div class="col-2"><strong>Date Of Birth:</strong></div>
+                                            <div class="col-9">
+                                                <div class="border-bottom pb-1">{{ \Carbon\Carbon::parse($applicant->dob)->format('d-M-Y') }}</div>
                                             </div>
                                         </div>
                                         <div class="row mb-3">

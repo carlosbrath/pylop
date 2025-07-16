@@ -21,7 +21,6 @@ return new class extends Migration
             $table->string('cnic')->unique();
             $table->date('cnic_issue_date');
             $table->date('dob');
-            $table->enum('gender', ['Male', 'Female', 'Other']);
             $table->string('phone');
 
             $table->string('businessName');
@@ -31,10 +30,23 @@ return new class extends Migration
             $table->text('businessAddress');
             $table->text('permanentAddress');
 
+            $table->string('branch_name')->nullable()->after('quota');
+            $table->string('branch_code')->nullable()->after('branch_name');
+            $table->string('challan_image')->nullable()->after('branch_code');
+            $table->enum('fee_status', ['paid', 'unpaid'])->default('unpaid')->after('challan_image');
+
             $table->bigInteger('amount')->nullable();
 
-            $table->unsignedTinyInteger('tier'); // 1, 2, or 3
+            $table->unsignedTinyInteger('tier'); 
             $table->enum('status', ['NotCompleted','Pending', 'Approved', 'Rejected'])->default('Pending');
+
+            $table->unsignedBigInteger('district_id')->nullable()->after('businessType');
+            $table->unsignedBigInteger('tehsil_id')->nullable()->after('district_id');
+            $table->unsignedBigInteger('business_category_id')->nullable()->after('tehsil_id');
+            $table->unsignedBigInteger('business_sub_category_id')->nullable()->after('business_category_id');
+            $table->unsignedBigInteger('branch_id')->nullable()->after('quota');
+            $table->string('cnic_front')->nullable()->after('branch_id');
+            $table->string('cnic_back')->nullable()->after('cnic_front');
 
             $table->timestamps();
         });

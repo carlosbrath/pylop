@@ -226,12 +226,12 @@
     </section>
 
 
-    <!-- Loan Links Section -->
+    {{-- <!-- Loan Links Section -->
     <section id="loan_links" class="py-5 loan_links bg-light">
         <div class="container">
             <div class="row g-4">
                 <!-- Apply Column -->
-                <div class="col-lg-4 col-md-6">
+                <div class="col-lg-6 col-md-6">
                     <div class="link_card border-end h-100 shadow-sm bg-white rounded p-4 text-center">
                         <img src="./images/applyloan.png" class="mb-3" alt="Apply" />
                         <a target="_blank" href="{{ route('loan.application') }}" style="cursor: pointer">
@@ -243,22 +243,22 @@
                 </div>
 
                 <!-- Track Column -->
-                <div class="col-lg-4 col-md-6">
+                <div class="col-lg-6 col-md-6">
                     <div class="link_card border-end h-100 shadow-sm bg-white rounded p-4 text-center">
                         <img src="./images/track.png" class="mb-3" alt="Track" />
                         <a target="_blank" href="{{ route('track.application') }}" style="cursor: pointer">
                             <h4 class="mt-3">Track</h4>
                             <p class="text-muted">Check status of your loan application</p>
                         </a>
-                        <a target="_blank" href="/PMYPHome/Dashboarddetails" style="cursor: pointer">
+                        {{-- <a target="_blank" href="/PMYPHome/Dashboarddetails" style="cursor: pointer">
                             <h5 class="mt-4">Analytics</h5>
                             <p class="text-muted">Click here for Dashboard</p>
-                        </a>
+                        </a> --}}
                     </div>
                 </div>
 
                 <!-- Calculator Column -->
-                <div class="col-lg-4 col-md-6">
+                {{-- <div class="col-lg-4 col-md-6">
                     <div class="link_card border-end h-100 shadow-sm bg-white rounded p-4 text-center">
                         <img src="./images/calculator.png" class="mb-3" alt="Calculator" />
                         <a target="_blank" href="./images/image.png" style="cursor: pointer">
@@ -266,10 +266,10 @@
                             <p class="text-muted">Calculate loan repayment schedule</p>
                         </a>
                     </div>
-                </div>
+                </div> --}}
             </div>
         </div>
-    </section>
+    </section> --}}
 
     <!-- Eligibility Section -->
     <section id="eligibility" class="py-5">
@@ -521,68 +521,7 @@
             </div>
         </div>
     </section>
-    <!-- Financial Calculators Section -->
-    <section class="f-cal bg-light">
-        <div class="container">
-            <div class="row align-items-center py-5">
-                <!-- Left: Image -->
-                <div class="col-lg-5 mb-4 mb-lg-0">
-                    <img src="./images/F.Calculator.png" class="img-fluid" alt="Financial Calculator" />
-                </div>
 
-                <!-- Right: Content -->
-                <div class="col-lg-7">
-                    <div class="section-title mb-4">
-                        <h2 class="fw-bold text-success">
-                            Financial Calculators / Templates
-                        </h2>
-                        <p>
-                            This section includes a collection of free financial calculators
-                            and templates to help you compute essential business metrics.
-                            Our tools assist in analyzing income statements, cash flows,
-                            balance sheets, and loan repayment schedules.
-                        </p>
-                        <p><strong>Please download from the links below:</strong></p>
-                    </div>
-
-                    <!-- Download Links -->
-                    <div class="downloads_links">
-                        <a target="_blank" href="/downloads/balancesheettemplate.xlsx" style="cursor: pointer"
-                            class="d-block mb-2 text-decoration-none">
-                            <h5>
-                                <i class="bi bi-circle-fill text-success me-2"></i> Balance
-                                Sheet
-                            </h5>
-                        </a>
-
-                        <a target="_blank" href="/downloads/cashflowstatemettemplate.xlsx" style="cursor: pointer"
-                            class="d-block mb-2 text-decoration-none">
-                            <h5>
-                                <i class="bi bi-circle-fill text-success me-2"></i> Cashflow
-                                Statement
-                            </h5>
-                        </a>
-
-                        <a target="_blank" href="/downloads/incomestatementtemplate.xlsx" style="cursor: pointer"
-                            class="d-block mb-2 text-decoration-none">
-                            <h5>
-                                <i class="bi bi-circle-fill text-success me-2"></i> Income
-                                Statement
-                            </h5>
-                        </a>
-
-                        <a target="_blank" href="/downloads/loanrepaymenttemplatev.xlsx" style="cursor: pointer"
-                            class="d-block mb-2 text-decoration-none">
-                            <h5>
-                                <i class="bi bi-circle-fill text-success me-2"></i> Loan
-                                Repayment
-                            </h5>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
     @push('scripts')
         <script>
             window.onload = function() {

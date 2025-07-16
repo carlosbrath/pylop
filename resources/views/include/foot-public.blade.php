@@ -22,6 +22,8 @@
                  isValid = false;
                  field_name = formatFieldName(select.name)
                  showToast(field_name + ' required.', 'left', 'bottom');
+             } else {
+                  select.classList.remove('error');
              }
          })
          inputs.forEach(function(input) {
@@ -140,6 +142,7 @@
                          updateSelect.innerHTML +=
                              `<option value="${sub.id}">${sub.name}</option>`;
                      });
+                     updateSelect.innerHTML += `<option value="100">Others</option>`
                  }
                  if (updateSelect.name == 'applicant_choosed_branch') {
                      updateSelect.innerHTML = '<option value="">Select Branches</option>';
