@@ -18,7 +18,9 @@
 <body>
     @include('include.topStrip-public')
     @include('include.navbar-public')
-    @yield('content')
+    <div class="print-area">
+        @yield('content')
+    </div>
     @include('include.footer-public')
     @include('include.foot-public')
     @stack('scripts')

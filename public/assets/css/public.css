@@ -3,14 +3,15 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu&display=swap");
 :root {
-    --primary-color: #054829;
+    --primary-color: #78e701;
     --secondary-color: #f0a017;
     --accent-color: #ffcc00;
     --danger-color: #e3342f;
 }
 
 body {
-    font-family: "Open Sans", "Noto Nastaliq Urdu", "Roboto", sans-serif;
+    font-family: "system-ui", "Open Sans", "Noto Nastaliq Urdu", "Roboto",
+        sans-serif;
     background: #eee;
 }
 a {
@@ -19,6 +20,9 @@ a {
 .urdu-text {
     font-family: "Noto Nastaliq Urdu", serif;
     direction: rtl;
+}
+.h1-heading {
+    color: var(--primary-color) !important;
 }
 .text-secondary {
     color: var(--secondary-color) !important;
@@ -52,21 +56,21 @@ a {
     background: #ffffff;
 }
 
-.left-hero {
-    background: url("../../images/primeminister.png") no-repeat center center;
-    background-size: cover;
-    min-height: 400px;
+#hero-section img {
+    max-width: 100%;
 }
 
-.right-hero {
-    background-color: var(--primary-color);
-    padding: 40px 20px;
-    text-align: center;
+#hero-section .logo-row img {
+    height: 60px;
+    object-fit: contain;
+    border-radius: 10px;
 }
-
-.ajk-logo {
-    max-width: 120px;
-    margin: 20px auto;
+.logo-section img {
+    height: 150px;
+}
+.technical-section img {
+    width: 150px;
+    height: 250px;
 }
 
 .bottom-logos img {
@@ -93,7 +97,7 @@ a {
 }
 
 .footer {
-    background-color: #004000;
+    background: radial-gradient(#005066,#00191f);
     color: white;
     padding: 20px 0;
     text-align: center;
@@ -167,6 +171,24 @@ input.error,
 select.error,
 textarea.error {
     border: 1px solid red !important;
+}
+
+@media print {
+    body * {
+        visibility: hidden;
+    }
+
+    .print-area,
+    .print-area * {
+        visibility: visible;
+    }
+
+    .print-area {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+    }
 }
 
 /* // X-Small devices (portrait phones, less than 576px) */

@@ -4,6 +4,11 @@
  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 
  <script>
+     const routeMap = {
+                'get.tehsils': "{{ route('get.tehsils', ':id') }}",
+                'get.branches': "{{ route('get.branches', ':id') }}",
+                'get.subcategories': "{{ route('get.subcategories', ':id') }}"
+        };
      $(document).ready(function() {
          $('input[name="cnic"]').mask('00000-0000000-0');
          $('input[name="phone"]').mask('00000000000');
@@ -23,7 +28,7 @@
                  field_name = formatFieldName(select.name)
                  showToast(field_name + ' required.', 'left', 'bottom');
              } else {
-                  select.classList.remove('error');
+                 select.classList.remove('error');
              }
          })
          inputs.forEach(function(input) {
@@ -124,9 +129,9 @@
          }
      }
 
-     function fetchonChangeSelect(select, updateSelect, url) {
-         console.log(updateSelect)
-         fetch(`${url}${select.value}`)
+     function fetchonChangeSelect(select, updateSelect, routeName) {
+         let url = routeMap[routeName].replace(':id', select.value);
+         fetch(url)
              .then(response => response.json())
              .then(data => {
                  if (updateSelect.name == 'tehsil_id') {

@@ -276,19 +276,20 @@
                                                                     class="bi bi-{{ $field['icon'] }}"></i></span>
                                                             <div class="form-floating flex-grow-1">
                                                                 @if ($field['field_type'] === 'input')
-                                                                    <input type="{{ $field['type'] }}" class="form-control {{ isset($field['required']) && $field['required'] ? 'required' : '' }} "
+                                                                    <input type="{{ $field['type'] }}"
+                                                                        class="form-control {{ isset($field['required']) && $field['required'] ? 'required' : '' }} "
                                                                         id="{{ $field['id'] }}" name="{{ $field['id'] }}"
                                                                         placeholder="{{ $field['label'] }}"
                                                                         value="{{ $field['value'] ?? old($field['id']) }}"
                                                                         {{ isset($field['placeholder']) ? "placeholder='" . $field['placeholder'] . "'" : '' }}
-                                                                        {{ isset($field['readonly']) && $field['readonly'] ? 'readonly' : '' }}
-                                                                        >
+                                                                        {{ isset($field['readonly']) && $field['readonly'] ? 'readonly' : '' }}>
                                                                     <label for="{{ $field['id'] }}">{{ $field['label'] }}
                                                                         / {{ $field['urdu'] ?? '' }}
                                                                         {!! $field['required'] ? '<span class="text-danger">*</span>' : '' !!}</label>
                                                                 @elseif ($field['field_type'] === 'select')
-                                                                    <select class="form-select {{ isset($field['required']) && $field['required'] ? 'required' : '' }}" 
-                                                                    id="{{ $field['id'] }}"
+                                                                    <select
+                                                                        class="form-select {{ isset($field['required']) && $field['required'] ? 'required' : '' }}"
+                                                                        id="{{ $field['id'] }}"
                                                                         name="{{ $field['id'] }}"
                                                                         {{ isset($field['readonly']) && $field['readonly'] ? 'readonly' : '' }}>
                                                                         <option disabled selected value="">Select
@@ -600,14 +601,14 @@
                 const chosedBranch = document.getElementById('applicant_choosed_branch');
 
                 districtSelect.addEventListener('change', function() {
-                    fetchonChangeSelect(districtSelect, tehsilSelect, '/get-tehsils/')
-                    fetchonChangeSelect(districtSelect, chosedBranch, '/get-branches/')
+                    fetchonChangeSelect(districtSelect, tehsilSelect, 'get.tehsils')
+                    fetchonChangeSelect(districtSelect, chosedBranch, 'get.branches')
                 });
 
 
 
                 categorySelect.addEventListener('change', function() {
-                    fetchonChangeSelect(categorySelect, subcategorySelect, '/get-subcategories/')
+                    fetchonChangeSelect(categorySelect, subcategorySelect, 'get.subcategories')
                 });
             });
 
@@ -644,6 +645,7 @@
                     btn.closest('.education-entry').remove();
                 });
             });
+
             function previewImage(input, previewId) {
                 const file = input.files[0];
                 if (file) {

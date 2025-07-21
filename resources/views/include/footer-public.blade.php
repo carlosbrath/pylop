@@ -1,5 +1,5 @@
 <!-- Footer -->
-<footer class="footer text-white pt-4 pb-2" style="background-color: #004000">
+<footer class="footer text-white pt-4 pb-2">
     <div class="container">
         <div class="row">
             <!-- Logo + Info -->

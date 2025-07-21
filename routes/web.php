@@ -29,9 +29,9 @@ Route::post('/upload-challan', [PublicController::class, 'uploadChallan'])->name
 Route::get('/application/{id}/print', [PublicController::class, 'print'])->name('application.print');
 Route::post('/storeForm', [PublicController::class, 'storeForm'])->name('storeForm');
 
-Route::get('/get-tehsils/{district_id}', [PublicController::class, 'getTehsils']);
-Route::get('/get-subcategories/{category_id}', [PublicController::class, 'getSubcategories']);
-Route::get('/get-branches/{branch_id}', [PublicController::class, 'getBranches']);
+Route::get('/get-tehsils/{district_id}', [PublicController::class, 'getTehsils'])->name('get.tehsils');
+Route::get('/get-subcategories/{category_id}', [PublicController::class, 'getSubcategories'])->name('get.subcategories');
+Route::get('/get-branches/{branch_id}', [PublicController::class, 'getBranches'])->name('get.branches');
 
 
 Route::match(['get', 'post'], '/track-application', [PublicController::class, 'trackView'])->name('track.application');

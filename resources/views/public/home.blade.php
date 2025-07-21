@@ -2,10 +2,52 @@
 @section('title', $title ?? 'Dashboard')
 @section('content')
     <!-- Hero Section -->
-    {{-- <section class="hero-section d-flex align-items-center"> --}}
-    {{-- <div class="overlay"></div> --}}
-    {{-- </section> --}}
-    <section>
+  <section id="hero-section" class="py-5" style="background: url('{{ asset('/assets/img/public/hero-bg.png') }}') no-repeat center center / cover;">
+  <div class="container-fluid">
+    <div class="row align-items-center text-center text-lg-start">
+        <div class="col-lg-12 text-white d-flex justify-content-center align-items-center flex-column">
+            <h1 class="fw-bold h1-heading mb-2">Prime Minister Youth Loan Program</h1>
+            <h3 class="fw-bold text-white mb-3">AK Small Industries</h3>
+        </div>
+    </div>
+    <div class="row">
+      <!-- Left Image -->
+      <div class="col-lg-3 mb-4 mb-lg-0 px-5">
+        <img src="/assets/img/public/priminister.png" class="img-fluid rounded" alt="Minister Left">
+      </div>
+
+      <!-- Center Content -->
+      <div class="col-lg-6 text-white">
+        
+        <h5 class="fs-5 text-center">Empowering youth through accessible </h5>
+        <h5 class="fs-5 text-center mb-4">business loan under the vision of the Prime Minister.</h5>
+
+        <!-- Logo Row -->
+        <div class="d-flex justify-content-between  flex-wrap logo-section mb-5">
+          <img src="{{asset('/assets/img/public/ajk-logo.png')}}" class="img-fluid"  alt="Logo 1">
+          <img src="{{asset('/assets/img/public/walfer-logo.png')}}" class="img-fluid"  alt="Logo 2">
+          <img src="{{asset('/assets/img/public/itb-logo.png')}}" class="img-fluid"  alt="Logo 3">
+          <img src="{{asset('/assets/img/public/bajk-logo.png')}}" class="img-fluid"  alt="Logo 4">
+        </div>
+        <div class="d-flex justify-content-between  technical-section">
+            <img src="{{asset('/assets/img/public/technical-5.png')}}" class="img-fluid"  alt="Logo 1">
+            <img src="{{asset('/assets/img/public/technical-1.png')}}" class="img-fluid"  alt="Logo 1">
+            <img src="{{asset('/assets/img/public/technical-2.png')}}" class="img-fluid"  alt="Logo 2">
+            <img src="{{asset('/assets/img/public/technical-3.png')}}" class="img-fluid"  alt="Logo 3">
+            <img src="{{asset('/assets/img/public/technical-4.png')}}" class="img-fluid"  alt="Logo 4">
+        </div>
+      </div>
+
+      <!-- Right Image -->
+      <div class="col-lg-3 mt-4 mt-lg-0 px-5">
+        <img src="/assets/img/public/minister.png" class="img-fluid rounded" alt="Minister Right">
+      </div>
+
+    </div>
+  </div>
+</section>
+
+    {{-- <section>
         <div class="container-fluid">
             <div class="row" style="height: 100vh;">
                 <!-- Left Column with Background Image -->
@@ -35,7 +77,7 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> --}}
 
 
     <!-- About Section -->
@@ -162,7 +204,8 @@
                             provided by
                             Bank of AJK, and markup will be paid by the Government of AJK through Azad kashmir Small
                             Industries
-                            Corporation. In case of late repayment, the borrower must pay the additional markup / penalty.</li>
+                            Corporation. In case of late repayment, the borrower must pay the additional markup / penalty.
+                        </li>
                         <li>📊 <strong>Quota:</strong> Loans will be issued based on district-wise population ratio and
                             gender quota.</li>
                         <li>🏪 <strong>Business Nature:</strong> 75% for new businesses and 25% for startup.
@@ -182,7 +225,8 @@
                         <li>💰 <strong>قرضہ کی حد:</strong> 1 لاکھ سے 20 لاکھ روپے، کاروبار کی نوعیت کے مطابق۔</li>
                         <li>💸 <strong>شرح منافع:</strong> قرضہ بلا سود ہے، اصل رقم بینک آف اے جے کے فراہم کرے گا،
                             جبکہ مارک اپ کی رقم حکومت آزاد کشمیر بذریعہ آزاد کشمیر سمال انڈسٹریز کارپوریشن ادا کرے گی۔قرضہ
-                            کی اقساط کی ریکوری میں تاخیر کی صورت میں زائد مارک اپ / جرمانہ کی رقم مقروض ادا کرنے کا پابند ہوگا۔</li>
+                            کی اقساط کی ریکوری میں تاخیر کی صورت میں زائد مارک اپ / جرمانہ کی رقم مقروض ادا کرنے کا پابند
+                            ہوگا۔</li>
                         <li>📊 <strong>کوٹہ:</strong>
                             قرضہ کی اجرائیگی ضلع وائز آبادی کے تناسب اور Gender کوٹہ کے مطابق ہوگی ۔</li>
                         <li>🏪 <strong>کاروباری نوعیت:</strong> نیا کاروبار (75 فیصد ) اور سٹارٹ اپ بزنس (25) فیصد )</li>
@@ -254,11 +298,11 @@
                             <h5 class="mt-4">Analytics</h5>
                             <p class="text-muted">Click here for Dashboard</p>
                         </a> --}}
-                    </div>
-                </div>
+    </div>
+    </div>
 
-                <!-- Calculator Column -->
-                {{-- <div class="col-lg-4 col-md-6">
+    <!-- Calculator Column -->
+    {{-- <div class="col-lg-4 col-md-6">
                     <div class="link_card border-end h-100 shadow-sm bg-white rounded p-4 text-center">
                         <img src="./images/calculator.png" class="mb-3" alt="Calculator" />
                         <a target="_blank" href="./images/image.png" style="cursor: pointer">
@@ -267,8 +311,8 @@
                         </a>
                     </div>
                 </div> --}}
-            </div>
-        </div>
+    </div>
+    </div>
     </section> --}}
 
     <!-- Eligibility Section -->
