@@ -13,7 +13,7 @@
     <div class="row">
       <!-- Left Image -->
       <div class="col-lg-3 mb-4 mb-lg-0 px-5">
-        <img src="/assets/img/public/priminister.png" class="img-fluid rounded" alt="Minister Left">
+        <img src="{{asset('/assets/img/public/priminister.png')}}" class="img-fluid rounded" alt="Minister Left">
       </div>
 
       <!-- Center Content -->
@@ -40,7 +40,7 @@
 
       <!-- Right Image -->
       <div class="col-lg-3 mt-4 mt-lg-0 px-5">
-        <img src="/assets/img/public/minister.png" class="img-fluid rounded" alt="Minister Right">
+        <img src="{{asset('/assets/img/public/minister.png')}}" class="img-fluid rounded" alt="Minister Right">
       </div>
 
     </div>
