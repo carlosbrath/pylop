@@ -2,8 +2,9 @@
 @section('title', $title ?? 'Dashboard')
 @section('content')
     <!-- Hero Section -->
-  <section id="hero-section" class="py-5" style="background: url('{{ asset('/assets/img/public/hero-bg.png') }}') no-repeat center center / cover;">
-  <div class="container-fluid">
+  <section>
+    <img src="{{ asset('/assets/img/public/banner.png') }}" style="width: 100%">
+  {{-- <div class="container-fluid">
     <div class="row align-items-center text-center text-lg-start">
         <div class="col-lg-12 text-white d-flex justify-content-center align-items-center flex-column">
             <h1 class="fw-bold h1-heading mb-2">Prime Minister Youth Loan Program</h1>
@@ -12,12 +13,12 @@
     </div>
     <div class="row">
       <!-- Left Image -->
-      <div class="col-lg-3 mb-4 mb-lg-0 px-5">
+      <div class="col-lg-3 col-sm-3 mb-4 mb-lg-0 px-5">
         <img src="{{asset('/assets/img/public/priminister.png')}}" class="img-fluid rounded" alt="Minister Left">
       </div>
 
       <!-- Center Content -->
-      <div class="col-lg-6 text-white">
+      <div class="col-lg-6 col-sm-3 text-white">
         
         <h5 class="fs-5 text-center">Empowering youth through accessible </h5>
         <h5 class="fs-5 text-center mb-4">business loan under the vision of the Prime Minister.</h5>
@@ -39,12 +40,12 @@
       </div>
 
       <!-- Right Image -->
-      <div class="col-lg-3 mt-4 mt-lg-0 px-5">
+      <div class="col-lg-3 col-sm-3 mt-4 mt-lg-0 px-5">
         <img src="{{asset('/assets/img/public/minister.png')}}" class="img-fluid rounded" alt="Minister Right">
       </div>
 
     </div>
-  </div>
+  </div> --}}
 </section>
 
     {{-- <section>
