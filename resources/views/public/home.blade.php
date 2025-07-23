@@ -1,5 +1,10 @@
 @extends('layouts.master-public')
-@section('title', $title ?? 'Dashboard')
+@section('title', 'Prime Minister Youth Loan Program – Empowering AJK Youth')
+@section('meta_description', 'Learn how PMYP provides interest‑free loans (₨100K–2M) to AJK youth across sectors like IT, agriculture & tourism. Apply today!')
+@section('meta_keywords', 'AJK youth loan, PMYP, interest free loan, AJK entrepreneurs, Pakistan AJK loans')
+@section('og_title', 'PMYP: Interest‑Free Loans for AJK Youth Entrepreneurs')
+@section('og_description', 'Explore PMYP’s 0% markup loans of ₨100K–2M for youth aged 18–40 in AJK. Business opportunities in tech, tourism, handicrafts & more supported.')
+@section('og_image', asset('/assets/img/public/banner.webp'))
 @section('content')
     <!-- Hero Section -->
   <section>

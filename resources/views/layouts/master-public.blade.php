@@ -14,14 +14,14 @@
     {{-- Open Graph for Social Sharing --}}
     <meta property="og:title" content="@yield('og_title', 'Prime Minister Youth Loan Program AJK ')">
     <meta property="og:description" content="@yield('og_description', 'Prime Minister Youth Loan Program. Empowering youth through accessible business loan under the vision of the Prime Minister.')">
-    <meta property="og:image" content="@yield('og_image', asset('/assets/img/public/logo.png'))">
+    <meta property="og:image" content="@yield('og_image', asset('/assets/img/public/banner.webp'))">
     <meta property="og:url" content="{{ url()->current() }}">
-    <link rel="canonical" href="{{ url()->current() }}">
+    <link rel="canonical" href="{{ url()->current() }}/">
 
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="@yield('og_title', 'Prime Minister Youth Loan Program AJK ')">
     <meta name="twitter:description" content="@yield('og_description', 'Prime Minister Youth Loan Program. Empowering youth through accessible business loan under the vision of the Prime Minister.')">
-    <meta name="twitter:image" content="@yield('og_image', asset('/assets/img/public/logo.png'))">
+    <meta name="twitter:image" content="@yield('og_image', asset('/assets/img/public/banner.webp'))">
 
 
 
