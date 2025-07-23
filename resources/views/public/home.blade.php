@@ -3,7 +3,7 @@
 @section('content')
     <!-- Hero Section -->
   <section>
-    <img src="{{ asset('/assets/img/public/banner.png') }}" style="width: 100%">
+    <img src="{{ asset('/assets/img/public/banner.webp') }}" style="width: 100%">
   {{-- <div class="container-fluid">
     <div class="row align-items-center text-center text-lg-start">
         <div class="col-lg-12 text-white d-flex justify-content-center align-items-center flex-column">
