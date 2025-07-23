@@ -484,7 +484,7 @@
                         </div>
                     </div>
                     <div class="col-lg-4 text-center">
-                        <img src="{{ asset('/assets/img/public/FAQs.png') }}" class="img-fluid" alt="FAQ" />
+                        <img src="{{ asset('/assets/img/public/faqs.png') }}" class="img-fluid" alt="FAQ" />
                     </div>
                 </div>
             </div>

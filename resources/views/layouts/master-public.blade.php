@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     {{-- Dynamic Meta Tags --}}
+    <meta name="robots" content="index, follow">
     <title>@yield('title', 'Prime Minister Youth Loan Program AJK') - PMYP</title>
     <meta name="description" content="@yield('meta_description', 'Prime Minister Youth Loan Program. Empowering youth through accessible business loan under the vision of the Prime Minister.')">
     <meta name="keywords" content="@yield('meta_keywords', 'AJK, Youth Loan, PMYLP, AK Small Industries')">
