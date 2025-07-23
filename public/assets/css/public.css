@@ -16,6 +16,7 @@ body {
 }
 a {
     text-decoration: none;
+    cursor: pointer !important;
 }
 .urdu-text {
     font-family: "Noto Nastaliq Urdu", serif;
@@ -97,7 +98,7 @@ a {
 }
 
 .footer {
-    background: radial-gradient(#005066,#00191f);
+    background: radial-gradient(#005066, #00191f);
     color: white;
     padding: 20px 0;
     text-align: center;
@@ -137,12 +138,6 @@ a {
 .input-group .form-floating > .form-control:not(:placeholder-shown) ~ label {
     transform: scale(0.85) translateY(-1.5rem) translateX(0.15rem);
 }
-
-.input-group .form-floating > .form-control:focus ~ label,
-.input-group .form-floating > .form-control:not(:placeholder-shown) ~ label {
-    transform: scale(0.85) translateY(-1.5rem) translateX(0.15rem);
-}
-
 .form-floating select {
     padding-top: 1.625rem;
     padding-bottom: 0.625rem;
@@ -166,11 +161,23 @@ a {
     display: none;
 }
 
+.form-floating.has-file label {
+    opacity: 1;
+     transform: scale(0.85) translateY(-1.5rem) translateX(0.15rem);
+    background-color: #0000;
+}
+
 /* Error inputs */
 input.error,
 select.error,
 textarea.error {
     border: 1px solid red !important;
+}
+.input-error-div {
+    font-size: 12px;
+    color: #f00;
+    margin-right: 8px;
+    text-align: right;
 }
 
 @media print {

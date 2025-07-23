@@ -27,10 +27,24 @@ class Applicant extends Model
         'businessAddress',
         'permanentAddress',
         'amount',
-        'branch_name',
-        'branch_code',
+        'challan_branch_id',
         'challan_image',
+        'challan_fee',
         'fee_status',
         'status',
     ];
+    public function feeBranch(){
+         return $this->belongsTo(Branch::class, 'challan_branch_id');
+    }
+    public function educations(){
+        return $this->hasMany(ApplicantEducation::class, 'applicant_id');
+    }
+    public function district(){
+         return $this->belongsTo(Location::class, 'district_id')
+                    ->where('type', 'district');
+    }
+    public function tehsil(){
+         return $this->belongsTo(Location::class, 'tehsil_id')
+                    ->where('type', 'tehsil');
+    }
 }

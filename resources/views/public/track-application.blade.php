@@ -84,19 +84,19 @@
                         @csrf
                         <div class="row g-3">
 
-                            <div class="col-md-4">
+                            <div class="col-4 offset-3">
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="bi bi-credit-card-2-front"></i></span>
                                     <div class="form-floating flex-grow-1">
                                         <input type="text" name="cnic" id="track_cnic" class="form-control"
-                                            placeholder="xxxxx-xxxxxxx-x" value="{{ $applicant->cnic ?? old('cnic') }}"
+                                            placeholder="xxxxx-xxxxxxx-x" value="{{ $applicant?->cnic ?? old('cnic') }}"
                                             required maxlength="15">
                                         <label for="track_cnic">CNIC / شناختی کارڈ نمبر</label>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="col-md-4">
+                            {{-- <div class="col-md-4">
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
                                     <div class="form-floating flex-grow-1">
@@ -106,9 +106,9 @@
                                         <label for="track_issue_date">CNIC Issue Date / اجراء کی تاریخ</label>
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
 
-                            <div class="col-md-4">
+                            {{-- <div class="col-md-4">
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="bi bi-calendar-date"></i></span>
                                     <div class="form-floating flex-grow-1">
@@ -118,9 +118,9 @@
                                         <label for="track_dob">Date of Birth / تاریخ پیدائش</label>
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
 
-                            <div class="col-12 text-center mt-3">
+                            <div class="col-4 mt-3 pt-3">
                                 <button type="submit" class="btn btn-success px-5">
                                     <i class="bi bi-search me-1"></i> Track Application
                                 </button>
@@ -132,15 +132,18 @@
 
                 @if (isset($applicant))
                     <div class="page">
-                        <div class="text-center mb-4">
-                            <img src="{{ asset('images/ajklogo.png') }}" alt="AJK Logo" style="height: 70px; float: left;">
-                            <div>
-                                <h5>Government of Azad Jammu & Kashmir</h5>
-                                <h4><strong>Small Industries Prime Minister Youth Loan Program</strong></h4>
+                        <div class="d-flex align-items-center justify-content-between mb-4 text-center" style="gap: 10px;">
+                            <img src="https://sic.ajk.gov.pk/pmylp/public/images/ajklogo.png" alt="AJK Logo"
+                                style="height: 100px;">
+
+                            <div class="flex-grow-1 text-center">
+                                <h5 class="mb-1">Government of Azad Jammu & Kashmir</h5>
+                                <h4 class="mb-1"><strong>Prime Minister Youth Loan Program</strong></h4>
                                 <h6 class="text-muted">Application for the Loan</h6>
                             </div>
-                            <img src="{{ asset('images/logo.png') }}" alt="Small Industries Logo"
-                                style="height: 70px; float: right;">
+
+                            <img src="https://sic.ajk.gov.pk/pmylp/public/images/logo.png" alt="Small Industries Logo"
+                                style="height: 100px;">
                         </div>
 
                         <div class="section-title">Applicant Details</div>
@@ -189,7 +192,15 @@
                         </div>
                         <div class="info-row">
                             <div class="info-label">Tier:</div>
-                            <div class="info-value">{{ $applicant->tier }}</div>
+                            <div class="info-value">
+                                @if($applicant->tier==1)
+                                    Tier 1 (Up to 5  Lakh)
+                                @elseif($applicant->tier==2)
+                                    Tier 1 (5 to 10  Lakh)
+                                @else
+                                    Tier 1 (10 to 20  Lakh)
+                                @endif
+                            </div>
                         </div>
                         <div class="info-row">
                             <div class="info-label">Quota:</div>
@@ -203,11 +214,18 @@
                             <div class="info-label">Tehsil:</div>
                             <div class="info-value">{{ $applicant->tehsil->name ?? '-' }}</div>
                         </div>
+                        <div class="section-title">Educations</div>
+                        @foreach ($applicant->educations as $ed)
+                            <div class="info-row">
+                                <div class="info-label">Education Level:</div>
+                                <div class="info-value">{{ $ed->education_level }}</div>
+                            </div>
+                        @endforeach
 
                         <div class="section-title">Application Status</div>
                         <div class="info-row">
-                            <div class="info-label">Fee Status:</div>
-                            <div class="info-value">{{ $applicant->fee_status }}</div>
+                            <div class="info-label">Challan Fee</div>
+                            <div class="info-value">{{ challanFee($applicant->tier)}} {!!($applicant->fee_status=='<span class="badge bg-success"">Paid</span>'?:'<span class="badge bg-danger">Unpaid</span>')!!}</div>
                         </div>
                         <div class="info-row">
                             <div class="info-label">Loan Status:</div>
@@ -218,16 +236,16 @@
                             <div class="section-title">Challan Details</div>
                             <div class="info-row">
                                 <div class="info-label">Branch Name:</div>
-                                <div class="info-value">{{ $applicant->branch_name ?? '-' }}</div>
+                                <div class="info-value">{{ $applicant->feeBranch->branch_name ?? '-' }}</div>
                             </div>
                             <div class="info-row">
                                 <div class="info-label">Branch Code:</div>
-                                <div class="info-value">{{ $applicant->branch_code ?? '-' }}</div>
+                                <div class="info-value">{{ $applicant->feeBranch->branch_code ?? '-' }}</div>
                             </div>
-                            <div class="my-3">
+                            <div class="my-3 d-flex justify-content-end no-print">
                                 @if ($applicant->challan_image && file_exists(public_path('images/challans/' . $applicant->challan_image)))
                                     <img src="{{ asset('images/challans/' . $applicant->challan_image) }}"
-                                        style="max-width: 100%; height: auto; border: 1px solid #ccc;">
+                                        style="max-width: 100%; width:300px; height:400px; height: auto; border: 1px solid #ccc;">
                                 @else
                                     <p>Challan Image: Not Uploaded</p>
                                 @endif
@@ -245,15 +263,77 @@
                             <button onclick="window.print()" class="btn btn-primary">Print Application</button>
                         </div>
                     </div>
+                    @if ($applicant->fee_status != 'paid')
+                        <div class="md-col-10 no-print">
+                            <form action="{{ route('upload.challan') }}" method="POST" enctype="multipart/form-data"
+                                class="my-4 p-4 bg-white shadow-sm rounded">
+                                <h3 class="mb-5">Fee informations</h3>
+                                @csrf
+                                <input type="hidden" name="applicant_id" value="{{ $applicant->id }}">
+                                <div class="row g-3">
+                                    <div class="col-md-4">
+                                        <div class="input-group position-relative">
+                                            <span class="input-group-text"><i class="bi bi-bank"></i></span>
+                                            <div class="form-floating flex-grow-1">
+                                                <select id="branch_id" name="branch_id"
+                                                    class="form-select custom-select2" required>
+                                                    <option value="" disabled selected hidden>Select Branch</option>
+                                                    @foreach ($branches as $branch)
+                                                        <option value="{{ $branch->id }}">{{$branch->branch_code .' '. $branch->branch_name }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                                <label for="branch_id">Branch Name</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {{-- <div class="col-md-6">
+                                        <div class="input-group">
+                                            <span class="input-group-text"><i class="bi bi-123"></i></span>
+                                            <div class="form-floating flex-grow-1">
+                                                <input type="text" class="form-control" id="branch_code"
+                                                    name="branch_code" placeholder="Branch Code" required>
+                                                <label for="branch_code">Branch Code</label>
+                                            </div>
+                                        </div>
+                                    </div> --}}
+                                    <div class="col-md-4">
+                                        <div class="input-group">
+                                            <span class="input-group-text"><i class="bi bi-123"></i></span>
+                                            <div class="form-floating flex-grow-1">
+                                                <input type="text" class="form-control" id="challan_fee"
+                                                    name="challan_fee" placeholder="Enter Challan Fee" required>
+                                                <label for="challan_fee">Enter Challan Fee</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <div class="input-group">
+                                            <span class="input-group-text"><i
+                                                    class="bi bi-file-earmark-arrow-up"></i></span>
+                                            <div class="form-floating  has-file flex-grow-1">
+                                                <input type="file" class="form-control" id="challan_image"
+                                                    name="challan_image" required>
+                                                <label for="challan_image">Upload Challan Image</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 text-end mt-3">
+                                        <button type="submit" class="btn btn-success">
+                                            <i class="bi bi-upload"></i> Submit Challan
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    @endif
                 @endif
 
-                <!-- Info Box -->
-                <div class="col-md-10 mt-4 no-print">
-                    <div class="alert alert-info border-0">
-                        <strong>Note:</strong> Please enter the CNIC, issue date, and Date of Birth used in the original
-                        application. The status will only appear if all details are correctly entered.
-                    </div>
-                </div>
+
+              
 
 
             </div>

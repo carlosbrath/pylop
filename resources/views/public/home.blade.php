@@ -443,7 +443,7 @@
                     <div class="card h-100 shadow-sm border-success">
                         <div class="card-body">
                             <h4 class="text-success fw-bold">Tier 2</h4>
-                            <p><strong>Loan Range:</strong> PKR 500,000 – 1,500,000</p>
+                            <p><strong>Loan Range:</strong> PKR 500,000 – 1,000,000</p>
                             <p><strong>Markup:</strong> 0% (Interest-Free)</p>
                             <p><strong>Type:</strong> Secured Loan</p>
                         </div>
@@ -455,7 +455,7 @@
                     <div class="card h-100 shadow-sm border-success">
                         <div class="card-body">
                             <h4 class="text-success fw-bold">Tier 3</h4>
-                            <p><strong>Loan Range:</strong> PKR 1,500,000 – 2,000,000</p>
+                            <p><strong>Loan Range:</strong> PKR 1,000,000 – 2,000,000</p>
                             <p><strong>Markup:</strong> 0% (Interest-Free)</p>
                             <p><strong>Type:</strong> Secured Loan</p>
                         </div>

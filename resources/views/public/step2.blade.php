@@ -160,18 +160,6 @@
                                                             'urdu' => 'قرض کی رقم',
                                                             'field_type' => 'input',
                                                         ],
-
-                                                        // [
-                                                        //     'id' => 'gender',
-                                                        //     'label' => 'Gender / صنف',
-                                                        //     'icon' => 'gender-ambiguous',
-                                                        //     'field_type' => 'select',
-                                                        //     'options' => [
-                                                        //         ['value' => 'Male', 'label' => 'Male / مرد'],
-                                                        //         ['value' => 'Female', 'label' => 'Female / عورت'],
-                                                        //         ['value' => 'Other', 'label' => 'Other / دیگر'],
-                                                        //     ],
-                                                        // ],
                                                         [
                                                             'id' => 'district_id',
                                                             'label' => 'District / ضلع',
@@ -262,7 +250,7 @@
                                                             'label' => 'Your Selected Branch / آپ کی منتخب کردہ برانچ',
                                                             'icon' => 'list-task',
                                                             'field_type' => 'select',
-                                                            'required' => true,
+                                                            // 'required' => true,
                                                             'select_field' => 'Branch',
                                                             'options' => [], // Will be populated via AJAX
                                                         ],
@@ -282,16 +270,18 @@
                                                                         placeholder="{{ $field['label'] }}"
                                                                         value="{{ $field['value'] ?? old($field['id']) }}"
                                                                         {{ isset($field['placeholder']) ? "placeholder='" . $field['placeholder'] . "'" : '' }}
-                                                                        {{ isset($field['readonly']) && $field['readonly'] ? 'readonly' : '' }}>
+                                                                        {{ isset($field['readonly']) && $field['readonly'] ? 'readonly' : '' }}
+                                                                        data-name="{{$field['label'] ?? ''}}">
                                                                     <label for="{{ $field['id'] }}">{{ $field['label'] }}
                                                                         / {{ $field['urdu'] ?? '' }}
-                                                                        {!! $field['required'] ? '<span class="text-danger">*</span>' : '' !!}</label>
+                                                                        {!! isset($field['required']) && $field['required'] ? '<span class="text-danger">*</span>' : '' !!}</label>
                                                                 @elseif ($field['field_type'] === 'select')
                                                                     <select
                                                                         class="form-select {{ isset($field['required']) && $field['required'] ? 'required' : '' }}"
                                                                         id="{{ $field['id'] }}"
                                                                         name="{{ $field['id'] }}"
-                                                                        {{ isset($field['readonly']) && $field['readonly'] ? 'readonly' : '' }}>
+                                                                        {{ isset($field['readonly']) && $field['readonly'] ? 'readonly' : '' }}
+                                                                        data-name="{{$field['label'] ?? ''}}">
                                                                         <option disabled selected value="">Select
                                                                             {{ $field['select_field'] ?? '' }}
                                                                         </option>
@@ -303,7 +293,7 @@
                                                                         @endforeach
                                                                     </select>
                                                                     <label for="{{ $field['id'] }}">{{ $field['label'] }}
-                                                                        {!! $field['required'] ? '<span class="text-danger">*</span>' : '' !!}</label>
+                                                                        {!! isset($field['required']) && $field['required'] ? '<span class="text-danger">*</span>' : '' !!}</label>
                                                                 @endif
                                                             </div>
                                                         </div>
@@ -318,7 +308,7 @@
                                                                 class="bi bi-house-door"></i></span>
                                                         <div class="form-floating flex-grow-1">
                                                             <textarea class="form-control" id="BusinessAddress" name="BusinessAddress" placeholder="Current Address"
-                                                                style="height: 100px">{{ old('BusinessAddress') }}</textarea>
+                                                                style="height: 100px" data-name="Current Address">{{ old('BusinessAddress') }}</textarea>
                                                             <label for="BusinessAddress">Current Address / عارضی پتہ</label>
                                                         </div>
                                                     </div>
@@ -331,7 +321,7 @@
                                                         <span class="input-group-text"><i class="bi bi-geo-alt"></i></span>
                                                         <div class="form-floating flex-grow-1">
                                                             <textarea class="form-control" id="PermanentAddress" name="PermanentAddress" placeholder="Permanent Address"
-                                                                style="height: 100px">{{ old('PermanentAddress') }}</textarea>
+                                                                style="height: 100px" data-name="Permanent Address">{{ old('PermanentAddress') }}</textarea>
                                                             <label for="PermanentAddress">Permanent Address / مستقل
                                                                 پتہ</label>
                                                         </div>
@@ -358,7 +348,7 @@
                                                                                 class="bi bi-mortarboard"></i></span>
                                                                         <div class="form-floating flex-grow-1">
                                                                             <select name="educations[0][education_level]"
-                                                                                class="form-select">
+                                                                                class="form-select required" data-name="Degree Title">
                                                                                 <option value="">Select</option>
                                                                                 <option value="Illiterate">Illiterate /
                                                                                     ناخواندہ</option>
@@ -372,20 +362,21 @@
                                                                                     انٹرمیڈیٹ</option>
                                                                                 <option value="Diploma">Diploma / ڈپلومہ
                                                                                 </option>
-                                                                                <option value="Bachelor_14">Bachelor (14
+                                                                                <option value="Bachelor 14
+                                                                                    Years">Bachelor (14
                                                                                     Years) / بیچلر (14 سال)</option>
-                                                                                <option value="Bachelor_16">Bachelor (16
+                                                                                <option value="Bachelor 16 Years">Bachelor (16
                                                                                     Years) / بیچلر (16 سال)</option>
-                                                                                <option value="Master_16">Master (16 Years)
+                                                                                <option value="Master 16 Years">Master (16 Years)
                                                                                     / ماسٹر (16 سال)</option>
-                                                                                <option value="Master_18">Master (18 Years)
+                                                                                <option value="Master 18 Years">Master (18 Years)
                                                                                     / ماسٹر (18 سال)</option>
                                                                                 <option value="MPhil">MPhil / ایم فل
                                                                                 </option>
                                                                                 <option value="PhD">PhD / پی ایچ ڈی
                                                                                 </option>
                                                                             </select>
-                                                                            <label>Education Level / تعلیمی سطح</label>
+                                                                            <label>Education Level / تعلیمی سطح <span class="text-danger">*</span></label>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -397,8 +388,8 @@
                                                                         <div class="form-floating flex-grow-1">
                                                                             <input type="text"
                                                                                 name="educations[0][degree_title]"
-                                                                                class="form-control"
-                                                                                placeholder="Degree Title">
+                                                                                class="form-control "
+                                                                                placeholder="Degree Title" data-name="Degree Title">
                                                                             <label>Degree Title / ڈگری کا عنوان</label>
                                                                         </div>
                                                                     </div>
@@ -412,10 +403,11 @@
                                                                             <input type="text"
                                                                                 name="educations[0][institute]"
                                                                                 class="form-control"
-                                                                                placeholder="Institute Name">
+                                                                                placeholder="Institute Name" data-name="Institute">
                                                                             <label>Institute / ادارہ</label>
                                                                         </div>
                                                                     </div>
+                                                                   
                                                                 </div>
 
                                                                 <!-- Passing Year -->
@@ -490,7 +482,7 @@
                                                                         alt="" class="img-fluid d-none"
                                                                         style="max-height: 350px;">
                                                                     <input type="file" name="cnic_front"
-                                                                        id="cnic_front" class="d-none" accept="image/*"
+                                                                        id="cnic_front" class="d-none" data-name="Cnic copy" accept="image/*"
                                                                         onchange="previewImage(this, 'cnic_front_preview')">
                                                                 </div>
                                                             </div>
@@ -509,7 +501,7 @@
                                                                         alt="" class="img-fluid d-none"
                                                                         style="max-height: 150px;">
                                                                     <input type="file" name="cnic_back" id="cnic_back"
-                                                                        class="d-none" accept="image/*"
+                                                                        class="d-none" data-name="Cnic copy" accept="image/*"
                                                                         onchange="previewImage(this, 'cnic_back_preview')">
                                                                 </div>
                                                             </div>

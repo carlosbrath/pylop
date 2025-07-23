@@ -16,12 +16,9 @@ class PublicController extends Controller
     function home()
     {
         $title = 'Home';
-
-        // Fetch only parent categories and their children
         $businessCategories = BusinessCategory::with('children')
             ->where('parent_id', 0)
             ->get();
-
         return view('public.home', compact('title', 'businessCategories'));
     }
     function step1()
@@ -58,6 +55,7 @@ class PublicController extends Controller
 
         $districts = Location::where('type', 'district')->get();
         $categories = BusinessCategory::where('parent_id', 0)->with('children')->get();
+       
         // $categories = Branch::where('parent_id', 0)->with('children')->get();
 
         return view('public.step2', compact('title', 'cnic', 'issueDate', 'tier', 'districts', 'categories'));
@@ -176,21 +174,19 @@ class PublicController extends Controller
         // dd($request->all());
         $request->validate([
             'applicant_id' => 'required|exists:applicants,id',
-            'branch_name' => 'required|string|max:255',
-            'branch_code' => 'required|string|max:255',
+            'branch_id' => 'required',
+            'challan_fee' => 'required|integer|min:1',
             'challan_image' => 'required|image|max:2048',
         ]);
         $applicant = Applicant::find($request->applicant_id);
-
-
         if ($request->hasFile('challan_image')) {
             $fileName = time() . '.' . $request->challan_image->extension();
             $request->challan_image->move(public_path('images/challans'), $fileName);
         }
 
         $applicant->update([
-            'branch_name' => $request->branch_name,
-            'branch_code' => $request->branch_code,
+            'challan_branch_id' => $request->branch_id,
+            'challan_fee' => $request->challan_fee,
             'challan_image' => $fileName,
             'fee_status' => 'paid',
         ]);
@@ -209,42 +205,37 @@ class PublicController extends Controller
 
         return redirect()->back()->with('success', 'Challan uploaded successfully.');
     }
-
-    public function print($id)
-    {
-        $applicant = Applicant::findOrFail($id);
-        return view('public.print', compact('applicant'));
-    }
     public function trackView(Request $request)
     {
         $applicant = null;
+        $branches  = Branch::get();
+      
         if (session('auto_track') && session('application_id')) {
-            $applicant = Applicant::find(session('application_id'));
-
+            $applicant = Applicant::with(['feeBranch', 'educations', 'district', 'tehsil'])->find(session('application_id'));
+                
             if (!$applicant) {
                 return redirect()->route('track.application')->withErrors([
                     'application_id' => 'No application found with the provided ID.',
                 ]);
             }
 
-            return view('public.track-application', compact('applicant'));
+            return view('public.track-application', compact('applicant', 'branches'));
         }
 
         if ($request->isMethod('post')) {
             $request->validate([
                 'cnic' => 'required|regex:/^\d{5}-\d{7}-\d{1}$/',
-                'issue_date' => 'required|date',
-                'dob' => 'required|date',
+                // 'issue_date' => 'required|date',
+                // 'dob' => 'required|date',
             ]);
-            $applicant = Applicant::where('cnic', $request->cnic)
-                ->first();
-
+            $applicant = Applicant::with(['feeBranch', 'educations', 'district', 'tehsil'])
+            ->where('cnic', $request->cnic)
+            ->first();
             if (!$applicant) {
                 return back()->withErrors(['cnic' => 'No application found with the provided details.'])->withInput();
             }
         }
-
-        return view('public.track-application', compact('applicant'));
+        return view('public.track-application', compact('applicant', 'branches'));
     }
     public function getTehsils($id)
     {

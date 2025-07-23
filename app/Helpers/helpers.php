@@ -49,70 +49,12 @@ function firebasenotifications($notification) {
         curl_close($ch);
     }
 }
-
-function formateLocation($locationData) {
-    // Convert the comma-separated strings to an array of associative arrays
-    $locationArray = $locationData->toArray();
-   
-    $formattedLocations = array_map(function($location) {
-        $color = '%2335ce59';
-
-        // Check if latest_location is not null
-        if ($location['latest_location'] != null) {
-            list($lat, $long) = array_map('trim', explode(',', $location['latest_location']['latlong']));
-            // Determine role
-                $role = 'Tourist';
-                $icon= 'taxi';
-            if($location['role_id']==3){
-                $role = 'Tourist';
-                $color = '%2335ce59';
-                $icon= 'taxi';
-            }
-            if($location['role_id']==4){
-                $role = 'Tourist Police Officer';
-                $color = '%23092f99';
-                $icon= 'taxi';
-            }
-            if($location['role_id']==5){
-                $role = 'Entry Point Officers';
-                $color = '%2335ce59';
-                $icon= 'taxi';
-            } elseif($location['role_id']==6) {
-                $role = 'Tour Operator';
-                $color = '%234cd73a';
-                $icon= 'emergency_share';
-            }
-            $role= $location['name']. ' '. $role;
-            return [
-                'lat' => (float) $lat,
-                'long' => (float) $long,
-                'tooltip' => $role,
-                'color' => $color,
-                'icon' => $icon,
-            ];
-        }
-
-        return null; // Return null if latest_location is null
-    }, $locationArray);
-    $formattedLocations = array_values(array_filter($formattedLocations));
-    return $formattedLocations;
-}
-function tourlocations($locationData)  {
-    $locationArray = $locationData->toArray();
-    $formattedLocations = array_map(function($location) {
-        list($lat, $long) = array_map('trim', explode(',', $location['latlong']));
-         // Determine role
-         $role = 'user';
-         $icon= 'taxi';
-         $color= '%23512424';
-        $role= 'Tourist'. ' '. $role;
-        return [
-            'lat' => (float) $lat,
-            'long' => (float) $long,
-            'tooltip' => $role,
-            'color' => $color,
-            'icon' => $icon,
-        ];
-    }, $locationArray);
-    return $formattedLocations;
+function challanFee($tier)  {
+    if($tier==1){
+        return 500;
+    } elseif($tier==2){
+        return 1000;
+    } else {
+        return 2000;
+    }
 }

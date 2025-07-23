@@ -30,23 +30,27 @@ return new class extends Migration
             $table->text('businessAddress');
             $table->text('permanentAddress');
 
-            $table->string('branch_name')->nullable()->after('quota');
-            $table->string('branch_code')->nullable()->after('branch_name');
-            $table->string('challan_image')->nullable()->after('branch_code');
-            $table->enum('fee_status', ['paid', 'unpaid'])->default('unpaid')->after('challan_image');
-
+            $table->unsignedBigInteger('business_category_id')->nullable();
+            $table->unsignedBigInteger('business_sub_category_id')->nullable();
+            
+            $table->unsignedTinyInteger('tier'); 
             $table->bigInteger('amount')->nullable();
 
-            $table->unsignedTinyInteger('tier'); 
-            $table->enum('status', ['NotCompleted','Pending', 'Approved', 'Rejected'])->default('Pending');
 
-            $table->unsignedBigInteger('district_id')->nullable()->after('businessType');
-            $table->unsignedBigInteger('tehsil_id')->nullable()->after('district_id');
-            $table->unsignedBigInteger('business_category_id')->nullable()->after('tehsil_id');
-            $table->unsignedBigInteger('business_sub_category_id')->nullable()->after('business_category_id');
-            $table->unsignedBigInteger('branch_id')->nullable()->after('quota');
-            $table->string('cnic_front')->nullable()->after('branch_id');
-            $table->string('cnic_back')->nullable()->after('cnic_front');
+            $table->unsignedBigInteger('district_id')->nullable();
+            $table->unsignedBigInteger('tehsil_id')->nullable();
+           
+          
+            $table->unsignedBigInteger('branch_id')->nullable();
+            $table->unsignedBigInteger('challan_branch_id')->nullable();
+            $table->unsignedBigInteger('challan_fee')->nullable();
+            $table->string('challan_image')->nullable();
+
+            $table->string('cnic_front')->nullable();
+            $table->string('cnic_back')->nullable();
+            
+            $table->enum('fee_status', ['paid', 'unpaid'])->default('unpaid');
+            $table->enum('status', ['NotCompleted','Pending', 'Approved', 'Rejected'])->default('Pending');
 
             $table->timestamps();
         });
