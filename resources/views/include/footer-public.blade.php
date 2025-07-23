@@ -3,11 +3,19 @@
     <div class="container">
         <div class="row">
             <!-- Logo + Info -->
-            <div class="col-md-6 mb-3 mb-md-0">
-                <h5 class="fw-bold">PM Youth Loan Program Azad Kasmir Small Industries</h5>
-                <p style="font-size: 14px">
-                    Empowering youth through entrepreneurship under the vision of the Prime Minister.
-                </p>
+            <div class="col-md-6 mb-3 mb-md-0 d-flex gap-3 align-items-center">
+                <div>
+                    <a class=" d-flex align-items-center gap-2" href="{{ route('home') }}">
+                        <img src=" {{ asset('/assets/img/public/logo.png') }}" alt="PMYLP" class="footer-logo">
+                        {{-- <span class="fw-bold text-success" title="Prime Minister Youth Loan Program">PMYLP</span> --}}
+                    </a>
+                </div>
+                <div>
+                    <h5 class="fw-bold h1-heading">Prime Minister Youth Loan Program</h5>
+                    <p style="font-size: 14px">
+                        Empowering youth through entrepreneurship under the vision of the Prime Minister.
+                    </p>
+                </div>
             </div>
 
             <!-- Quick Links (Optional) -->

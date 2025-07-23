@@ -225,7 +225,7 @@
                         <div class="section-title">Application Status</div>
                         <div class="info-row">
                             <div class="info-label">Challan Fee</div>
-                            <div class="info-value">{{ challanFee($applicant->tier)}} {!!($applicant->fee_status=='<span class="badge bg-success"">Paid</span>'?:'<span class="badge bg-danger">Unpaid</span>')!!}</div>
+                            <div class="info-value">{{ challanFee($applicant->tier)}} {!!($applicant->fee_status=='paid'?'<span class="badge bg-success"">Paid</span>':'<span class="badge bg-danger">Unpaid</span>')!!}</div>
                         </div>
                         <div class="info-row">
                             <div class="info-label">Loan Status:</div>
@@ -254,9 +254,11 @@
 
                         <div class="section-title no-print">Important Instructions</div>
                         <ul class="no-print">
-                            <li>Please keep this page saved or printed for your records.</li>
-                            <li>Only one application is allowed per CNIC.</li>
-                            <li>All information provided will be verified from NADRA and relevant institutions.</li>
+                           <li>
+                                <strong>Submit your challan</strong> at the nearest <strong>Bank of AJK branch</strong>.<br>
+                                After submission, <strong>please upload a scanned copy or clear image</strong> of the challan below.
+                            </li>
+                            <li><strong>All information provided</strong> will be verified from <strong>NADRA</strong> and relevant institutions.</li>
                         </ul>
 
                         <div class="no-print mt-3 text-end">

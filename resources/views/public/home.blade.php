@@ -175,7 +175,7 @@
                     </ul>
                 </div>
                 <div class="col-md-2 text-center">
-                    <img src="{{ asset('./images/logo.png') }}" class="img-fluid px-2" alt="PMYP Logo" />
+                    <img src="{{ asset('/assets/img/public/logo.png') }}" class="img-fluid px-2" alt="PMYP Logo" />
                 </div>
                 <div class="col-md-5 text-end" dir="rtl">
                     <ul class="list-unstyled text-end lh-lg">
@@ -311,7 +311,7 @@
                             <p class="text-muted">Calculate loan repayment schedule</p>
                         </a>
                     </div>
-                </div> --}}
+                </div> 
     </div>
     </div>
     </section> --}}
@@ -479,7 +479,7 @@
                         </div>
                     </div>
                     <div class="col-lg-4 text-center">
-                        <img src="./images/FAQs.png" class="img-fluid" alt="FAQ" />
+                        <img src="{{ asset('/assets/img/public/FAQs.png') }}" class="img-fluid" alt="FAQ" />
                     </div>
                 </div>
             </div>
@@ -561,7 +561,7 @@
 
                 <!-- Right Column Image -->
                 <div class="col-lg-6 text-center mt-4 mt-lg-0">
-                    <img src="./images/FAQsIllustration.png" class="img-fluid" alt="FAQ Illustration" />
+                    <img src="{{ asset('/assets/img/public/FAQsIllustration.png') }}" class="img-fluid" alt="FAQ Illustration" />
                 </div>
             </div>
         </div>

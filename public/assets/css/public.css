@@ -101,8 +101,13 @@ a {
     background: radial-gradient(#005066, #00191f);
     color: white;
     padding: 20px 0;
-    text-align: center;
+    /* text-align: center; */
     font-size: 14px;
+}
+.footer-logo {
+    background: #f7f7f7;
+    height: 80px;
+    border-radius: 50px;
 }
 
 .btn-green {

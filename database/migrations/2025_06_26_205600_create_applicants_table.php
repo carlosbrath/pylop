@@ -30,20 +30,21 @@ return new class extends Migration
             $table->text('businessAddress');
             $table->text('permanentAddress');
 
-            $table->unsignedBigInteger('business_category_id')->nullable();
-            $table->unsignedBigInteger('business_sub_category_id')->nullable();
+            $table->bigInteger('business_category_id')->nullable();
+            $table->bigInteger('business_sub_category_id')->nullable();
             
             $table->unsignedTinyInteger('tier'); 
             $table->bigInteger('amount')->nullable();
 
 
-            $table->unsignedBigInteger('district_id')->nullable();
-            $table->unsignedBigInteger('tehsil_id')->nullable();
-           
+            $table->bigInteger('district_id')->nullable();
+            $table->bigInteger('tehsil_id')->nullable();
+
+           $table->bigInteger('applicant_choosed_branch')->nullable();
           
-            $table->unsignedBigInteger('branch_id')->nullable();
-            $table->unsignedBigInteger('challan_branch_id')->nullable();
-            $table->unsignedBigInteger('challan_fee')->nullable();
+            $table->bigInteger('branch_id')->nullable();
+            $table->bigInteger('challan_branch_id')->nullable();
+            $table->bigInteger('challan_fee')->nullable();
             $table->string('challan_image')->nullable();
 
             $table->string('cnic_front')->nullable();

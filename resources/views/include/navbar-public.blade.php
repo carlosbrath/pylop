@@ -2,7 +2,7 @@
   <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm py-3">
     <div class="container">
         <a class="navbar-brand d-flex align-items-center gap-2" href="{{ route('home') }}">
-            <img src="{{ asset('./images/logo.png') }}" alt="PMYBALS Logo" style="height: 40px;">
+            <img src="{{ asset('./images/logo.png') }}" alt="PMYLP" style="height: 40px;">
             <span class="fw-bold text-success" title="Prime Minister Youth Loan Program">PMYLP</span>
         </a>
 
