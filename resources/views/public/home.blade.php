@@ -91,9 +91,9 @@
         <div class="container">
             <h2 class="text-center mb-4 fw-bold">Features</h2>
             <p class="text-center mb-5 fs-5 text-muted">
-                The Prime Minister Youth Loan Program aims to empower the youth of Azad Jammu & Kashmir through
-                subsidized financing. It encourages innovation, boost local industries, and
-                supports self-employment opportunities.
+                Prime Minister Youth Loan Program aims to empower the youth of Azad Jammu & Kashmir through
+                subsidized financing. It encourages innovation, boost entrepreneurship and
+                creat self-employment opportunities.
             </p>
 
             <div class="row g-4 justify-content-center">
@@ -141,7 +141,7 @@
                                 <h5 class="card-title fw-bold text-success">🌍 Population Quota</h5>
                                 <p class="card-text">Loan disbursement based on district-wise population ratio.</p>
                             </div>
-                            <a href="#population-quota" class="btn btn-outline-success mt-3">View More</a>
+                            {{-- <a href="#population-quota" class="btn btn-outline-success mt-3">View More</a> --}}
                         </div>
                     </div>
                 </div>
@@ -171,9 +171,9 @@
                             juridiction in AJK.</li>
                         <li>🔸 Must hold a valid computerized CNIC (not expired).</li>
                         <li>🔸 Applicant’s age must be between 18 to 40 years.</li>
-                        <li>🔸 Preference will be given to youth with business skills, certificate diplomas, or degrees.
+                        <li>🔸 Preference will be given to youth with business skills, certificate diplomas or degrees.
                         </li>
-                        <li>🔸 Men, Women, Persons with Disabilities, and Transgenders are eligible to apply.</li>
+                        <li>🔸 Men, Women, Special Persons and Transgenders are eligible to apply.</li>
                         <li>🔸 Government/semi-government employees and defaulters of any financial institution are not
                             eligible.</li>
                         <li>🔸 Incomplete applications or those not meeting the criteria will not be considered.</li>
@@ -206,7 +206,7 @@
                         <li class="fw-bold">📌 Loan Details:</li>
                         <li>💰 <strong>Loan Limit:</strong> From PKR 100,000 to PKR 2,000,000, based on the type of
                             business.</li>
-                        <li>💸 <strong>Markup Rate:</strong> The loan is interest-free. The principal amount will be
+                        <li>💸 <strong>Markup Rate:</strong> Interest-free to borrowers. The principal amount will be
                             provided by
                             Bank of AJK, and markup will be paid by the Government of AJK through Azad kashmir Small
                             Industries
@@ -218,7 +218,7 @@
                         </li>
                         <li>📝 <strong>Form Fee:</strong> For offline applications, the form fee must be deposited in the
                             name of Managing Director, AJK Small Industries Corporation, Account No. 040-14027001 (Bank of
-                            AJK). Attach the bank receipt and CNIC copy with the form. For online applications, both must be
+                            AJK). Attach bank receipt, CNIC copy and Certificate / Deploma / Degree (if any) with the form. For online applications same must be
                             uploaded.</li>
                     </ul>
                 </div>
@@ -238,7 +238,7 @@
                         <li>🏪 <strong>کاروباری نوعیت:</strong> نیا کاروبار (75 فیصد ) اور سٹارٹ اپ بزنس (25) فیصد )</li>
                         <li>📝 <strong>قیمت فارم:</strong> قیمت فارم آزاد کشمیر سمال انڈسٹریز کارپوریشن بنام منیجنگ ڈائر
                             یکٹر آزاد کشمیر سمال انڈسٹریز کارپوریشن، اکاؤنٹ نمبر 14027001-040 بینک آف آزاد جموں وکشمیر میں
-                            جمع کرواتے ہوئے آف لائن درخواست کی صورت میں بینک رسید اور شناختی کارڈ کی فوٹو کاپی درخواست فارم
+                            جمع کرواتے ہوئے آف لائن درخواست کی صورت میں بینک رسید، شناختی کارڈ کی فوٹو کاپی اور سرٹیفیکیٹ/ ڈپلومہ / ڈگری "اگر ہو" درخواست فارم
                             کے ساتھ منسلک کی جانا ہوگی جبکہ آن لائن درخواست فارم کی صورت میں بینک رسید اور شناختی کارڈ اپ
                             لوڈ کیا جانا ضروری ہے۔</li>
                     </ul>
@@ -506,8 +506,7 @@
                             <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
                                 <div class="accordion-body">
                                     Yes, physical application submission is also available.<br>
-                                    Applicants who prefer to apply in person can visit the nearest designated bank branch or
-                                    facilitation center for the PM Youth Loan Program.
+                                    Applicants who prefer to apply in person can visit the nearest branch of Bank Of AJK.
                                     <br />
 
                                 </div>
@@ -524,7 +523,7 @@
                             </h2>
                             <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
                                 <div class="accordion-body">
-                                    No. This scheme is only for resident Azad Kashmir.
+                                    This scheme is only for resident Azad Kashmir.
                                 </div>
                             </div>
                         </div>
@@ -539,7 +538,7 @@
                             </h2>
                             <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
                                 <div class="accordion-body">
-                                    No. Government employees are not eligible under this scheme.
+                                    Government employees are not eligible under this scheme.
                                 </div>
                             </div>
                         </div>
@@ -556,8 +555,7 @@
                             <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
                                 <div class="accordion-body">
                                     There is no general minimum educational requirement.
-                                    However, if the business requires specific qualifications or
-                                    certifications, they must be held by the applicant.
+                                    However, Certificate / Diploma / Degree holders will be given preference.
                                 </div>
                             </div>
                         </div>
