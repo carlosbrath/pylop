@@ -1,15 +1,17 @@
 @extends('layouts.master-public')
 @section('title', 'Prime Minister Youth Loan Program – Empowering AJK Youth')
-@section('meta_description', 'Learn how PMYP provides interest‑free loans (₨100K–2M) to AJK youth across sectors like IT, agriculture & tourism. Apply today!')
+@section('meta_description', 'Learn how PMYP provides interest‑free loans (₨100K–2M) to AJK youth across sectors like
+    IT, agriculture & tourism. Apply today!')
 @section('meta_keywords', 'AJK youth loan, PMYP, interest free loan, AJK entrepreneurs, Pakistan AJK loans')
 @section('og_title', 'PMYP: Interest‑Free Loans for AJK Youth Entrepreneurs')
-@section('og_description', 'Explore PMYP’s 0% markup loans of ₨100K–2M for youth aged 18–40 in AJK. Business opportunities in tech, tourism, handicrafts & more supported.')
+@section('og_description', 'Explore PMYP’s 0% markup loans of ₨100K–2M for youth aged 18–40 in AJK. Business
+    opportunities in tech, tourism, handicrafts & more supported.')
 @section('og_image', asset('/assets/img/public/banner.webp'))
 @section('content')
     <!-- Hero Section -->
-  <section>
-    <img src="{{ asset('/assets/img/public/banner.webp') }}" style="width: 100%">
-  {{-- <div class="container-fluid">
+    <section>
+        <img src="{{ asset('/assets/img/public/banner.webp') }}" style="width: 100%">
+        {{-- <div class="container-fluid">
     <div class="row align-items-center text-center text-lg-start">
         <div class="col-lg-12 text-white d-flex justify-content-center align-items-center flex-column">
             <h1 class="fw-bold h1-heading mb-2">Prime Minister Youth Loan Program</h1>
@@ -51,39 +53,7 @@
 
     </div>
   </div> --}}
-</section>
-
-    {{-- <section>
-        <div class="container-fluid">
-            <div class="row" style="height: 100vh;">
-                <!-- Left Column with Background Image -->
-                <div class="col-md-5  left-hero d-none d-md-block d-sm-none"></div>
-
-                <!-- Right Column -->
-                <div class="col-md-7 right-hero d-flex flex-column justify-content-center">
-                    <h1 class="mb-3 text-secondary">Prime Minister Youth Loan Program</h1>
-                    <!-- AJK Logo in Center -->
-                    <img src="{{ asset('/images/ajklogo.png') }}" alt="AJK Logo" class="ajk-logo">
-
-                    <h3 class="mt-3 text-white">
-                        Subsidized Financing By Azad Kashmir Small Industries &<br> Bank of Azad Jammu and Kashmir
-                    </h3>
-                    <!-- Apply Now Button -->
-                    <div class="d-flex justify-content-center">
-                        <a href="{{ route('loan.application') }}" class="btn btn-secondary mt-4 px-4 py-2 w-auto fw-bold btn-lg">
-                            Apply Now
-                        </a>
-                    </div>
-
-                    <!-- Bottom Logos Row -->
-                    <div class="d-flex justify-content-between align-items-center mt-5 bottom-logos">
-                        <img src="{{ asset('/images/logo.png') }}" alt="Small Industries Logo">
-                        <img src="{{ asset('/images/bankajk.png') }}" alt="BAJK Logo">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section> --}}
+    </section>
 
 
     <!-- About Section -->
@@ -218,7 +188,8 @@
                         </li>
                         <li>📝 <strong>Form Fee:</strong> For offline applications, the form fee must be deposited in the
                             name of Managing Director, AJK Small Industries Corporation, Account No. 040-14027001 (Bank of
-                            AJK). Attach bank receipt, CNIC copy and Certificate / Deploma / Degree (if any) with the form. For online applications same must be
+                            AJK). Attach bank receipt, CNIC copy and Certificate / Deploma / Degree (if any) with the form.
+                            For online applications same must be
                             uploaded.</li>
                     </ul>
                 </div>
@@ -238,7 +209,8 @@
                         <li>🏪 <strong>کاروباری نوعیت:</strong> نیا کاروبار (75 فیصد ) اور سٹارٹ اپ بزنس (25) فیصد )</li>
                         <li>📝 <strong>قیمت فارم:</strong> قیمت فارم آزاد کشمیر سمال انڈسٹریز کارپوریشن بنام منیجنگ ڈائر
                             یکٹر آزاد کشمیر سمال انڈسٹریز کارپوریشن، اکاؤنٹ نمبر 14027001-040 بینک آف آزاد جموں وکشمیر میں
-                            جمع کرواتے ہوئے آف لائن درخواست کی صورت میں بینک رسید، شناختی کارڈ کی فوٹو کاپی اور سرٹیفیکیٹ/ ڈپلومہ / ڈگری "اگر ہو" درخواست فارم
+                            جمع کرواتے ہوئے آف لائن درخواست کی صورت میں بینک رسید، شناختی کارڈ کی فوٹو کاپی اور سرٹیفیکیٹ/
+                            ڈپلومہ / ڈگری "اگر ہو" درخواست فارم
                             کے ساتھ منسلک کی جانا ہوگی جبکہ آن لائن درخواست فارم کی صورت میں بینک رسید اور شناختی کارڈ اپ
                             لوڈ کیا جانا ضروری ہے۔</li>
                     </ul>
@@ -276,14 +248,14 @@
     </section>
 
 
-    {{-- <!-- Loan Links Section -->
-    <section id="loan_links" class="py-5 loan_links bg-light">
+    <!-- Loan Links Section -->
+    <section id="loan_links" class="py-5 loan_links bg-light d-md-none ">
         <div class="container">
             <div class="row g-4">
                 <!-- Apply Column -->
-                <div class="col-lg-6 col-md-6">
+                <div class="col-lg-4 col-md-6">
                     <div class="link_card border-end h-100 shadow-sm bg-white rounded p-4 text-center">
-                        <img src="./images/applyloan.png" class="mb-3" alt="Apply" />
+                        <img src="{{asset('/assets/img/public/applyloan.png')}}" class="mb-3" alt="Apply" />
                         <a target="_blank" href="{{ route('loan.application') }}" style="cursor: pointer">
                             <h4 class="mt-3">Apply for Loan</h4>
                             <p class="text-muted">Fill online loan application</p>
@@ -293,9 +265,9 @@
                 </div>
 
                 <!-- Track Column -->
-                <div class="col-lg-6 col-md-6">
+                <div class="col-lg-4 col-md-6">
                     <div class="link_card border-end h-100 shadow-sm bg-white rounded p-4 text-center">
-                        <img src="./images/track.png" class="mb-3" alt="Track" />
+                        <img src="{{asset('/assets/img/public/track.png')}}" class="mb-3" alt="Track" />
                         <a target="_blank" href="{{ route('track.application') }}" style="cursor: pointer">
                             <h4 class="mt-3">Track</h4>
                             <p class="text-muted">Check status of your loan application</p>
@@ -304,22 +276,22 @@
                             <h5 class="mt-4">Analytics</h5>
                             <p class="text-muted">Click here for Dashboard</p>
                         </a> --}}
-    </div>
-    </div>
+                    </div>
+                </div>
 
-    <!-- Calculator Column -->
-    {{-- <div class="col-lg-4 col-md-6">
+                <!-- Calculator Column -->
+                <div class="col-lg-4 col-md-6">
                     <div class="link_card border-end h-100 shadow-sm bg-white rounded p-4 text-center">
-                        <img src="./images/calculator.png" class="mb-3" alt="Calculator" />
-                        <a target="_blank" href="./images/image.png" style="cursor: pointer">
+                        <img src=" {{asset('/assets/img/public/calculator.png')}}" class="mb-3" alt="Calculator" />
+                        <a target="_blank" href="#" style="cursor: pointer">
                             <h4 class="mt-3">Calculator</h4>
                             <p class="text-muted">Calculate loan repayment schedule</p>
                         </a>
                     </div>
-                </div> 
-    </div>
-    </div>
-    </section> --}}
+                </div>
+            </div>
+        </div>
+    </section>
 
     <!-- Eligibility Section -->
     <section id="eligibility" class="py-5">
@@ -340,91 +312,6 @@
             </ul>
         </div>
     </section>
-    {{-- <section id="population-quota" class="py-5 bg-white">
-        <div class="container">
-            <h2 class="text-center mb-4">📊 District-wise Population Quota</h2>
-
-            <div class="table-responsive">
-                <table class="table table-bordered table-hover text-center align-middle shadow-sm">
-                    <thead class="table-success">
-                        <tr>
-                            <th scope="col">Sr.#</th>
-                            <th scope="col">District</th>
-                            <th scope="col">Population (%)</th>
-                            <th scope="col">District-wise Quota of Beneficiaries (Proposed)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>Muzaffarabad</td>
-                            <td>16%</td>
-                            <td>449</td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>Neelum</td>
-                            <td>5%</td>
-                            <td>140</td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>Jhelum Valley</td>
-                            <td>6%</td>
-                            <td>168</td>
-                        </tr>
-                        <tr>
-                            <td>4</td>
-                            <td>Bagh</td>
-                            <td>9%</td>
-                            <td>252</td>
-                        </tr>
-                        <tr>
-                            <td>5</td>
-                            <td>Haveli</td>
-                            <td>4%</td>
-                            <td>112</td>
-                        </tr>
-                        <tr>
-                            <td>6</td>
-                            <td>Poonch</td>
-                            <td>12%</td>
-                            <td>337</td>
-                        </tr>
-                        <tr>
-                            <td>7</td>
-                            <td>Sudhnoti</td>
-                            <td>7%</td>
-                            <td>196</td>
-                        </tr>
-                        <tr>
-                            <td>8</td>
-                            <td>Kotli</td>
-                            <td>19%</td>
-                            <td>533</td>
-                        </tr>
-                        <tr>
-                            <td>9</td>
-                            <td>Mirpur</td>
-                            <td>11%</td>
-                            <td>309</td>
-                        </tr>
-                        <tr>
-                            <td>10</td>
-                            <td>Bhimber</td>
-                            <td>11%</td>
-                            <td>309</td>
-                        </tr>
-                        <tr class="table-light fw-bold">
-                            <td colspan="2">Total</td>
-                            <td>100%</td>
-                            <td>2,805</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </section> --}}
     <!-- Tier Information Section -->
     <section id="tier-info" class="py-5 bg-light">
         <div class="container">
@@ -564,7 +451,8 @@
 
                 <!-- Right Column Image -->
                 <div class="col-lg-6 text-center mt-4 mt-lg-0">
-                    <img src="{{ asset('/assets/img/public/FAQsIllustration.png') }}" class="img-fluid" alt="FAQ Illustration" />
+                    <img src="{{ asset('/assets/img/public/FAQsIllustration.png') }}" class="img-fluid"
+                        alt="FAQ Illustration" />
                 </div>
             </div>
         </div>

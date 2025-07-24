@@ -52,8 +52,8 @@
         <hr class="border-light" />
 
         <div class="text-center small">
-            &copy; 2025 AJK Small Industries. Developed with 💚 by
-            <strong>IT Board</strong>.
+            &copy; 2025 <a href="https://itb.ajk.gov.pk/" class="text-info">AJ&K Information Technology Board</a>. Developed with 💚 by
+            <a href="https://itb.ajk.gov.pk/" class="text-info"><strong>IT Board Development Team</strong></a>.
         </div>
     </div>
 </footer>

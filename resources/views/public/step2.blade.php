@@ -390,7 +390,7 @@
                                                                                 name="educations[0][degree_title]"
                                                                                 class="form-control "
                                                                                 placeholder="Degree Title" data-name="Degree Title">
-                                                                            <label>Degree Title / ڈگری کا عنوان</label>
+                                                                            <label>Degree/Diploma Title / ڈگری/ڈپلومہ عنوان</label>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -468,7 +468,7 @@
                                                             <div class="col-md-6">
                                                                 <label for="cnic_front" class="form-label">CNIC Front Side
                                                                     /
-                                                                    سامنے</label>
+                                                                    سامنے <span class="text-danger">*</span></label>
                                                                 <div class="border p-3 rounded text-center bg-light dropzone"
                                                                     ondragover="event.preventDefault();"
                                                                     ondrop="handleDrop(event, 'cnic_front')"
@@ -482,7 +482,7 @@
                                                                         alt="" class="img-fluid d-none"
                                                                         style="max-height: 350px;">
                                                                     <input type="file" name="cnic_front"
-                                                                        id="cnic_front" class="d-none" data-name="Cnic copy" accept="image/*"
+                                                                        id="cnic_front" class="d-none required" data-name="Cnic copy" accept="image/*"
                                                                         onchange="previewImage(this, 'cnic_front_preview')">
                                                                 </div>
                                                             </div>
@@ -490,7 +490,7 @@
                                                             <!-- CNIC Back -->
                                                             <div class="col-md-6">
                                                                 <label for="cnic_back" class="form-label">CNIC Back Side /
-                                                                    پیچھے</label>
+                                                                    پیچھے <span class="text-danger">*</span></label>
                                                                 <div class="border p-3 rounded text-center bg-light dropzone"
                                                                     ondragover="event.preventDefault();"
                                                                     ondrop="handleDrop(event, 'cnic_back')"
@@ -499,9 +499,9 @@
                                                                     <p class="mb-2">Drag & Drop or Click to Upload</p>
                                                                     <img id="cnic_back_preview" src="#"
                                                                         alt="" class="img-fluid d-none"
-                                                                        style="max-height: 150px;">
+                                                                        style="max-height: 350px;">
                                                                     <input type="file" name="cnic_back" id="cnic_back"
-                                                                        class="d-none" data-name="Cnic copy" accept="image/*"
+                                                                        class="d-none required" data-name="Cnic copy" accept="image/*"
                                                                         onchange="previewImage(this, 'cnic_back_preview')">
                                                                 </div>
                                                             </div>

@@ -88,10 +88,10 @@
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="bi bi-credit-card-2-front"></i></span>
                                     <div class="form-floating flex-grow-1">
-                                        <input type="text" name="cnic" id="track_cnic" class="form-control"
+                                        <input type="text" name="cnic" id="track_cnic" class="form-control required"
                                             placeholder="xxxxx-xxxxxxx-x" value="{{ $applicant?->cnic ?? old('cnic') }}"
                                             required maxlength="15">
-                                        <label for="track_cnic">CNIC / شناختی کارڈ نمبر</label>
+                                        <label for="track_cnic">CNIC / شناختی کارڈ نمبر <span class="text-danger">*</span></label>
                                     </div>
                                 </div>
                             </div>
