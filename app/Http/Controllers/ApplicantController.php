@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\NotificationToken;
+use App\Models\Applicant;
 use Illuminate\Http\Request;
 
-class NotificationTokenController extends Controller
+class ApplicantController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,12 @@ class NotificationTokenController extends Controller
      */
     public function index()
     {
-        //
+        
+        $title = 'Applications';
+        $page_title = 'Applications';
+        $applicants = Applicant::get();
+        return view('applicants.list', compact('applicants', 'title', 'page_title'));
+
     }
 
     /**
@@ -35,38 +40,9 @@ class NotificationTokenController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'user_id' => 'required',
-            'token_id' => 'required|string',
-        ]);
-        $notificationToken = NotificationToken::firstOrCreate([
-            'user_id' => $request->input('user_id'),
-            'token_id' => $request->input('token_id'),
-        ]);
-         if ($notificationToken->wasRecentlyCreated) {
-            // Return a JSON response for API requests
-            return response()->json(['message' => 'Notification token created successfully!'], 201);
-        } else {
-            return response()->json(['message' => 'Notification token already exists!'], 200); 
-        }
+        //
     }
-    public function insertTokens(Request $request)
-    {
-        $request->validate([
-            'user_id' => 'required',
-            'token_id' => 'required|string',
-        ]);
-        $notificationToken = NotificationToken::firstOrCreate([
-            'user_id' => $request->input('user_id'),
-            'token_id' => $request->input('token_id'),
-        ]);
-         if ($notificationToken->wasRecentlyCreated) {
-            // Return a JSON response for API requests
-            return response()->json(['message' => 'Notification token created successfully!'], 201);
-        } else {
-            return response()->json(['message' => 'Notification token already exists!'], 200); 
-        }
-    }
+
     /**
      * Display the specified resource.
      *

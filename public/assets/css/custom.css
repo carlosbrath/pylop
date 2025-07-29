@@ -1,6 +1,22 @@
 .bg-gradient-primary-to-secondary {
     background-color: #6eabc2 !important;
-    background-image: linear-gradient(135deg, #6eabc2 0%, rgba(80, 108, 106, 0.8) 100%) !important;
+    background-image: linear-gradient(
+        135deg,
+        #6eabc2 0%,
+        rgba(80, 108, 106, 0.8) 100%
+    ) !important;
+}
+.body-blank {
+    background: radial-gradient(#005066, #00191f) !important;
+}
+.bg-gradient-primary-to-secondary {
+    background-color: #00191f !important;
+    background-image: radial-gradient(#005066, #00191f) !important;
+}
+.login-logo {
+    background: #f7f7f7;
+    height: 80px;
+    border-radius: 50px;
 }
 #map {
     position: relative;
@@ -22,16 +38,17 @@
     border-radius: 24px;
 }
 .logo {
-    background-color: #12124E;
+    background-color: #12124e;
     padding: 5px;
 }
 .logo:hover {
     background-color: #202068;
     padding: 5px;
 }
-.alert-danger { 
+.alert-danger {
     padding: 2px 14px;
 }
 .leaflet-control-attribution a:first-child {
     display: none;
 }
+

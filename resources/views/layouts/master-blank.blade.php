@@ -3,6 +3,8 @@
 <html lang="en">
 
 <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,13 +12,14 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
+  
+
     <title>@yield('title') - Dashboard</title>
-
     @include('include.head')
-
+      <link rel="icon" href="{{ asset('/assets/img/public/logo.png') }}" type="image/png">
 </head>
 
-<body class="bg-primary">
+<body class="body-blank">
     <div id="layoutAuthentication">
         <div id="layoutAuthentication_content">
 
@@ -27,7 +30,7 @@
             <footer class="footer-admin mt-auto footer-dark">
                 <div class="container-xl px-4">
                     <div class="row">
-                        <div class="col-md-6 small">Copyright © 2024 AJ&K Information Technology Board</div>
+                        <div class="col-md-6 small">Copyright © 2025 AJ&K Information Technology Board</div>
                         <div class="col-md-6 text-md-end small">
                             <a href="#!">All Rights Reserved.</a>
                             ·

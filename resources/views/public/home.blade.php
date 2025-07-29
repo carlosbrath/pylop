@@ -11,51 +11,7 @@
     <!-- Hero Section -->
     <section>
         <img src="{{ asset('/assets/img/public/banner.webp') }}" style="width: 100%">
-        {{-- <div class="container-fluid">
-    <div class="row align-items-center text-center text-lg-start">
-        <div class="col-lg-12 text-white d-flex justify-content-center align-items-center flex-column">
-            <h1 class="fw-bold h1-heading mb-2">Prime Minister Youth Loan Program</h1>
-            <h3 class="fw-bold text-white mb-3">AK Small Industries</h3>
-        </div>
-    </div>
-    <div class="row">
-      <!-- Left Image -->
-      <div class="col-lg-3 col-sm-3 mb-4 mb-lg-0 px-5">
-        <img src="{{asset('/assets/img/public/priminister.png')}}" class="img-fluid rounded" alt="Minister Left">
-      </div>
-
-      <!-- Center Content -->
-      <div class="col-lg-6 col-sm-3 text-white">
-        
-        <h5 class="fs-5 text-center">Empowering youth through accessible </h5>
-        <h5 class="fs-5 text-center mb-4">business loan under the vision of the Prime Minister.</h5>
-
-        <!-- Logo Row -->
-        <div class="d-flex justify-content-between  flex-wrap logo-section mb-5">
-          <img src="{{asset('/assets/img/public/ajk-logo.png')}}" class="img-fluid"  alt="Logo 1">
-          <img src="{{asset('/assets/img/public/walfer-logo.png')}}" class="img-fluid"  alt="Logo 2">
-          <img src="{{asset('/assets/img/public/itb-logo.png')}}" class="img-fluid"  alt="Logo 3">
-          <img src="{{asset('/assets/img/public/bajk-logo.png')}}" class="img-fluid"  alt="Logo 4">
-        </div>
-        <div class="d-flex justify-content-between  technical-section">
-            <img src="{{asset('/assets/img/public/technical-5.png')}}" class="img-fluid"  alt="Logo 1">
-            <img src="{{asset('/assets/img/public/technical-1.png')}}" class="img-fluid"  alt="Logo 1">
-            <img src="{{asset('/assets/img/public/technical-2.png')}}" class="img-fluid"  alt="Logo 2">
-            <img src="{{asset('/assets/img/public/technical-3.png')}}" class="img-fluid"  alt="Logo 3">
-            <img src="{{asset('/assets/img/public/technical-4.png')}}" class="img-fluid"  alt="Logo 4">
-        </div>
-      </div>
-
-      <!-- Right Image -->
-      <div class="col-lg-3 col-sm-3 mt-4 mt-lg-0 px-5">
-        <img src="{{asset('/assets/img/public/minister.png')}}" class="img-fluid rounded" alt="Minister Right">
-      </div>
-
-    </div>
-  </div> --}}
     </section>
-
-
     <!-- About Section -->
     <section id="about" class="py-5 bg-light">
         <div class="container">
@@ -133,89 +89,8 @@
 
     <section id="schemes" class="py-5 bg-light">
         <div class="container">
-            <div class="row mb-4" id="eligibility">
-                <div class="col-md-5">
-                    <ul class="list-unstyled lh-lg">
-                        <li class="fw-bold">📌 Eligibility Criteria:</li>
-                        <li>🔸 Loan will be granted to youth of Azad jammu & Kashmir having business
-                            juridiction in AJK.</li>
-                        <li>🔸 Must hold a valid computerized CNIC (not expired).</li>
-                        <li>🔸 Applicant’s age must be between 18 to 40 years.</li>
-                        <li>🔸 Preference will be given to youth with business skills, certificate diplomas or degrees.
-                        </li>
-                        <li>🔸 Men, Women, Special Persons and Transgenders are eligible to apply.</li>
-                        <li>🔸 Government/semi-government employees and defaulters of any financial institution are not
-                            eligible.</li>
-                        <li>🔸 Incomplete applications or those not meeting the criteria will not be considered.</li>
-                    </ul>
-                </div>
-                <div class="col-md-2 text-center">
-                    <img src="{{ asset('/assets/img/public/logo.png') }}" class="img-fluid px-2" alt="PMYP Logo" />
-                </div>
-                <div class="col-md-5 text-end" dir="rtl">
-                    <ul class="list-unstyled text-end lh-lg">
-
-                        <li class="fw-bold">📌 مطلوبہ معیار اہلیت:</li>
-                        <li>🔸 قرضہ ایسے افراد کو دیا جائے گا جو آزاد کشمیر کے شہری ہوں اور مجوزہ کاروبار کا دائرہ کار آزاد
-                            کشمیر کی حدود میں ہو۔
-                        </li>
-                        <li>🔸 کمپیوٹرائزڈ شناختی کارڈ ہولڈر ہو ۔</li>
-                        <li>🔸 عمر 18 سے 40 سال کے درمیان ہو۔</li>
-                        <li>🔸 ایسے نوجوان جو کاروباری مہارت رکھتے ہوں۔ سرٹیفیکیٹ / ڈپلومہ / ڈگری ہولڈرز کو ترجیح دی جائے
-                            گی۔</li>
-                        <li>🔸 مرد، خواتین، معذور اور خواجہ سرا درخواست دینے کے اہل ہوں گے۔</li>
-                        <li>🔸 سرکاری / نیم سرکاری ملازمین اور مالیاتی اداروں کے نادہندہ افراد اہل نہیں ہوں گے۔</li>
-                        <li>🔸 مطلوبہ معیار پر پورا نہ اترنے والی اور نامکمل درخواستیں زیر غور نہیں لائی جائیں گی۔</li>
-
-                    </ul>
-                </div>
-            </div>
-            <div class="row mb-4" id="loanDetails">
-                <div class="col-md-5">
-                    <ul class="list-unstyled lh-lg">
-                        <li class="fw-bold">📌 Loan Details:</li>
-                        <li>💰 <strong>Loan Limit:</strong> From PKR 100,000 to PKR 2,000,000, based on the type of
-                            business.</li>
-                        <li>💸 <strong>Markup Rate:</strong> Interest-free to borrowers. The principal amount will be
-                            provided by
-                            Bank of AJK, and markup will be paid by the Government of AJK through Azad kashmir Small
-                            Industries
-                            Corporation. In case of late repayment, the borrower must pay the additional markup / penalty.
-                        </li>
-                        <li>📊 <strong>Quota:</strong> Loans will be issued based on district-wise population ratio and
-                            gender quota.</li>
-                        <li>🏪 <strong>Business Nature:</strong> 75% for new businesses and 25% for startup.
-                        </li>
-                        <li>📝 <strong>Form Fee:</strong> For offline applications, the form fee must be deposited in the
-                            name of Managing Director, AJK Small Industries Corporation, Account No. 040-14027001 (Bank of
-                            AJK). Attach bank receipt, CNIC copy and Certificate / Deploma / Degree (if any) with the form.
-                            For online applications same must be
-                            uploaded.</li>
-                    </ul>
-                </div>
-                <div class="col-md-2 text-center">
-                    {{-- <img src="{{ asset('./images/logo.png') }}" class="img-fluid px-2" alt="PMYP Logo" /> --}}
-                </div>
-                <div class="col-md-5 text-end" dir="rtl">
-                    <ul class="list-unstyled text-end lh-lg">
-                        <li class="fw-bold">📌 قرضہ کی تفصیلات:</li>
-                        <li>💰 <strong>قرضہ کی حد:</strong> 1 لاکھ سے 20 لاکھ روپے، کاروبار کی نوعیت کے مطابق۔</li>
-                        <li>💸 <strong>شرح منافع:</strong> قرضہ بلا سود ہے، اصل رقم بینک آف اے جے کے فراہم کرے گا،
-                            جبکہ مارک اپ کی رقم حکومت آزاد کشمیر بذریعہ آزاد کشمیر سمال انڈسٹریز کارپوریشن ادا کرے گی۔قرضہ
-                            کی اقساط کی ریکوری میں تاخیر کی صورت میں زائد مارک اپ / جرمانہ کی رقم مقروض ادا کرنے کا پابند
-                            ہوگا۔</li>
-                        <li>📊 <strong>کوٹہ:</strong>
-                            قرضہ کی اجرائیگی ضلع وائز آبادی کے تناسب اور Gender کوٹہ کے مطابق ہوگی ۔</li>
-                        <li>🏪 <strong>کاروباری نوعیت:</strong> نیا کاروبار (75 فیصد ) اور سٹارٹ اپ بزنس (25) فیصد )</li>
-                        <li>📝 <strong>قیمت فارم:</strong> قیمت فارم آزاد کشمیر سمال انڈسٹریز کارپوریشن بنام منیجنگ ڈائر
-                            یکٹر آزاد کشمیر سمال انڈسٹریز کارپوریشن، اکاؤنٹ نمبر 14027001-040 بینک آف آزاد جموں وکشمیر میں
-                            جمع کرواتے ہوئے آف لائن درخواست کی صورت میں بینک رسید، شناختی کارڈ کی فوٹو کاپی اور سرٹیفیکیٹ/
-                            ڈپلومہ / ڈگری "اگر ہو" درخواست فارم
-                            کے ساتھ منسلک کی جانا ہوگی جبکہ آن لائن درخواست فارم کی صورت میں بینک رسید اور شناختی کارڈ اپ
-                            لوڈ کیا جانا ضروری ہے۔</li>
-                    </ul>
-                </div>
-            </div>
+            @include('include.eligibility')
+            @include('include.loandetails')
         </div>
     </section>
 

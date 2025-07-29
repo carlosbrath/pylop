@@ -60,21 +60,21 @@
 <!-- Popup Modal -->
 <div class="modal fade" id="announcementModal" tabindex="-1" aria-labelledby="announcementLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered">
-        <div class="modal-content border-success">
+        <div class="modal-content border-success ">
             <div class="modal-header bg-success text-white">
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
                     aria-label="Close"></button>
             </div>
-            <h5 class="modal-title" id="announcementLabel" dir="rtl">📢 اہم اطلاع</h5>
+            <h5 class="modal-title urdu-text" id="announcementLabel" dir="rtl">📢 اہم اطلاع</h5>
 
-            <div class="modal-body text-justify" dir="rtl" style="line-height: 2; font-size: 1rem;">
+            <div class="modal-body urdu-text text-justify" dir="rtl" style="line-height: 2; font-size: 1rem; ">
                 <p>
                     آزاد کشمیر سمال انڈسٹریز درخواست قرضہ فارم کا ابتدائی سطح پر جائزہ لیکر بینک آف آزاد جموں و کشمیر کو
                     ارسال کی جائیں گی۔
                     درخواست دہندگان بینک آف آزاد جموں و کشمیر کی قریب ترین برانچ سے رابطہ کریں۔
                 </p>
                 <p>
-                    آن لائن درخواست ھاء کے علاؤہ، قرضہ فارم بینک آف آزاد جموں و کشمیر کی تمام برانچز سے حاصل کیے جا سکتے
+                    آن لائن درخواست کے علاؤہ، قرضہ فارم بینک آف آزاد جموں و کشمیر کی تمام برانچز سے حاصل کیے جا سکتے
                     ہیں۔
                     بعد از تکمیل، قرضہ فارم مندرجہ ذیل پتوں پر ارسال کیے جائیں:
                 </p>

@@ -12,23 +12,4 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.29.0/feather.min.js" crossorigin="anonymous">
 </script>
 
-<meta name="csrf-token" content="{{ csrf_token() }}">
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "GovernmentOrganization",
-  "name": "AJK Small Industries",
-  "url": "{{ url('/') }}",
-  "logo": "{{ asset('/assets/img/public/logo.png') }}",
-  "description": "Prime Minister Youth Loan Program for AJK Small Industries Development",
-}
-</script>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-25NGL3V2R4"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
 
-  gtag('config', 'G-25NGL3V2R4');
-</script>

@@ -51,7 +51,7 @@ return new class extends Migration
             $table->string('cnic_back')->nullable();
             
             $table->enum('fee_status', ['paid', 'unpaid'])->default('unpaid');
-            $table->enum('status', ['NotCompleted','Pending', 'Approved', 'Rejected'])->default('Pending');
+            $table->enum('status', ['NotCompleted','Pending', 'Forwarded', 'Approved', 'Rejected'])->default('Pending');
 
             $table->timestamps();
         });

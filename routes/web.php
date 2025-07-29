@@ -41,17 +41,8 @@ Route::match(['get', 'post'], '/track-application', [PublicController::class, 't
 Route::match(['post', 'get'], '/login', [\App\Http\Controllers\AuthController::class, 'login'])->name('login');
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/dashboard', [\App\Http\Controllers\AdminController::class, 'dashboard'])->name('dashboard');
-    Route::resource('/news', \App\Http\Controllers\NewsController::class);
-    Route::resource('/entrypoints', \App\Http\Controllers\EntryPointOfficeController::class);
-    Route::resource('/tour', \App\Http\Controllers\TourController::class);
-    Route::get('tours/tourist', [\App\Http\Controllers\TourController::class, 'tourist'])->name('tours.tourist');
+    Route::get('/applicant/list', [\App\Http\Controllers\ApplicantController::class, 'index'])->name('applicant.list');
     Route::resource('/user', \App\Http\Controllers\UserContoller::class);
-    Route::put('/change/{id}/password/', [\App\Http\Controllers\UserContoller::class, 'changePassword'])->name('change.password');
-    Route::get('/operators/list', [\App\Http\Controllers\UserContoller::class, 'operators'])->name('operators.list');
-    Route::get('/operators/create', [\App\Http\Controllers\UserContoller::class, 'create_operators'])->name('operators.create');
-    Route::get('/vehicals/list', [\App\Http\Controllers\AdminController::class, 'vehicals'])->name('vehicals.list');
-    Route::resource('/tokens', \App\Http\Controllers\NotificationTokenController::class);
-    Route::get('/insertTokens', [\App\Http\Controllers\NotificationTokenController::class, 'insertTokens']);
     Route::get('/run-migrations', [MigrationController::class, 'runMigrations']);
 });
 

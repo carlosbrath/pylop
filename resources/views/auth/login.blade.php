@@ -155,9 +155,9 @@
 </div>
 <form action="{{url('login')}}" method="POST">
     <div class="d-flex">
-        <img src="{{asset('images/logo_tran_visit.png')}}" width="70px"  alt="">
+        <img src="{{ asset('/assets/img/public/logo.png') }}" class="login-logo"  alt="">
     </div>
-    <h3>Visit AJ&K</h3>
+    <h3>PMYLP AJ&K</h3>
     @csrf
     <!-- Display error messages -->
     @if ($errors->any())

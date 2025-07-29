@@ -9,7 +9,7 @@
         <meta name="description" content="" />
         <meta name="author" content="" />
         <title>@yield('title') - Visit Ajk</title>
-        <link rel="icon" href="{{asset('images/logo_tran_visit.png')}}" type="image/png">
+        <link rel="icon" href="{{ asset('/assets/img/public/logo.png') }}" type="image/png">
         @include('include.head')
         @yield('style')
     </head>
@@ -22,7 +22,7 @@
                 <footer class="footer-admin mt-auto footer-light">
                     <div class="container-xl px-4">
                         <div class="row">
-                            <div class="col-md-6 small">Copyright © 2024 AJ&K Information Technology Board</div>
+                            <div class="col-md-6 small">Copyright © 2025 AJ&K Information Technology Board</div>
                             <div class="col-md-6 text-md-end small">
                                 <a href="#!">All Rights Reserved.</a>
                                 ·

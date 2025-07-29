@@ -58,14 +58,14 @@
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="me-3">
-                                <div class="text-white-75 small">Tours</div>
-                                <div class="text-lg fw-bold">{{$tours}}</div>
+                                <div class="text-white-75 small">Total </div>
+                                <div class="text-lg fw-bold">{{$total}}</div>
                             </div>
                             <i class="feather-xl text-white-50" data-feather="activity"></i>
                         </div>
                     </div>
                     <div class="card-footer d-flex align-items-center justify-content-between small">
-                        <a class="text-white stretched-link" href="{{route('tour.index')}}">View</a>
+                        <a class="text-white stretched-link" href="">View</a>
                         <div class="text-white"><i class="fas fa-angle-right"></i></div>
                     </div>
                 </div>
@@ -75,14 +75,14 @@
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="me-3">
-                                <div class="text-white-75 small">Tourist</div>
-                                <div class="text-lg fw-bold">{{$tourist}}</div>
+                                <div class="text-white-75 small">Pending</div>
+                                <div class="text-lg fw-bold">{{$pending}}</div>
                             </div>
                             <i class="feather-xl text-white-50" data-feather="users"></i>
                         </div>
                     </div>
                     <div class="card-footer d-flex align-items-center justify-content-between small">
-                        <a class="text-white stretched-link" href="{{route('tours.tourist')}}">View</a>
+                        <a class="text-white stretched-link" href="">View</a>
                         <div class="text-white"><i class="fas fa-angle-right"></i></div>
                     </div>
                 </div>
@@ -92,14 +92,14 @@
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="me-3">
-                                <div class="text-white-75 small">Entry Points</div>
-                                <div class="text-lg fw-bold">{{$entrypoint}}</div>
+                                <div class="text-white-75 small">Forworded</div>
+                                <div class="text-lg fw-bold">{{$forwarded}}</div>
                             </div>
                             <i class="feather-xl text-white-50" data-feather="home"></i>
                         </div>
                     </div>
                     <div class="card-footer d-flex align-items-center justify-content-between small">
-                        <a class="text-white stretched-link" href="{{route('entrypoints.index')}}">View</a>
+                        <a class="text-white stretched-link" href="">View</a>
                         <div class="text-white"><i class="fas fa-angle-right"></i></div>
                     </div>
                 </div>
@@ -109,20 +109,20 @@
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="me-3">
-                                <div class="text-white-75 small">Vehicles</div>
-                                <div class="text-lg fw-bold">{{$vehicales}}</div>
+                                <div class="text-white-75 small">Rejected</div>
+                                <div class="text-lg fw-bold">{{$rejected}}</div>
                             </div>
                             <i class="feather-xl text-white-50" data-feather="truck"></i>
                         </div>
                     </div>
                     <div class="card-footer d-flex align-items-center justify-content-between small">
-                        <a class="text-white stretched-link" href="{{route('vehicals.list')}}">View</a>
+                        <a class="text-white stretched-link" href="">View</a>
                         <div class="text-white"><i class="fas fa-angle-right"></i></div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="row">
+        {{-- <div class="row">
             <div class="col-xl-3 col-md-6 mb-4">
                 <!-- Dashboard info widget 1-->
                 <div class="card border-start-lg border-start-primary h-100">
@@ -130,7 +130,7 @@
                         <div class="d-flex align-items-center">
                             <div class="flex-grow-1">
                                 <div class="small fw-bold text-primary mb-1">Entry Point Officers</div>
-                                <div class="h5">{{$epo}}</div>
+                                <div class="h5"></div>
                                 <div class="text-xs fw-bold text-success d-inline-flex align-items-center">
 
                                 </div>
@@ -147,7 +147,7 @@
                         <div class="d-flex align-items-center">
                             <div class="flex-grow-1">
                                 <div class="small fw-bold text-secondary mb-1">Transport Officers</div>
-                                <div class="h5">{{$tpo}}</div>
+                                <div class="h5"></div>
                                 <div class="text-xs fw-bold text-danger d-inline-flex align-items-center">
                                 </div>
                             </div>
@@ -164,7 +164,7 @@
                         <div class="d-flex align-items-center">
                             <div class="flex-grow-1">
                                 <div class="small fw-bold text-success mb-1">Tour Operators</div>
-                                <div class="h5">{{$operator}}</div>
+                                <div class="h5">5</div>
                                 <div class="text-xs fw-bold text-success d-inline-flex align-items-center">
                                 </div>
                             </div>
@@ -180,7 +180,7 @@
                         <div class="d-flex align-items-center">
                             <div class="flex-grow-1">
                                 <div class="small fw-bold text-info mb-1">Users</div>
-                                <div class="h5">{{$users->count()}}</div>
+                                <div class="h5">8</div>
                                 <div class="text-xs fw-bold text-danger d-inline-flex align-items-center">
                                 </div>
                             </div>
@@ -189,14 +189,7 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-    <div class="container-xl px-4">
-        <div class="row">
-            <div class="col-xl-12 col-md-12 mb-4">
-                @include('include.mapapp')
-            </div>
-        </div>
+        </div> --}}
     </div>
 </main>
 @section('scripts')

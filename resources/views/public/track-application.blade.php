@@ -80,7 +80,7 @@
 
                     <!-- Form -->
                     <form action="{{ route('track.application') }}" method="POST"
-                        class="col-md-10 bg-light p-4 rounded shadow-sm ">
+                        class="col-md-12 bg-light p-4 rounded shadow-sm ">
                         @csrf
                         <div class="row g-3">
 
