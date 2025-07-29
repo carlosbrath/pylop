@@ -153,7 +153,7 @@
     <div class="shape"></div>
     <div class="shape"></div>
 </div>
-<form action="{{url('login')}}" method="POST">
+<form action="{{route('login')}}" method="POST">
     <div class="d-flex">
         <img src="{{ asset('/assets/img/public/logo.png') }}" class="login-logo"  alt="">
     </div>
