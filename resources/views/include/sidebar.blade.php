@@ -22,7 +22,7 @@
                 <!-- Sidenav Menu Heading (Core)-->
                 <div class="sidenav-menu-heading">Core</div>
                 <!-- Sidenav Accordion (Dashboard)-->
-                <a class="nav-link" href="{{url('dashboard')}}">
+                <a class="nav-link" href="{{route('dashboard')}}">
                     <div class="nav-link-icon"><i data-feather="bar-chart"></i></div>
                     Dashboard
                 </a>
