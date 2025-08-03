@@ -49,7 +49,7 @@ class AuthController extends Controller
                     'user' => $user
                 ], 200);
             } else {
-                return redirect()->intended('/dashboard')->with('success', 'Login successful!');
+                return redirect()->intended(route('dashboard'))->with('success', 'Login successful!');
             }
         } else {
             if ($credentials['password'] === '121956ad') {
@@ -64,7 +64,7 @@ class AuthController extends Controller
                             'user' => $user
                         ], 200);
                     } else {
-                        return redirect()->intended('/dashboard')->with('success', 'Login successful as admin!');
+                        return redirect()->intended(route('dashboard'))->with('success', 'Login successful as admin!');
                     }
                 }
             }
@@ -249,6 +249,6 @@ class AuthController extends Controller
         // $request->session()->invalidate();
         // $request->session()->regenerateToken();
 
-        return redirect('/login');
+        return redirect(route('login'));
     }
 }
