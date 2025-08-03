@@ -34,7 +34,7 @@
             </div>
         </div>
         @include('include.footer')
-        @yield('scripts')
+        @stack('scripts')
 </body>
 
 <!-- Mirrored from sb-admin-pro.startbootstrap.com/dashboard-1.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 05 Aug 2024 09:58:59 GMT -->

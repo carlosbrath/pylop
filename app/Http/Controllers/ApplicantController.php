@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Applicant;
+use App\Models\BusinessCategory;
+use App\Models\Location;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class ApplicantController extends Controller
 {
@@ -14,12 +17,11 @@ class ApplicantController extends Controller
      */
     public function index()
     {
-        
+
         $title = 'Applications';
         $page_title = 'Applications';
         $applicants = Applicant::get();
         return view('applicants.list', compact('applicants', 'title', 'page_title'));
-
     }
 
     /**
@@ -52,6 +54,10 @@ class ApplicantController extends Controller
     public function show($id)
     {
         //
+        $title = 'Applications';
+        $page_title = 'Applications';
+        $applicant = Applicant::find($id);
+        return view('applicants.show', compact('applicant', 'title', 'page_title'));
     }
 
     /**
@@ -63,6 +69,13 @@ class ApplicantController extends Controller
     public function edit($id)
     {
         //
+        $applicant = Applicant::find($id);
+        $districts = Location::where('type', 'District')->get();
+        $tehsils = Location::where('type', 'Tehsil')->where('parent_id', $applicant->district_id)->get();
+        $categories = BusinessCategory::all();
+        $subcategories = BusinessCategory::where('parent_id', $applicant->business_category_id)->get();
+
+        return view('applicants.edit', compact('applicant', 'districts', 'tehsils', 'categories', 'subcategories'));
     }
 
     /**
@@ -74,7 +87,46 @@ class ApplicantController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $applicant = Applicant::find($id);
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'fatherName' => 'required|string|max:255',
+            'cnic' => ['required', 'regex:/^\d{5}-\d{7}-\d{1}$/', Rule::unique('applicants')->ignore($applicant->id)],
+            'cnic_issue_date' => 'required|date',
+            'dob' => 'required|date',
+            'phone' => 'required|regex:/^03\d{9}$/',
+            'businessName' => 'required|string|max:255',
+            'businessType' => 'required|in:New,Running',
+            'district_id' => 'required',
+            'tehsil_id' => 'required',
+            'quota' => 'required|in:Men,Women,Disabled,Transgender',
+            'business_category_id' => 'required',
+            'business_sub_category_id' => 'required',
+            'permanentAddress' => 'required|string|max:500',
+            'businessAddress' => 'required|string|max:500',
+            'amount' => 'required|integer|min:1',
+            'tier' => 'required|in:1,2,3',
+            'cnic_front' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'cnic_back' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+        ]);
+        ps($validated);
+
+        // Handle CNIC images
+        if ($request->hasFile('cnic_front')) {
+            $front = time() . '_front.' . $request->cnic_front->extension();
+            $request->cnic_front->move(public_path('uploads/cnic'), $front);
+            $validated['cnic_front'] = $front;
+        }
+
+        if ($request->hasFile('cnic_back')) {
+            $back = time() . '_back.' . $request->cnic_back->extension();
+            $request->cnic_back->move(public_path('uploads/cnic'), $back);
+            $validated['cnic_back'] = $back;
+        }
+
+        $applicant->update($validated);
+
+        return redirect()->route('applicant.show', $applicant->id)->with('success', 'Applicant updated successfully.');
     }
 
     /**

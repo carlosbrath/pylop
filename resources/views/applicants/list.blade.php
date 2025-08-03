@@ -53,15 +53,15 @@
                                 @endif
                             </td>
                             <td>
-                                <div class="badge bg-primary text-white rounded-pill">Active</div>
+                                {!!applicant_status_badge($applicant)!!}
                             </td>
                             <td>
                                 <button class="btn btn-datatable btn-icon btn-transparent-dark me-2" id="actionDropdown" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-ellipsis-vertical"></i></button>
                                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="actionDropdown">
-                                    <li><a class="dropdown-item" href="{{route('user.show', $applicant->id)}}">View</a></li>
+                                    <li><a class="dropdown-item" href="{{route('applicant.show', $applicant->id)}}">View</a></li>
                                     {{-- <li><a class="dropdown-item" href="#">Edit</a></li> --}}
                                 </ul>
-                                <button class="btn btn-datatable btn-icon btn-transparent-dark" onclick="confirmDelete('{{ route('user.destroy', $applicant->id) }}', '{{ $applicant->id }}')"><i class="fa-regular fa-trash-can"></i></button>
+                                {{-- <button class="btn btn-datatable btn-icon btn-transparent-dark" onclick="confirmDelete('{{ route('applicant', $applicant->id) }}', '{{ $applicant->id }}')"><i class="fa-regular fa-trash-can"></i></button> --}}
                             </td>
                         </tr>
                         @endforeach

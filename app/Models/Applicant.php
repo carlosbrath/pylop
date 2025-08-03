@@ -21,6 +21,8 @@ class Applicant extends Model
         'district_id',
         'tehsil_id',
         'quota',
+        'cnic_front',
+        'cnic_back',
         'business_category_id',
         'business_sub_category_id',
         'applicant_choosed_branch',

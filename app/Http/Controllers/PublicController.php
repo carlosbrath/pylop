@@ -114,11 +114,11 @@ class PublicController extends Controller
         ]);
         if ($request->hasFile('cnic_front')) {
             $cnic_frontName = time() . '.' . $request->cnic_front->extension();
-            $request->cnic_front->move(public_path('images/cnic'), $cnic_frontName);
+            $request->cnic_front->move(public_path('uploads/cnic'), $cnic_frontName);
         }
         if ($request->hasFile('cnic_back')) {
             $cnic_backName = time() . '.' . $request->cnic_back->extension();
-            $request->cnic_back->move(public_path('images/cnic'), $cnic_backName);
+            $request->cnic_back->move(public_path('uploads/cnic'), $cnic_backName);
         }
         $applicant = Applicant::create([
             'cnic' => $request->cnic,
@@ -143,7 +143,6 @@ class PublicController extends Controller
             'amount' => $request->amount,
             'status' => 'Pending',
         ]);
-
         // Store education records
         foreach ($request->educations as $education) {
             ApplicantEducation::create([
@@ -181,7 +180,7 @@ class PublicController extends Controller
         $applicant = Applicant::find($request->applicant_id);
         if ($request->hasFile('challan_image')) {
             $fileName = time() . '.' . $request->challan_image->extension();
-            $request->challan_image->move(public_path('images/challans'), $fileName);
+            $request->challan_image->move(public_path('uploads/challans'), $fileName);
         }
 
         $applicant->update([

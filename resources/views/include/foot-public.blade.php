@@ -148,7 +148,7 @@
          const cnicRegex = /^(\d{5}-\d{7}-\d{1}|\d{13})$/;
 
          if (!elemeValue.match(cnicRegex)) {
-             input.style.border = '1px solid red';
+            input.classList.add('error');
              showToast("Please enter a valid " + elemName, "left", "bottom");
 
              // Optional: Show inline error
@@ -168,7 +168,7 @@
          const phoneRegex = /^(03\d{9})$/;
 
          if (!elemeValue.match(phoneRegex)) {
-             input.classList.remove('error');
+             input.classList.add('error');
              elemName=getFormatedname(input)
 
              // Optional: Show inline error

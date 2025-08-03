@@ -37,7 +37,7 @@
                 </a>
                 <div class="collapse" id="collapseEntrypoint" data-bs-parent="#accordionSidenav">
                     <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
-                        <a class="nav-link" href="{{route('applicant.list')}}">List</a>
+                        <a class="nav-link" href="{{route('applicant.index')}}">List</a>
                     </nav>
                 </div>
                

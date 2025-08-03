@@ -243,8 +243,8 @@
                                 <div class="info-value">{{ $applicant->feeBranch->branch_code ?? '-' }}</div>
                             </div>
                             <div class="my-3 d-flex justify-content-end no-print">
-                                @if ($applicant->challan_image && file_exists(public_path('images/challans/' . $applicant->challan_image)))
-                                    <img src="{{ asset('images/challans/' . $applicant->challan_image) }}"
+                                @if ($applicant->challan_image && file_exists(public_path('uploads/challans/' . $applicant->challan_image)))
+                                    <img src="{{ asset('uploads/challans/' . $applicant->challan_image) }}"
                                         style="max-width: 100%; width:300px; height:400px; height: auto; border: 1px solid #ccc;">
                                 @else
                                     <p>Challan Image: Not Uploaded</p>

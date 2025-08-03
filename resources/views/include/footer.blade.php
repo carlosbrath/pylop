@@ -1,9 +1,13 @@
  <!-- <script data-cfasync="false" src="cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script> -->
- <script src="{{ asset('assets/vendor/jquery/jquery.min.js')}}"></script>
- <script src="{{ asset('assets/vendor/bootstrap/js/bootstrap.bundle.min.js')}}" crossorigin="anonymous"></script>
- <!-- <script src="{{ asset('assets/vendor/bootstrap/js/bootstrap.bundle.min.js')}}" crossorigin="anonymous"></script> -->
- <script src="{{ asset('assets/js/scripts.js')}}"></script>
- <script src="{{ asset('assets/vendor/chart.js/Chart.min.js')}}" crossorigin="anonymous"></script>
+ <script src="{{ asset('assets/vendor/jquery/jquery.min.js') }}"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+ <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+ <script src="{{ asset('assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}" crossorigin="anonymous"></script>
+ <!-- <script src="{{ asset('assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}" crossorigin="anonymous"></script> -->
+ <script src="{{ asset('assets/js/scripts.js') }}"></script>
+
+ <script src="{{ asset('assets/vendor/chart.js/Chart.min.js') }}" crossorigin="anonymous"></script>
  <!-- <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"></script> -->
  <script src="{{ asset('assets/vendor/datatables/simple-datatables.min.js') }}"></script>
  <script src="{{ asset('assets/js/datatables/datatables.js') }}"></script>
@@ -13,43 +17,58 @@
  <script src="{{ asset('assets/js/custom.js') }}"></script>
  <sb-customizer project="sb-admin-pro"></sb-customizer>
  <script>
-     (function() {
-         function c() {
-             var b = a.contentDocument || a.contentWindow.document;
-             if (b) {
-                 var d = b.createElement('script');
-                 d.innerHTML = "window.__CF$cv$params={r:'8ae5ec1cafafc914',t:'MTcyMjg1MTg0MC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='cdn-cgi/challenge-platform/h/b/scripts/jsd/8c81cb09042c/maind41d.js';document.getElementsByTagName('head')[0].appendChild(a);";
-                 b.getElementsByTagName('head')[0].appendChild(d)
-             }
-         }
-         if (document.body) {
-             var a = document.createElement('iframe');
-             a.height = 1;
-             a.width = 1;
-             a.style.position = 'absolute';
-             a.style.top = 0;
-             a.style.left = 0;
-             a.style.border = 'none';
-             a.style.visibility = 'hidden';
-             document.body.appendChild(a);
-             if ('loading' !== document.readyState) c();
-             else if (window.addEventListener) document.addEventListener('DOMContentLoaded', c);
-             else {
-                 var e = document.onreadystatechange || function() {};
-                 document.onreadystatechange = function(b) {
-                     e(b);
-                     'loading' !== document.readyState && (document.onreadystatechange = e, c())
-                 }
-             }
-         }
-     })();
+    //  (function() {
+    //      function c() {
+    //          var b = a.contentDocument || a.contentWindow.document;
+    //          if (b) {
+    //              var d = b.createElement('script');
+    //              d.innerHTML =
+    //                  "window.__CF$cv$params={r:'8ae5ec1cafafc914',t:'MTcyMjg1MTg0MC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='cdn-cgi/challenge-platform/h/b/scripts/jsd/8c81cb09042c/maind41d.js';document.getElementsByTagName('head')[0].appendChild(a);";
+    //              b.getElementsByTagName('head')[0].appendChild(d)
+    //          }
+    //      }
+    //      if (document.body) {
+    //          var a = document.createElement('iframe');
+    //          a.height = 1;
+    //          a.width = 1;
+    //          a.style.position = 'absolute';
+    //          a.style.top = 0;
+    //          a.style.left = 0;
+    //          a.style.border = 'none';
+    //          a.style.visibility = 'hidden';
+    //          document.body.appendChild(a);
+    //          if ('loading' !== document.readyState) c();
+    //          else if (window.addEventListener) document.addEventListener('DOMContentLoaded', c);
+    //          else {
+    //              var e = document.onreadystatechange || function() {};
+    //              document.onreadystatechange = function(b) {
+    //                  e(b);
+    //                  'loading' !== document.readyState && (document.onreadystatechange = e, c())
+    //              }
+    //          }
+    //      }
+    //  })();
+
+     const routeMap = {
+         'get.tehsils': "{{ route('get.tehsils', ':id') }}",
+         'get.branches': "{{ route('get.branches', ':id') }}",
+         'get.subcategories': "{{ route('get.subcategories', ':id') }}"
+     };
+     $(document).ready(function() {
+         $('input[name="cnic"]').mask('00000-0000000-0');
+         $('input[name="phone"]').mask('00000000000');
+         $('.select2').select2({
+             allowClear: true,
+             width: '100%'
+         });
+     });
      window.addEventListener('DOMContentLoaded', event => {
          const litepickerRangePluginele = document.getElementById('litepickerRangePlugin');
          if (litepickerRangePluginele) {
              new Litepicker({
                  element: litepickerRangePluginele,
-                 startDate: '{{$date_from ?? ""}}',
-                 endDate: '{{$date_to ?? ""}}',
+                 startDate: '{{ $date_from ?? '' }}',
+                 endDate: '{{ $date_to ?? '' }}',
                  singleMode: false,
                  numberOfMonths: 2,
                  numberOfColumns: 2,
@@ -81,7 +100,8 @@
          })
          inputs.forEach(function(input) {
              if (input.value.trim() === '') {
-                 if (input.name == 'name' || input.name == 'cnic' || input.name == 'password' || input.name == 'password_confirmationd') {
+                 if (input.name == 'name' || input.name == 'cnic' || input.name == 'password' || input.name ==
+                     'password_confirmationd') {
                      input.classList.add('error');
                      isValid = false;
                      field_name = formatFieldName(input.name)
@@ -119,17 +139,18 @@
              }
          });
      }
-    
+
      function previewImage(event) {
-        var reader = new FileReader();
-        console.log(reader.result)
-        reader.onload = function() {
-            
-            var output = document.getElementById('profile-image');
-            output.src = reader.result;
-        };
-        reader.readAsDataURL(event.target.files[0]);
-    }
+         var reader = new FileReader();
+         console.log(reader.result)
+         reader.onload = function() {
+
+             var output = document.getElementById('profile-image');
+             output.src = reader.result;
+         };
+         reader.readAsDataURL(event.target.files[0]);
+     }
+
      function deleteItem(url) {
          fetch(`${url}`, {
                  method: 'DELETE',
@@ -156,50 +177,85 @@
                  );
              });
      }
+
      function attachOnChangeToInputsSelects() {
-            // Get all the input elements on the page
-            var inputs = document.getElementsByTagName('input');
-            var selects = document.getElementsByTagName('select');
+         // Get all the input elements on the page
+         var inputs = document.getElementsByTagName('input');
+         var selects = document.getElementsByTagName('select');
 
-            // Iterate over each input field
-            for (var i = 0; i < inputs.length; i++) {
-                // Attach the onchange event handler to the current input field
-                // inputs[i].addEventListener('change', handleInputChange);
-                // inputs[i].addEventListener('input', handleInputInput);
-            }
-            for (var i = 0; i < selects.length; i++) {
-                // Attach the onchange event handler to the current input field
-                selects[i].addEventListener('change', handleSelectChange);
-                // selects[i].addEventListener('input', handleSelectInput);
-            }
-        }
-        attachOnChangeToInputsSelects();
-            function handleSelectChange(event) {
-                var select = event.target;
-                var value = select.value;
-                var name = select.getAttribute('name');
+         // Iterate over each input field
+         for (var i = 0; i < inputs.length; i++) {
+             // Attach the onchange event handler to the current input field
+             // inputs[i].addEventListener('change', handleInputChange);
+             // inputs[i].addEventListener('input', handleInputInput);
+         }
+         for (var i = 0; i < selects.length; i++) {
+             // Attach the onchange event handler to the current input field
+             selects[i].addEventListener('change', handleSelectChange);
+             // selects[i].addEventListener('input', handleSelectInput);
+         }
+     }
+     attachOnChangeToInputsSelects();
 
-                // Remove any non-numeric characters
+     function handleSelectChange(event) {
+         var select = event.target;
+         var value = select.value;
+         var name = select.getAttribute('name');
 
-                if (name === 'role_id') {
-                    var districtDiv = document.querySelector('.district-div');
-                    var entrypointDiv = document.querySelector('.entrypoints-div');
+         // Remove any non-numeric characters
 
-                    if (value ==5) {
-                        districtDiv.style.display = "block";
-                        entrypointDiv.style.display = "block";
-                    } else if(value ==4) {
-                        districtDiv.style.display = "block";
-                        entrypointDiv.style.display = "none";
-                    } else if(value==2 || value==3 ){
-                        districtDiv.style.display = "none";
-                        entrypointDiv.style.display = "none";
-                    } else {
-                        districtDiv.style.display = "none";
-                        entrypointDiv.style.display = "none";
-                    }
-                }
+         if (name === 'role_id') {
+             var districtDiv = document.querySelector('.district-div');
+             var entrypointDiv = document.querySelector('.entrypoints-div');
 
-            }
+             if (value == 5) {
+                 districtDiv.style.display = "block";
+                 entrypointDiv.style.display = "block";
+             } else if (value == 4) {
+                 districtDiv.style.display = "block";
+                 entrypointDiv.style.display = "none";
+             } else if (value == 2 || value == 3) {
+                 districtDiv.style.display = "none";
+                 entrypointDiv.style.display = "none";
+             } else {
+                 districtDiv.style.display = "none";
+                 entrypointDiv.style.display = "none";
+             }
+         }
+
+     }
+
+     function fetchonChangeSelect(select, updateSelect, routeName) {
+         let url = routeMap[routeName].replace(':id', select.value);
+         fetch(url)
+             .then(response => response.json())
+             .then(data => {
+                 if (updateSelect.name == 'tehsil_id') {
+                     updateSelect.innerHTML = '<option value="">Select Tehsil</option>';
+                     data.forEach(tehsil => {
+                         updateSelect.innerHTML +=
+                             `<option value="${tehsil.id}">${tehsil.name} / ${tehsil.name_ur}</option>`;
+                     });
+                 }
+                 if (updateSelect.name == 'business_sub_category_id') {
+                     updateSelect.innerHTML = '<option value="">Select Subcategory</option>';
+                     data.forEach(sub => {
+                         updateSelect.innerHTML +=
+                             `<option value="${sub.id}">${sub.name}</option>`;
+                     });
+                     updateSelect.innerHTML += `<option value="100">Others</option>`
+                 }
+                 if (updateSelect.name == 'applicant_choosed_branch') {
+                     updateSelect.innerHTML = '<option value="">Select Branches</option>';
+                     data.forEach(sub => {
+                         updateSelect.innerHTML +=
+                             `<option value="${sub.id}">${sub.branch_code} ${sub.branch_name}</option>`;
+                     });
+                 }
+             });
+     }
  </script>
- <script defer src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" data-cf-beacon='{"rayId":"8ae5ec1cafafc914","version":"2024.7.0","serverTiming":{"name":{"cfL4":true}},"token":"6e2c2575ac8f44ed824cef7899ba8463","b":1}' crossorigin="anonymous"></script>
+ {{-- <script defer src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015"
+     integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ=="
+     data-cf-beacon='{"rayId":"8ae5ec1cafafc914","version":"2024.7.0","serverTiming":{"name":{"cfL4":true}},"token":"6e2c2575ac8f44ed824cef7899ba8463","b":1}'
+     crossorigin="anonymous"></script> --}}

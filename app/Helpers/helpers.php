@@ -58,3 +58,25 @@ function challanFee($tier)  {
         return 2000;
     }
 }
+function applicant_status_badge($applicant) {
+    switch ($applicant->status) {
+        case 'Pending':
+            return '<span class="badge bg-warning text-white">Pending</span>';
+        case 'Forwarded':
+            return '<span class="badge bg-info text-white">Forwarded</span>';
+        case 'Rejected':
+            return '<span class="badge bg-danger">Rejected</span>';
+        case 'Approved':
+            return '<span class="badge bg-success">Approved</span>';
+        default:
+            return '<span class="badge bg-secondary">'.e($applicant->status).'</span>';
+    }
+}
+function tierLabel($tier) {
+    return match($tier) {
+        1 => 'Tier 1 (Up to 5 Lakh)',
+        2 => 'Tier 2 (5 to 10 Lakh)',
+        3 => 'Tier 3 (10 to 20 Lakh)',
+        default => 'N/A',
+    };
+}

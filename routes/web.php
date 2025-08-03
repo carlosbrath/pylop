@@ -41,7 +41,8 @@ Route::match(['get', 'post'], '/track-application', [PublicController::class, 't
 Route::match(['post', 'get'], '/login', [\App\Http\Controllers\AuthController::class, 'login'])->name('login');
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/dashboard', [\App\Http\Controllers\AdminController::class, 'dashboard'])->name('dashboard');
-    Route::get('/applicant/list', [\App\Http\Controllers\ApplicantController::class, 'index'])->name('applicant.list');
+    // Route::get('/applicant/list', [\App\Http\Controllers\ApplicantController::class, 'index'])->name('applicant.list');
+    Route::resource('/applicant', \App\Http\Controllers\ApplicantController::class);
     Route::resource('/user', \App\Http\Controllers\UserContoller::class);
     Route::get('/run-migrations', [MigrationController::class, 'runMigrations']);
 });
