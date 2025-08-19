@@ -12,8 +12,7 @@
                         <div class="card mb-4">
                             <div class="card-body page">
                                 <div class="d-flex justify-content-end mb-2 no-print">
-                                    <a href="{{ route('applicant.edit', $applicant->id) }}"
-                                        class="btn btn-outline-teal">
+                                    <a href="{{ route('applicant.edit', $applicant->id) }}" class="btn btn-outline-teal">
                                         <i class="bi bi-pencil-square"></i> Edit Application
                                     </a>
                                 </div>
@@ -66,8 +65,24 @@
                                 @endif
 
                                 <div class="no-print mt-4 text-end">
+                                      @if ($applicant->status === 'Pending' || $applicant->status === 'NotCompleted')
+                                        <form action="{{ route('applicants.approve', $applicant->id) }}" method="POST"
+                                            class="d-inline">
+                                            @csrf
+                                            <button type="submit" class="btn btn-success">Approve</button>
+                                        </form>
+                                    @endif
+
+                                    @if ($applicant->status === 'Approved')
+                                        <form action="{{ route('applicants.forward', $applicant->id) }}" method="POST"
+                                            class="d-inline">
+                                            @csrf
+                                            <button type="submit" class="btn btn-primary">Forward to Bank</button>
+                                        </form>
+                                    @endif
                                     <button onclick="window.print()" class="btn btn-primary">Print Application</button>
                                 </div>
+                               
                             </div>
                         </div>
                     </div>

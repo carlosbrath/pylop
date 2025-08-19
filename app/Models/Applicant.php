@@ -2,12 +2,16 @@
 
 namespace App\Models;
 
+use App\Traits\LogsActivity;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\HasStatusTracking;
 
 class Applicant extends Model
 {
     use HasFactory;
+    use LogsActivity;
+    use HasStatusTracking;
     protected $fillable = [
         'cnic',
         'cnic_issue_date',

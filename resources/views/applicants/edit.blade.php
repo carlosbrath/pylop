@@ -57,6 +57,17 @@
                                         value="{{ old('phone', $applicant->phone) }}" required>
                                 </div>
                                 <div class="mb-3">
+                                    <label class="form-label">Tier</label>
+                                    <select class="form-control" name="tier" required>
+                                        <option value="1" {{ $applicant->tier == '1' ? 'selected' : '' }}>Tier 1 (Up to
+                                            5 Lakh)</option>
+                                        <option value="2" {{ $applicant->tier == '2' ? 'selected' : '' }}>Tier 2 (5 -
+                                            10 Lakh)</option>
+                                        <option value="3" {{ $applicant->tier == '3' ? 'selected' : '' }}>Tier 3 (10 -
+                                            20 Lakh)</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
                                     <label class="form-label">Loan Amount</label>
                                     <input class="form-control" type="number" name="amount"
                                         value="{{ old('amount', $applicant->amount) }}" required>

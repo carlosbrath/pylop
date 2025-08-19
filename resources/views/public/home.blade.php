@@ -19,7 +19,7 @@
             <p class="text-center mb-5 fs-5 text-muted">
                 Prime Minister Youth Loan Program aims to empower the youth of Azad Jammu & Kashmir through
                 subsidized financing. It encourages innovation, boost entrepreneurship and
-                creat self-employment opportunities.
+                create self-employment opportunities.
             </p>
 
             <div class="row g-4 justify-content-center">

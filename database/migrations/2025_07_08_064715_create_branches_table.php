@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('bank_name');
             $table->string('branch_name');
             $table->string('branch_code')->unique();
+            $table->string('district');
             $table->string('address');
             $table->string('tel')->nullable();
             $table->string('email')->nullable();
