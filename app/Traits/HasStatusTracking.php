@@ -25,7 +25,7 @@ trait HasStatusTracking
         // $this->save();
 
         // Detect actor
-        $actorType = $actorType ?? (Auth::check() ? 'user' : 'applicant');
+        $actorType = $actorType ?? (Auth::check() ? 'User' : 'Applicant');
         $actorId   = $actorId ?? (Auth::check() ? Auth::id() : $this->id);
 
         // Log the change

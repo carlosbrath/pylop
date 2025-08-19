@@ -133,7 +133,7 @@
                 @if (isset($applicant))
                     <div class="page">
                         <div class="d-flex align-items-center justify-content-between mb-4 text-center" style="gap: 10px;">
-                            <img src="https://sic.ajk.gov.pk/pmylp/public/images/ajklogo.png" alt="AJK Logo"
+                            <img src="{{ asset('/assets/img/public/ajklogo.png') }}" alt="AJK Logo"
                                 style="height: 100px;">
 
                             <div class="flex-grow-1 text-center">
@@ -142,7 +142,7 @@
                                 <h6 class="text-muted">Application for the Loan</h6>
                             </div>
 
-                            <img src="https://sic.ajk.gov.pk/pmylp/public/images/logo.png" alt="Small Industries Logo"
+                            <img src="{{ asset('/assets/img/public/logo.png') }}" alt="Small Industries Logo"
                                 style="height: 100px;">
                         </div>
 
@@ -333,11 +333,6 @@
                         </div>
                     @endif
                 @endif
-
-
-              
-
-
             </div>
 
         </div>

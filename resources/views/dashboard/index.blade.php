@@ -41,7 +41,7 @@
                             <div class="row align-items-center">
                                 <div class="col-xl-8 col-xxl-8">
                                     <div class="text-center text-xl-start text-xxl-start mb-4 mb-xl-0 mb-xxl-4">
-                                        <h1 class="text-primary">Welcome to Visit AJ&K</h1>
+                                        <h1 class="text-primary">Welcome to PMYPL</h1>
                                         <p class="text-gray-700 mb-0">Azad Government of the State of Jammu & Kashmir.</p>
                                     </div>
                                 </div>

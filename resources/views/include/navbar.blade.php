@@ -1,30 +1,10 @@
 <nav class="topnav navbar navbar-expand shadow justify-content-between justify-content-sm-start navbar-light bg-white" id="sidenavAccordion">
     <!-- Sidenav Toggle Button-->
     <button class="btn btn-icon btn-transparent-dark order-1 order-lg-0 me-2 ms-lg-2 me-lg-0" id="sidebarToggle"><i data-feather="menu"></i></button>
-    <a class="navbar-brand pe-3 ps-4 ps-lg-2" href="index.html">Visit AJ&K</a>
+    <a class="navbar-brand pe-3 ps-4 ps-lg-2" href="{{route('dashboard')}}">PMYPL</a>
     <!-- Navbar Items-->
     <ul class="navbar-nav align-items-center ms-auto">
-        <!-- Documentation Dropdown-->
-        <li class="nav-item dropdown no-caret d-none d-md-block me-3">
-            <div class="dropdown-menu dropdown-menu-end py-0 me-sm-n15 me-lg-0 o-hidden animated--fade-in-up" aria-labelledby="navbarDropdownDocs">
-                <div class="dropdown-divider m-0"></div>
-                <a class="dropdown-item py-3" href="https://docs.startbootstrap.com/sb-admin-pro/components" target="_blank">
-                    <div class="icon-stack bg-primary-soft text-primary me-4"><i data-feather="code"></i></div>
-                    <div>
-                        <div class="small text-gray-500">Components</div>
-                        Code snippets and reference
-                    </div>
-                </a>
-                <div class="dropdown-divider m-0"></div>
-                <a class="dropdown-item py-3" href="https://docs.startbootstrap.com/sb-admin-pro/changelog" target="_blank">
-                    <div class="icon-stack bg-primary-soft text-primary me-4"><i data-feather="file-text"></i></div>
-                    <div>
-                        <div class="small text-gray-500">Changelog</div>
-                        Updates and changes
-                    </div>
-                </a>
-            </div>
-        </li>
+        
         <!-- Navbar Search Dropdown-->
       
         <!-- User Dropdown-->
