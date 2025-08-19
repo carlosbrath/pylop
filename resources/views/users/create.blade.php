@@ -30,10 +30,7 @@
                                 <label class="small mb-1" for="Name">Name</label>
                                 <input class="form-control" id="name" type="text" name="name" placeholder="Enter Name" />
                             </div>
-                            <div class="mb-3">
-                                <label class="small mb-1" for="phone">Phone</label>
-                                <input class="form-control" id="phone" type="text" name="phone" placeholder="Enter Phone" />
-                            </div>
+
                             <div class="mb-3">
                                 <label class="small mb-1" for="email">Email</label>
                                 <input class="form-control" id="email" type="email" name="email" placeholder="Enter Email" />
@@ -48,38 +45,7 @@
                                     @endforeach
                                 </select>
                             </div>
-                            <div class="mb-3 entrypoints-div" style="display: none;">
-                                <label for="epo_id">Entry Point Office</label>
-                                <select class="form-control" id="epo_id" name="epo_id">
-                                    <option value="">Chose Entry Point</option>
-                                    @foreach($entrpointoffices as $epo)
-                                    <option value="{{$epo->id}}">{{$epo->name}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <!-- Form Group (new password)-->
-                            <div class="mb-3 district-div" style="display: none;">
-                                <label class="small mb-1" for="district">District </label>
-                                <select class="form-control" id="district" name="district">
-                                    <option value="">Chose District</option>
-                                    <option value="Muzaffarabad">Muzaffarabad</option>
-                                    <option value="Mirpur">Mirpur</option>
-                                    <option value="Rawalakot">Rawalakot</option>
-                                    <option value="Bhimber">Bhimber</option>
-                                    <option value="Kotli">Kotli</option>
-                                    <option value="Poonch">Poonch</option>
-                                    <option value="Bagh">Bagh</option>
-                                    <option value="Hattian Bala">Hattian Bala</option>
-                                    <option value="Neelum">Neelum</option>
-                                    <option value="Haveli">Haveli</option>
-                                    <option value="Sudhnoti">Sudhnoti</option>
-                                </select>
-                            </div>
-                            <!-- Upload input field -->
-                            <div class="mb-3">
-                                <label for="profile_picture">Profile Picture</label>
-                                <input class="form-control" type="file" name="profile_picture" id="profile_picture" accept="image/*" onchange="previewImage(event)">
-                            </div>
+ 
                             <div class="mb-3">
                                 <label class="small mb-1" for="password">Password</label>
                                 <input class="form-control" id="password" type="password" name="password" placeholder="Password" />
@@ -94,20 +60,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-4">
-                <!-- Profile picture card-->
-                <div class="card mb-4 mb-xl-0">
-                    <div class="card-header">Profile Picture</div>
-                    <div class="card-body text-center">
-                        <!-- Profile picture image-->
-                        <img class="img-account-profile rounded-circle mb-2" id="profile-image" src="{{asset('images/profile_pictures/default.png')}}" alt="" />
-                        <!-- Profile picture help block-->
-                        <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>
-                        <!-- Profile picture upload button-->
-                        <button class="btn btn-primary" onclick="document.getElementById('profile_picture').click()" type="button">Upload new image</button>
-                    </div>
-                </div>
-            </div>
+
         </div>
     </div>
 </main>

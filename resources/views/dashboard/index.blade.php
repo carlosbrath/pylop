@@ -144,8 +144,10 @@
                                 <!-- Dashboard Tab Pane 1-->
                                 <div class="tab-pane fade show active" id="overview" role="tabpanel"
                                     aria-labelledby="overview-pill">
-                                    <div class="chart-area mb-4 mb-lg-0" style="height: 20rem"><canvas id="myAreaChart"
-                                            width="100%" height="30"></canvas></div>
+                                    <div class="chart-area mb-4 mb-lg-0" style="height: 20rem">
+                                        <canvas id="myAreaChart"
+                                            width="100%" height="30"></canvas>
+                                        </div>
                                 </div>
                                 <!-- Dashboard Tab Pane 2-->
                                 <div class="tab-pane fade" id="activities" role="tabpanel"

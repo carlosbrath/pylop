@@ -16,6 +16,16 @@ use App\Http\Controllers\PublicController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+<<<<<<< HEAD
+=======
+
+Route::get('/', function () {
+    // return view('welcome');
+
+    return  Redirect::to('login');
+});
+
+>>>>>>> e2f0e23addb97750c5ab7dbeaed507cc47ce65f4
 Route::get('/', [PublicController::class, 'home'])->name('home');
 Route::get('/loan/application', [PublicController::class, 'step1'])->name('loan.application');
 Route::get('loan/application/form', [PublicController::class, 'step2'])->name('loan.application.form');
@@ -35,14 +45,12 @@ Route::match(['get', 'post'], '/track-application', [PublicController::class, 't
 Route::match(['post', 'get'], '/login', [\App\Http\Controllers\AuthController::class, 'login'])->name('login');
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/dashboard', [\App\Http\Controllers\AdminController::class, 'dashboard'])->name('dashboard');
+    // Route::get('/applicant/list', [\App\Http\Controllers\ApplicantController::class, 'index'])->name('applicant.list');
     Route::resource('/applicant', \App\Http\Controllers\ApplicantController::class);
-
-    Route::post('/applicants/{id}/approve', [\App\Http\Controllers\ApplicantController::class, 'approve'])->name('applicants.approve');
-    Route::post('/applicants/{id}/forward-to-bank', [\App\Http\Controllers\ApplicantController::class, 'forwardToBank'])->name('applicants.forward');
-
     Route::resource('/user', \App\Http\Controllers\UserContoller::class);
     Route::get('/run-migrations', [MigrationController::class, 'runMigrations']);
 });
+
 Route::get('/test-email', [MigrationController::class, 'testEmail']);
 Route::get('/config-clear', [MigrationController::class, 'configClear']);
 Route::post('/logout', [\App\Http\Controllers\AuthController::class, 'logout'])->name('logout');
