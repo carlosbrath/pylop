@@ -70,7 +70,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4">
+                {{-- <div class="col-lg-4">
                     <!-- Profile picture card-->
                     <div class="card mb-4 mb-xl-0">
                         <div class="card-header">Profile Picture</div>
@@ -83,8 +83,8 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="row">
+            </div> --}}
+            {{-- <div class="row">
                 <div class="col-lg-8">
                     <div class="card mb-4">
                         <div class="card-header">Update Password</div>
@@ -113,7 +113,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> --}}
         </div>
     </main>
 

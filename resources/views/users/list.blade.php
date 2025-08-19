@@ -19,8 +19,7 @@
                         <tr>
                             <th>Sr.No</th>
                             <th>Name</th>
-                            <th>Profile</th>
-                            <th>Email | Phone</th>
+                            <th>Email</th>
                             <th>Role</th>
                             <th>Status</th>
                             <th>Actions</th>
@@ -29,8 +28,7 @@
                     <tfoot>
                         <tr>
                             <th>Name</th>
-                            <th>Email | Phone</th>
-                            <th>Profile</th>
+                            <th>Email</th>
                             <th>Role</th>
                             <th>Status</th>
                             <th>Actions</th>
@@ -41,7 +39,7 @@
                         <tr>
                             <td>{{$loop->iteration}}</td>
                             <td>{{$user->name}}</td>
-                            <td><img  src="{{ asset('images/profile_pictures/' . ($user->profile_picture ?? 'default.png')) }}" style="width: 50px; border-radius: 24px;" alt="profile Picture"></td>
+                            {{-- <td><img  src="{{ asset('images/profile_pictures/' . ($user->profile_picture ?? 'default.png')) }}" style="width: 50px; border-radius: 24px;" alt="profile Picture"></td> --}}
                             <td>{{$user->email ?? $user->phone }}</td>
                             <td>{{$user->role->title}}</td>
                             <td>
@@ -51,7 +49,7 @@
                                 <button class="btn btn-datatable btn-icon btn-transparent-dark me-2" id="actionDropdown" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-ellipsis-vertical"></i></button>
                                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="actionDropdown">
                                     <li><a class="dropdown-item" href="{{route('user.show', $user->id)}}">View</a></li>
-                                    <li><a class="dropdown-item" href="#">Edit</a></li>
+                                    <li><a class="dropdown-item" href="{{route('user.edit', $user->id)}}">Edit</a></li>
                                 </ul>
                                 <button class="btn btn-datatable btn-icon btn-transparent-dark" onclick="confirmDelete('{{ route('user.destroy', $user->id) }}', '{{ $user->id }}')"><i class="fa-regular fa-trash-can"></i></button>
                             </td>

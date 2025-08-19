@@ -66,7 +66,7 @@
 
                                 <div class="no-print mt-4 text-end">
                                       @if ($applicant->status === 'Pending' || $applicant->status === 'NotCompleted')
-                                        <form action="{{ route('applicants.approve', $applicant->id) }}" method="POST"
+                                        <form action="{{ route('applicant.Approve', $applicant->id) }}" method="POST"
                                             class="d-inline">
                                             @csrf
                                             <button type="submit" class="btn btn-success">Approve</button>
@@ -74,7 +74,7 @@
                                     @endif
 
                                     @if ($applicant->status === 'Approved')
-                                        <form action="{{ route('applicants.forward', $applicant->id) }}" method="POST"
+                                        <form action="{{ route('applicant.forward', $applicant->id) }}" method="POST"
                                             class="d-inline">
                                             @csrf
                                             <button type="submit" class="btn btn-primary">Forward to Bank</button>

@@ -54,18 +54,8 @@ class UserContoller extends Controller
         //
         $title = 'Add User';
         $page_title = 'Add Users';
-        $userRole = auth()->user()->role_id;
-        $roleMapping = [
-            1 => [],
-            2 => [4, 5, 6],
-            7 => [2, 4, 5, 6],
-            5 => [4],
-        ];
-        $roles = Role::when($userRole != 1, function ($query) use ($userRole, $roleMapping) {
-            return $query->whereIn('id', $roleMapping[$userRole] ?? []);
-        })->get();
-        $entrpointoffices = EntryPointOffice::get();
-        return view('users.create', compact('roles'), compact('entrpointoffices', 'title', 'page_title'));
+        $roles = Role::all();
+        return view('users.create', compact('title', 'page_title', 'roles'));
     }
     /**
      * Store a newly created resource in storage.
@@ -79,8 +69,6 @@ class UserContoller extends Controller
             $validator = Validator::make($request->all(), [
                 'name' => 'required|string|max:255',
                 'email' => 'nullable|string|unique:users|max:255',
-                'district' => 'nullable|string|max:255',
-                'phone' => 'string|max:255|unique:users',
                 'password' => 'required|string|min:8|confirmed',
             ]);
             if ($validator->fails()) {
@@ -95,25 +83,12 @@ class UserContoller extends Controller
                         ->withInput();
                 }
             }
-            if ($request->hasFile('profile_picture')) {
-                $fileName = time() . '.' . $request->profile_picture->extension();
-                $request->profile_picture->move(public_path('images/profile_pictures'), $fileName);
-            } else {
-                $fileName = 'default.png'; // Set a default image if no upload
-            }
             $user = User::create([
                 'name' => $request->name,
                 'email' => $request->email,
                 'role_id' => $request->role_id ?? 3,
-                'epo_id' => $request->epo_id,
-                'district' => $request->district,
                 'password' => Hash::make($request->password),
-                'cnic' => $request->cnic,
-                'phone' => $request->phone,
-                'license_no' => $request->license_no,
-                'address' => $request->address,
-                'otp_expires_at' => Carbon::now()->addMinutes(10),
-                'profile_picture' => $fileName,
+
             ]);
 
             if ($request->expectsJson()) {
@@ -175,7 +150,7 @@ class UserContoller extends Controller
      */
     public function show(Request $request, $id)
     {
-        $user = User::with('entryPointOffice')->find($id);
+        $user = User::find($id);
         $title = 'Add User';
         $page_title = 'Add Users';
         if ($request->expectsJson()) {
@@ -184,7 +159,7 @@ class UserContoller extends Controller
                 200
             );
         }
-        return view('users.show', compact('user'), compact('title'), compact('page_title'));
+        return view('users.show', compact('user', 'title', 'page_title'));
     }
 
     /**
@@ -193,9 +168,19 @@ class UserContoller extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
-        //
+        $user = User::find($id);
+        $title = 'Add User';
+        $page_title = 'Add Users';
+        $roles = Role::all();
+        if ($request->expectsJson()) {
+            return response()->json(
+                ['user' => $user],
+                200
+            );
+        }
+        return view('users.edit', compact('user', 'title', 'page_title', 'roles'));
     }
 
     /**
@@ -209,15 +194,16 @@ class UserContoller extends Controller
     {
         $user = User::find($id);
         $user->update($request->all());
+        // dd($request->all());
         if ($request->expectsJson()) {
             return response()->json(
                 ['user' => $user],
                 200
             );
         }
-        return redirect('user.show');
+        return redirect()->route('user.show', $user->id);
     }
-    function changePassword(Request $request, $id)
+    public function changePassword(Request $request, $id)
     {
         try {
             $validator = Validator::make($request->all(), [
