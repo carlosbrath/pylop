@@ -16,16 +16,6 @@ use App\Http\Controllers\PublicController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-<<<<<<< HEAD
-=======
-
-Route::get('/', function () {
-    // return view('welcome');
-
-    return  Redirect::to('login');
-});
-
->>>>>>> e2f0e23addb97750c5ab7dbeaed507cc47ce65f4
 Route::get('/', [PublicController::class, 'home'])->name('home');
 Route::get('/loan/application', [PublicController::class, 'step1'])->name('loan.application');
 Route::get('loan/application/form', [PublicController::class, 'step2'])->name('loan.application.form');
