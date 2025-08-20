@@ -68,8 +68,11 @@
         </div>
     </div>
 </main>
+@push('scripts')
+    <script>
+        
+    </script>
+@endpush
 @endsection
 
-@section('scripts')
 
-@endsection

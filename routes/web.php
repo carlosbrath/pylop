@@ -17,12 +17,6 @@ use App\Http\Controllers\PublicController;
 |
 */
 
-Route::get('/', function () {
-    // return view('welcome');
-
-    return  Redirect::to('login');
-});
-
 Route::get('/', [PublicController::class, 'home'])->name('home');
 Route::get('/loan/application', [PublicController::class, 'step1'])->name('loan.application');
 Route::get('loan/application/form', [PublicController::class, 'step2'])->name('loan.application.form');
@@ -51,15 +45,15 @@ Route::middleware('auth:sanctum')->group(function () {
         ->name('applicant.forward');
 
     Route::resource('/user', \App\Http\Controllers\UserContoller::class);
-    Route::match(
-        ['post', 'get'],
-        '/change/Password',
-        [\App\Http\Controllers\UserContoller::class, 'changePassword']
-    )->name('change.password');
-    
+
+    Route::post('/applicants/{id}/approve', [\App\Http\Controllers\ApplicantController::class, 'approve'])->name('applicants.approve');
+    Route::post('/applicants/{id}/forward-to-bank', [\App\Http\Controllers\ApplicantController::class, 'forwardToBank'])->name('applicants.forward');
+
     Route::get('/run-migrations', [MigrationController::class, 'runMigrations']);
 });
+Route::post('/logout', [\App\Http\Controllers\AuthController::class, 'logout'])->name('logout');
+
+
 
 Route::get('/test-email', [MigrationController::class, 'testEmail']);
 Route::get('/config-clear', [MigrationController::class, 'configClear']);
-Route::post('/logout', [\App\Http\Controllers\AuthController::class, 'logout'])->name('logout');

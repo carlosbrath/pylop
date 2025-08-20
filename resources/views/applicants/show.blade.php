@@ -8,14 +8,18 @@
             @if (isset($applicant))
                 <div class="row">
                     <!-- Left: Application Preview -->
+
                     <div class="col-lg-8  print-area">
+                        @include('include.alerts')
                         <div class="card mb-4">
                             <div class="card-body page">
+                                @if($applicant->status =='Pending' || $applicant->status =='NotCompleted')
                                 <div class="d-flex justify-content-end mb-2 no-print">
                                     <a href="{{ route('applicant.edit', $applicant->id) }}" class="btn btn-outline-teal">
                                         <i class="bi bi-pencil-square"></i> Edit Application
                                     </a>
                                 </div>
+                                @endif
                                 <div class="d-flex align-items-center justify-content-between mb-4 text-center"
                                     style="gap: 10px;">
                                     <img src="{{ asset('/assets/img/public/ajklogo.png') }}" style="height: 100px;"
@@ -65,24 +69,57 @@
                                 @endif
 
                                 <div class="no-print mt-4 text-end">
-                                      @if ($applicant->status === 'Pending' || $applicant->status === 'NotCompleted')
-                                        <form action="{{ route('applicant.Approve', $applicant->id) }}" method="POST"
-                                            class="d-inline">
-                                            @csrf
-                                            <button type="submit" class="btn btn-success">Approve</button>
-                                        </form>
-                                    @endif
+                                    <div id="approve-section">
+                                        @if ($applicant->status === 'Pending')
+                                            <button type="button"
+                                                onclick="remarks('{{ route('applicants.approve', $applicant->id) }}','approveForm', 'approve-section')"
+                                                class="btn btn-success d-inline" id="approveBtn">Approve</button>
+                                        @endif
 
-                                    @if ($applicant->status === 'Approved')
-                                        <form action="{{ route('applicant.forward', $applicant->id) }}" method="POST"
-                                            class="d-inline">
+                                        @if ($applicant->status === 'Approved')
+                                            <button type="button" class="btn btn-success d-inline"
+                                                onclick="remarks('{{ route('applicants.forward', $applicant->id) }}','approveForm', 'approve-section')"
+                                                id="forwordbtnBtn">Forward to Bank</button>
+                                        @endif
+                                        <button onclick="window.print()" class="btn btn-primary">Print Application</button>
+                                    </div>
+                                    <div id="remarks-section">
+                                        <!-- Hidden form -->
+                                        <form action="{{ route('applicants.approve', $applicant->id) }}" method="POST"
+                                            id="approveForm" class="mt-2 d-none">
                                             @csrf
-                                            <button type="submit" class="btn btn-primary">Forward to Bank</button>
+                                            <div class="mb-2">
+                                                <textarea name="remarks" class="form-control" rows="3" placeholder="Enter approval remarks..." required></textarea>
+                                            </div>
+                                            <button type="submit" class="btn btn-success">Confirm Approve</button>
+                                            <button type="button" class="btn btn-secondary"
+                                                id="cancelApprove">Cancel</button>
                                         </form>
-                                    @endif
-                                    <button onclick="window.print()" class="btn btn-primary">Print Application</button>
+                                    </div>
                                 </div>
-                               
+
+                            </div>
+                        </div>
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <h5 class="mb-0">Remarks History</h5>
+                            </div>
+                            <div class="card-body">
+                                @if ($remarks->count())
+                                    <div class="space-y-2">
+                                        @foreach ($remarks as $log)
+                                            <div class="border rounded p-3 mb-2">
+                                                <x-info-row label="Old Status" :value="$log->old_status ?? '-'" />
+                                                <x-info-row label="New Status" :value="$log->new_status ?? '-'" />
+                                                <x-info-row label="Changed By" :value="$log->actor->name ?? 'System'" />
+                                                <x-info-row label="Remarks" :value="$log->remarks ?? '-'" />
+                                                <x-info-row label="Changed At" :value="$log->created_at->format('d M Y h:i A')" />
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                @else
+                                    <p class="text-muted">No remarks found.</p>
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -127,4 +164,23 @@
             @endif
         </div>
     </main>
+    @push('scripts')
+        <script>
+            function remarks(url, targetId, targetId2) {
+                const form = document.getElementById(targetId);
+                const approveSection = document.getElementById(targetId2);
+                form.action = url;
+                form.classList.remove("d-none");
+                approveSection.classList.add("d-none");
+                const cancelApprove = form.querySelector("#cancelApprove");
+                if (cancelApprove) {
+                    cancelApprove.addEventListener("click", function() {
+                        approveSection.classList.remove("d-none");
+                        form.classList.add("d-none");
+                    });
+                }
+            }
+        </script>
+    @endpush
+
 @endsection

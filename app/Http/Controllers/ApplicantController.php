@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Applicant;
+use App\Models\ApplicantStatusLog;
 use App\Models\BusinessCategory;
 use App\Models\Location;
 use Illuminate\Http\Request;
@@ -58,8 +59,11 @@ class ApplicantController extends Controller
         $title = 'Applications';
         $page_title = 'Applications';
         $applicant = Applicant::find($id);
-        // $applicant->updateStatus('Approved', 'Approved by admin');
-        return view('applicants.show', compact('applicant', 'title', 'page_title'));
+        $remarks = ApplicantStatusLog::where('applicant_id', $applicant->id)
+            ->latest()
+            ->get();
+        // pd($remarks);
+        return view('applicants.show', compact('applicant', 'title', 'page_title', 'remarks'));
     }
 
     /**
@@ -136,18 +140,45 @@ class ApplicantController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function approve($id)
+    public function approve(Request $request, $id)
     {
         $applicant = Applicant::findOrFail($id);
+
+        // Already approved check
         if ($applicant->status === 'Approved') {
             return back()->with('info', 'Applicant is already approved.');
         }
 
+        // 1. Check if fee is paid
+        if ($applicant->fee_status !== 'paid') {
+            return back()->with('error', 'Applicant cannot be approved until the fee is paid.');
+        }
+
+        // 2. Check if required documents exist
+        if (empty($applicant->cnic_front) || empty($applicant->cnic_back) || empty($applicant->challan_image)) {
+            return back()->with('error', 'Applicant cannot be approved. Required documents are missing.');
+        }
+
+        // 3. Check age between 18 and 40
+        $age = \Carbon\Carbon::parse($applicant->dob)->age;
+        // if ($age < 18 || $age > 40) {
+        //     return back()->with('error', 'Applicant must be between 18 and 40 years old.');
+        // }
+
+
+        // 4. Check CNIC issue date not older than 10 years
+        $yearsSinceIssued = \Carbon\Carbon::parse($applicant->cnic_issue_date)->diffInYears(now());
+        if ($yearsSinceIssued > 10) {
+            return back()->with('error', 'Applicant\'s CNIC was expired.');
+        }
+
+        // If all checks pass -> Approve
+        $applicant->updateStatus('Approved', $request->remarks);
         $applicant->status = 'Approved';
         $applicant->save();
 
-        // you can also log this action here
-        $applicant->updateStatus('Approved', 'Approved by admin');
+        // Optional: log approval action
+        $applicant->updateStatus('Approved', $request->remarks);
 
         return back()->with('success', 'Applicant approved successfully.');
     }
@@ -159,13 +190,12 @@ class ApplicantController extends Controller
         if ($applicant->status !== 'Approved') {
             return back()->with('error', 'Only approved applications can be forwarded to the bank.');
         }
-
+        
+        $applicant->updateStatus('Forwarded', 'Forwarded by admin');
         $applicant->status = 'Forwarded';
         $applicant->save();
 
         // you can log here too
-         $applicant->updateStatus('Forwarded', 'Forwarded by admin');
-
         return back()->with('success', 'Applicant forwarded to bank successfully.');
     }
 
