@@ -1,13 +1,14 @@
  <!-- <script data-cfasync="false" src="cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script> -->
  <script src="{{ asset('assets/vendor/jquery/jquery.min.js') }}"></script>
  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+ <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
  <script src="{{ asset('assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}" crossorigin="anonymous"></script>
  <!-- <script src="{{ asset('assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}" crossorigin="anonymous"></script> -->
  <script src="{{ asset('assets/js/scripts.js') }}"></script>
 
  <script src="{{ asset('assets/vendor/chart.js/Chart.min.js') }}" crossorigin="anonymous"></script>
+ {{-- <script src="{{ asset('assets/demo/chart-area-demo.js') }}" crossorigin="anonymous"></script> --}}
  <!-- <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"></script> -->
  <script src="{{ asset('assets/vendor/datatables/simple-datatables.min.js') }}"></script>
  <script src="{{ asset('assets/js/datatables/datatables.js') }}"></script>
@@ -17,38 +18,6 @@
  <script src="{{ asset('assets/js/custom.js') }}"></script>
  <sb-customizer project="sb-admin-pro"></sb-customizer>
  <script>
-    //  (function() {
-    //      function c() {
-    //          var b = a.contentDocument || a.contentWindow.document;
-    //          if (b) {
-    //              var d = b.createElement('script');
-    //              d.innerHTML =
-    //                  "window.__CF$cv$params={r:'8ae5ec1cafafc914',t:'MTcyMjg1MTg0MC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='cdn-cgi/challenge-platform/h/b/scripts/jsd/8c81cb09042c/maind41d.js';document.getElementsByTagName('head')[0].appendChild(a);";
-    //              b.getElementsByTagName('head')[0].appendChild(d)
-    //          }
-    //      }
-    //      if (document.body) {
-    //          var a = document.createElement('iframe');
-    //          a.height = 1;
-    //          a.width = 1;
-    //          a.style.position = 'absolute';
-    //          a.style.top = 0;
-    //          a.style.left = 0;
-    //          a.style.border = 'none';
-    //          a.style.visibility = 'hidden';
-    //          document.body.appendChild(a);
-    //          if ('loading' !== document.readyState) c();
-    //          else if (window.addEventListener) document.addEventListener('DOMContentLoaded', c);
-    //          else {
-    //              var e = document.onreadystatechange || function() {};
-    //              document.onreadystatechange = function(b) {
-    //                  e(b);
-    //                  'loading' !== document.readyState && (document.onreadystatechange = e, c())
-    //              }
-    //          }
-    //      }
-    //  })();
-
      const routeMap = {
          'get.tehsils': "{{ route('get.tehsils', ':id') }}",
          'get.branches': "{{ route('get.branches', ':id') }}",

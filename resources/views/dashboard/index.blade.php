@@ -36,42 +36,13 @@
         <div class="container-xl px-4 mt-n10">
             <div class="row">
                 <div class="col-xxl-12 col-xl-12 mb-4">
-                    <!-- <div class="card h-100">
-                        <div class="card-body h-100 p-5">
-                            <div class="row align-items-center">
-                                <div class="col-xl-8 col-xxl-8">
-                                    <div class="text-center text-xl-start text-xxl-start mb-4 mb-xl-0 mb-xxl-4">
-                                        <h1 class="text-primary">Welcome to PMYPL</h1>
-                                        <p class="text-gray-700 mb-0">Azad Government of the State of Jammu & Kashmir.</p>
-                                    </div>
-                                </div>
-                                <div class="col-xl-4 col-xxl-4 text-center"><img class="img-fluid" src="{{ asset('images/full_map.png') }}" style="max-width: 10rem" /></div>
-                            </div>
-                        </div>
-                    </div> -->
+                   
                 </div>
             </div>
         </div>
         <div class="container-xl px-4">
             <!-- Example Colored Cards for Dashboard Demo-->
             <div class="row">
-                <div class="col-lg-6 col-xl-3 mb-4">
-                    <div class="card bg-primary text-white h-100">
-                        <div class="card-body">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="me-3">
-                                    <div class="text-white-75 small">Total </div>
-                                    <div class="text-lg fw-bold">{{ $total }}</div>
-                                </div>
-                                <i class="feather-xl text-white-50" data-feather="activity"></i>
-                            </div>
-                        </div>
-                        <div class="card-footer d-flex align-items-center justify-content-between small">
-                            <a class="text-white stretched-link" href="">View</a>
-                            <div class="text-white"><i class="fas fa-angle-right"></i></div>
-                        </div>
-                    </div>
-                </div>
                 <div class="col-lg-6 col-xl-3 mb-4">
                     <div class="card bg-warning text-white h-100">
                         <div class="card-body">
@@ -84,8 +55,8 @@
                             </div>
                         </div>
                         <div class="card-footer d-flex align-items-center justify-content-between small">
-                            <a class="text-white stretched-link" href="">View</a>
-                            <div class="text-white"><i class="fas fa-angle-right"></i></div>
+                            {{-- <a class="text-white stretched-link" href="">View</a> --}}
+                            {{-- <div class="text-white"><i class="fas fa-angle-right"></i></div> --}}
                         </div>
                     </div>
                 </div>
@@ -94,15 +65,32 @@
                         <div class="card-body">
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="me-3">
-                                    <div class="text-white-75 small">Forworded</div>
-                                    <div class="text-lg fw-bold">{{ $forwarded }}</div>
+                                    <div class="text-white-75 small">Approved</div>
+                                    <div class="text-lg fw-bold">{{ $approved }}</div>
                                 </div>
                                 <i class="feather-xl text-white-50" data-feather="home"></i>
                             </div>
                         </div>
                         <div class="card-footer d-flex align-items-center justify-content-between small">
-                            <a class="text-white stretched-link" href="">View</a>
-                            <div class="text-white"><i class="fas fa-angle-right"></i></div>
+                            {{-- <a class="text-white stretched-link" href="">View</a> --}}
+                            {{-- <div class="text-white"><i class="fas fa-angle-right"></i></div> --}}
+                        </div>
+                    </div>
+                </div>
+                   <div class="col-lg-6 col-xl-3 mb-4">
+                    <div class="card bg-primary text-white h-100">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="me-3">
+                                    <div class="text-white-75 small">Forworded </div>
+                                    <div class="text-lg fw-bold">{{ $forwarded }}</div>
+                                </div>
+                                <i class="feather-xl text-white-50" data-feather="activity"></i>
+                            </div>
+                        </div>
+                        <div class="card-footer d-flex align-items-center justify-content-between small">
+                            {{-- <a class="text-white stretched-link" href="">View</a> --}}
+                            {{-- <div class="text-white"><i class="fas fa-angle-right"></i></div> --}}
                         </div>
                     </div>
                 </div>
@@ -118,8 +106,8 @@
                             </div>
                         </div>
                         <div class="card-footer d-flex align-items-center justify-content-between small">
-                            <a class="text-white stretched-link" href="">View</a>
-                            <div class="text-white"><i class="fas fa-angle-right"></i></div>
+                            {{-- <a class="text-white stretched-link" href="">View</a> --}}
+                            {{-- <div class="text-white"><i class="fas fa-angle-right"></i></div> --}}
                         </div>
                     </div>
                 </div>
@@ -133,10 +121,11 @@
                             <ul class="nav nav-tabs card-header-tabs" id="dashboardNav" role="tablist">
                                 <li class="nav-item me-1"><a class="nav-link active" id="overview-pill" href="#overview"
                                         data-bs-toggle="tab" role="tab" aria-controls="overview"
-                                        aria-selected="true">Overview</a></li>
+                                        aria-selected="true">Daily</a></li>
                                 <li class="nav-item"><a class="nav-link" id="activities-pill" href="#activities"
                                         data-bs-toggle="tab" role="tab" aria-controls="activities"
-                                        aria-selected="false">Activities</a></li>
+                                        aria-selected="false">Monthly</a></li>
+
                             </ul>
                         </div>
                         <div class="card-body">
@@ -145,162 +134,220 @@
                                 <div class="tab-pane fade show active" id="overview" role="tabpanel"
                                     aria-labelledby="overview-pill">
                                     <div class="chart-area mb-4 mb-lg-0" style="height: 20rem">
-                                        <canvas id="myAreaChart"
-                                            width="100%" height="30"></canvas>
-                                        </div>
+                                        <canvas id="dailyChart" width="100%" height="30"></canvas>
+                                    </div>
                                 </div>
                                 <!-- Dashboard Tab Pane 2-->
                                 <div class="tab-pane fade" id="activities" role="tabpanel"
                                     aria-labelledby="activities-pill">
-                                    <table id="datatablesSimple">
-                                        <thead>
-                                            <tr>
-                                                <th>Date</th>
-                                                <th>Event</th>
-                                                <th>Time</th>
-                                            </tr>
-                                        </thead>
-                                        <tfoot>
-                                            <tr>
-                                                <th>Date</th>
-                                                <th>Event</th>
-                                                <th>Time</th>
-                                            </tr>
-                                        </tfoot>
-                                        <tbody>
-                                            <tr>
-                                                <td>01/13/20</td>
-                                                <td>
-                                                    <i class="me-2 text-green" data-feather="zap"></i>
-                                                    Server online
-                                                </td>
-                                                <td>1:21 AM</td>
-                                            </tr>
-                                            <tr>
-                                                <td>01/13/20</td>
-                                                <td>
-                                                    <i class="me-2 text-red" data-feather="zap-off"></i>
-                                                    Server restarted
-                                                </td>
-                                                <td>1:00 AM</td>
-                                            </tr>
-                                            <tr>
-                                                <td>01/12/20</td>
-                                                <td>
-                                                    <i class="me-2 text-purple" data-feather="shopping-cart"></i>
-                                                    New order placed! Order #
-                                                    <a href="#!">1126550</a>
-                                                </td>
-                                                <td>5:45 AM</td>
-                                            </tr>
-                                            <tr>
-                                                <td>01/12/20</td>
-                                                <td>
-                                                    <i class="me-2 text-blue" data-feather="user"></i>
-                                                    Valerie Luna submitted
-                                                    <a href="#!">quarter four report</a>
-                                                </td>
-                                                <td>4:23 PM</td>
-                                            </tr>
-                                            <tr>
-                                                <td>01/12/20</td>
-                                                <td>
-                                                    <i class="me-2 text-yellow" data-feather="database"></i>
-                                                    Database backup created
-                                                </td>
-                                                <td>3:51 AM</td>
-                                            </tr>
-                                            <tr>
-                                                <td>01/12/20</td>
-                                                <td>
-                                                    <i class="me-2 text-purple" data-feather="shopping-cart"></i>
-                                                    New order placed! Order #
-                                                    <a href="#!">1126549</a>
-                                                </td>
-                                                <td>1:22 AM</td>
-                                            </tr>
-                                            <tr>
-                                                <td>01/11/20</td>
-                                                <td>
-                                                    <i class="me-2 text-blue" data-feather="user-plus"></i>
-                                                    New user created:
-                                                    <a href="#!">Sam Malone</a>
-                                                </td>
-                                                <td>4:18 PM</td>
-                                            </tr>
-                                            <tr>
-                                                <td>01/11/20</td>
-                                                <td>
-                                                    <i class="me-2 text-purple" data-feather="shopping-cart"></i>
-                                                    New order placed! Order #
-                                                    <a href="#!">1126548</a>
-                                                </td>
-                                                <td>4:02 PM</td>
-                                            </tr>
-                                            <tr>
-                                                <td>01/11/20</td>
-                                                <td>
-                                                    <i class="me-2 text-purple" data-feather="shopping-cart"></i>
-                                                    New order placed! Order #
-                                                    <a href="#!">1126547</a>
-                                                </td>
-                                                <td>3:47 PM</td>
-                                            </tr>
-                                            <tr>
-                                                <td>01/11/20</td>
-                                                <td>
-                                                    <i class="me-2 text-green" data-feather="zap"></i>
-                                                    Server online
-                                                </td>
-                                                <td>1:19 AM</td>
-                                            </tr>
-                                            <tr>
-                                                <td>01/11/20</td>
-                                                <td>
-                                                    <i class="me-2 text-red" data-feather="zap-off"></i>
-                                                    Server restarted
-                                                </td>
-                                                <td>1:00 AM</td>
-                                            </tr>
-                                            <tr>
-                                                <td>01/10/20</td>
-                                                <td>
-                                                    <i class="me-2 text-purple" data-feather="shopping-cart"></i>
-                                                    New order placed! Order #
-                                                    <a href="#!">1126547</a>
-                                                </td>
-                                                <td>5:31 PM</td>
-                                            </tr>
-                                            <tr>
-                                                <td>01/10/20</td>
-                                                <td>
-                                                    <i class="me-2 text-purple" data-feather="shopping-cart"></i>
-                                                    New order placed! Order #
-                                                    <a href="#!">1126546</a>
-                                                </td>
-                                                <td>12:13 PM</td>
-                                            </tr>
-                                            <tr>
-                                                <td>01/10/20</td>
-                                                <td>
-                                                    <i class="me-2 text-blue" data-feather="user"></i>
-                                                    Diane Chambers submitted
-                                                    <a href="#!">quarter four report</a>
-                                                </td>
-                                                <td>10:56 AM</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                                    <div class="chart-area mb-4 mb-lg-0" style="height: 20rem">
+                                        <canvas id="monthlyChart" width="100%" height="30"></canvas>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-               
+
             </div>
         </div>
     </main>
-@section('scripts')
-    <script></script>
-@endsection
+    @push('scripts')
+        <script>
+            // Set new default font family and font color to mimic Bootstrap's default styling
+            Chart.defaults.global.defaultFontFamily =
+                'Metropolis, -apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
+            Chart.defaults.global.defaultFontColor = "#858796";
+
+            function number_format(number, decimals, dec_point, thousands_sep) {
+                number = (number + "").replace(",", "").replace(" ", "");
+                var n = !isFinite(+number) ? 0 : +number,
+                    prec = !isFinite(+decimals) ? 0 : Math.abs(decimals),
+                    sep = (typeof thousands_sep === "undefined") ? "," : thousands_sep,
+                    dec = (typeof dec_point === "undefined") ? "." : dec_point,
+                    s = "",
+                    toFixedFix = function(n, prec) {
+                        var k = Math.pow(10, prec);
+                        return "" + Math.round(n * k) / k;
+                    };
+                s = (prec ? toFixedFix(n, prec) : "" + Math.round(n)).split(".");
+                if (s[0].length > 3) {
+                    s[0] = s[0].replace(/\B(?=(?:\d{3})+(?!\d))/g, sep);
+                }
+                if ((s[1] || "").length < prec) {
+                    s[1] = s[1] || "";
+                    s[1] += new Array(prec - s[1].length + 1).join("0");
+                }
+                return s.join(dec);
+            }
+
+            // Get Laravel data
+            const daily = @json($daily);
+            const monthly = @json($monthly);
+
+            // ================= DAILY CHART =================
+            var dailyCtx = document.getElementById("dailyChart");
+            var dailyChart = new Chart(dailyCtx, {
+                type: 'line',
+                data: {
+                    labels: daily.map(d => d.date),
+                    datasets: [{
+                        label: "Daily Applications",
+                        lineTension: 0.3,
+                        backgroundColor: "rgba(0, 97, 242, 0.05)",
+                        borderColor: "rgba(0, 97, 242, 1)",
+                        pointRadius: 3,
+                        pointBackgroundColor: "rgba(0, 97, 242, 1)",
+                        pointBorderColor: "rgba(0, 97, 242, 1)",
+                        pointHoverRadius: 3,
+                        pointHoverBackgroundColor: "rgba(0, 97, 242, 1)",
+                        pointHoverBorderColor: "rgba(0, 97, 242, 1)",
+                        pointHitRadius: 10,
+                        pointBorderWidth: 2,
+                        data: daily.map(d => d.total)
+                    }]
+                },
+                options: {
+                    maintainAspectRatio: false,
+                    layout: {
+                        padding: {
+                            left: 10,
+                            right: 25,
+                            top: 25,
+                            bottom: 0
+                        }
+                    },
+                    scales: {
+                        xAxes: [{
+                            gridLines: {
+                                display: false,
+                                drawBorder: false
+                            },
+                            ticks: {
+                                maxTicksLimit: 7
+                            }
+                        }],
+                        yAxes: [{
+                            ticks: {
+                                maxTicksLimit: 5,
+                                padding: 10,
+                                callback: function(value) {
+                                    return number_format(value);
+                                }
+                            },
+                            gridLines: {
+                                color: "rgb(234, 236, 244)",
+                                zeroLineColor: "rgb(234, 236, 244)",
+                                drawBorder: false,
+                                borderDash: [2],
+                                zeroLineBorderDash: [2]
+                            }
+                        }]
+                    },
+                    legend: {
+                        display: false
+                    },
+                    tooltips: {
+                        backgroundColor: "rgb(255,255,255)",
+                        bodyFontColor: "#858796",
+                        titleMarginBottom: 10,
+                        titleFontColor: "#6e707e",
+                        titleFontSize: 14,
+                        borderColor: "#dddfeb",
+                        borderWidth: 1,
+                        xPadding: 15,
+                        yPadding: 15,
+                        displayColors: false,
+                        intersect: false,
+                        mode: "index",
+                        caretPadding: 10,
+                        callbacks: {
+                            label: function(tooltipItem, chart) {
+                                var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
+                                return datasetLabel + ": " + number_format(tooltipItem.yLabel);
+                            }
+                        }
+                    }
+                }
+            });
+
+            // ================= MONTHLY CHART =================
+            var monthlyCtx = document.getElementById("monthlyChart");
+            var monthlyChart = new Chart(monthlyCtx, {
+                type: 'bar',
+                data: {
+                    labels: monthly.map(m => m.month),
+                    datasets: [{
+                        label: "Monthly Applications",
+                        backgroundColor: "rgba(0, 123, 255, 0.5)",
+                        hoverBackgroundColor: "rgba(0, 123, 255, 0.7)",
+                        borderColor: "rgba(0, 123, 255, 1)",
+                        data: monthly.map(m => m.total)
+                    }]
+                },
+                options: {
+                    maintainAspectRatio: false,
+                    layout: {
+                        padding: {
+                            left: 10,
+                            right: 25,
+                            top: 25,
+                            bottom: 0
+                        }
+                    },
+                    scales: {
+                        xAxes: [{
+                            gridLines: {
+                                display: false,
+                                drawBorder: false
+                            },
+                            ticks: {
+                                maxTicksLimit: 6
+                            }
+                        }],
+                        yAxes: [{
+                            ticks: {
+                                maxTicksLimit: 5,
+                                padding: 10,
+                                callback: function(value) {
+                                    return number_format(value);
+                                }
+                            },
+                            gridLines: {
+                                color: "rgb(234, 236, 244)",
+                                zeroLineColor: "rgb(234, 236, 244)",
+                                drawBorder: false,
+                                borderDash: [2],
+                                zeroLineBorderDash: [2]
+                            }
+                        }]
+                    },
+                    legend: {
+                        display: false
+                    },
+                    tooltips: {
+                        backgroundColor: "rgb(255,255,255)",
+                        bodyFontColor: "#858796",
+                        titleMarginBottom: 10,
+                        titleFontColor: "#6e707e",
+                        titleFontSize: 14,
+                        borderColor: "#dddfeb",
+                        borderWidth: 1,
+                        xPadding: 15,
+                        yPadding: 15,
+                        displayColors: false,
+                        intersect: false,
+                        mode: "index",
+                        caretPadding: 10,
+                        callbacks: {
+                            label: function(tooltipItem, chart) {
+                                var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
+                                return datasetLabel + ": " + number_format(tooltipItem.yLabel);
+                            }
+                        }
+                    }
+                }
+            });
+        </script>
+    @endpush
 @endsection
