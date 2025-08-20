@@ -43,6 +43,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/applicants/{id}/approve', [\App\Http\Controllers\ApplicantController::class, 'approve'])->name('applicants.approve');
     Route::post('/applicants/{id}/forward-to-bank', [\App\Http\Controllers\ApplicantController::class, 'forwardToBank'])->name('applicants.forward');
 
+    // ---------------Avtivity Logs----------------------------------------------------------
+    Route::get('activity-logs', [\App\Http\Controllers\ActivityLogController::class, 'index'])->name('activitylogs.index');
+    Route::get('/activity-logs/{id}', [\App\Http\Controllers\ActivityLogController::class, 'show'])->name('activitylogs.show');
+
     Route::get('/run-migrations', [MigrationController::class, 'runMigrations']);
 });
 Route::post('/logout', [\App\Http\Controllers\AuthController::class, 'logout'])->name('logout');

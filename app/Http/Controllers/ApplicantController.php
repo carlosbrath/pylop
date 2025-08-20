@@ -9,6 +9,7 @@ use App\Models\Location;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
+use Yajra\DataTables\Facades\DataTables;
 
 class ApplicantController extends Controller
 {
@@ -17,13 +18,43 @@ class ApplicantController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function indexold()
     {
 
         $title = 'Applications';
         $page_title = 'Applications';
         $applicants = Applicant::get();
         return view('applicants.list', compact('applicants', 'title', 'page_title'));
+    }
+    public function index(Request $request)
+    {
+        if ($request->ajax()) {
+            $applicants = Applicant::latest();
+
+            return DataTables::of($applicants)
+                ->addIndexColumn()
+                ->addColumn('tier_label', function ($row) {
+                    if ($row->tier == 1) {
+                        return 'Tier 1 (Up to 5 Lakh)';
+                    } elseif ($row->tier == 2) {
+                        return 'Tier 2 (5 to 10 Lakh)';
+                    } else {
+                        return 'Tier 3 (10 to 20 Lakh)';
+                    }
+                })
+                ->addColumn('status_label', function ($row) {
+                    return applicant_status_badge($row); // your helper
+                })
+                ->addColumn('action', function ($row) {
+                    return view('applicants.actions', compact('row'))->render();
+                })
+                ->rawColumns(['status_label', 'action']) // prevent escaping HTML
+                ->make(true);
+        }
+
+        $title = 'Applications';
+        $page_title = 'Applications';
+        return view('applicants.list', compact('title', 'page_title'));
     }
 
     /**
@@ -190,7 +221,7 @@ class ApplicantController extends Controller
         if ($applicant->status !== 'Approved') {
             return back()->with('error', 'Only approved applications can be forwarded to the bank.');
         }
-        
+
         $applicant->updateStatus('Forwarded', 'Forwarded by admin');
         $applicant->status = 'Forwarded';
         $applicant->save();
