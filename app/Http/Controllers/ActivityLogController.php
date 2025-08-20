@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\ActivityLog;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
+use Yajra\DataTables\Facades\DataTables;
 
 class ActivityLogController extends Controller
 {
