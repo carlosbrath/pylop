@@ -52,12 +52,8 @@ Route::middleware('auth:sanctum')->group(function () {
     // ---------------Avtivity Logs----------------------------------------------------------
     Route::get('activity-logs', [\App\Http\Controllers\ActivityLogController::class, 'index'])->name('activitylogs.index');
     Route::get('/activity-logs/{id}', [\App\Http\Controllers\ActivityLogController::class, 'show'])->name('activitylogs.show');
-    Route::match(
-        ['post', 'get'],
-        '/change/Password',
-        [\App\Http\Controllers\UserContoller::class, 'changePassword']
-    )->name('change.password');
-    
+    Route::match( ['post', 'get'], '/change/Password', [\App\Http\Controllers\UserContoller::class, 'changePassword'])->name('change.password');
+
     Route::get('/run-migrations', [MigrationController::class, 'runMigrations']);
 });
 Route::post('/logout', [\App\Http\Controllers\AuthController::class, 'logout'])->name('logout');
