@@ -48,7 +48,12 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::post('/applicants/{id}/approve', [\App\Http\Controllers\ApplicantController::class, 'approve'])->name('applicants.approve');
     Route::post('/applicants/{id}/forward-to-bank', [\App\Http\Controllers\ApplicantController::class, 'forwardToBank'])->name('applicants.forward');
-
+    Route::match(
+        ['post', 'get'],
+        '/change/Password',
+        [\App\Http\Controllers\UserContoller::class, 'changePassword']
+    )->name('change.password');
+    
     Route::get('/run-migrations', [MigrationController::class, 'runMigrations']);
 });
 Route::post('/logout', [\App\Http\Controllers\AuthController::class, 'logout'])->name('logout');

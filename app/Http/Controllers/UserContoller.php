@@ -203,7 +203,7 @@ class UserContoller extends Controller
         }
         return redirect()->route('user.show', $user->id);
     }
-    public function changePassword(Request $request)
+public function changePassword(Request $request)
     {
         $id = auth()->user()->id;
         if ($request->isMethod('get')) {
