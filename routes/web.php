@@ -54,6 +54,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/activity-logs/{id}', [\App\Http\Controllers\ActivityLogController::class, 'show'])->name('activitylogs.show');
     Route::match( ['post', 'get'], '/change/Password', [\App\Http\Controllers\UserContoller::class, 'changePassword'])->name('change.password');
 
+    // ----------------------Ajax Loads------------------------------------------------------
+    Route::get('/ajax/gender-quota', [\App\Http\Controllers\AjaxController::class, 'genderQuota'])->name('ajax.gender-quota');
+
+
     Route::get('/run-migrations', [MigrationController::class, 'runMigrations']);
 });
 Route::post('/logout', [\App\Http\Controllers\AuthController::class, 'logout'])->name('logout');

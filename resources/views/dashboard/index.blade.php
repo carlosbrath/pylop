@@ -36,7 +36,7 @@
         <div class="container-xl px-4 mt-n10">
             <div class="row">
                 <div class="col-xxl-12 col-xl-12 mb-4">
-                   
+
                 </div>
             </div>
         </div>
@@ -77,7 +77,7 @@
                         </div>
                     </div>
                 </div>
-                   <div class="col-lg-6 col-xl-3 mb-4">
+                <div class="col-lg-6 col-xl-3 mb-4">
                     <div class="card bg-primary text-white h-100">
                         <div class="card-body">
                             <div class="d-flex justify-content-between align-items-center">
@@ -111,6 +111,182 @@
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 col-xl-6 mb-4">
+                    <div class="card bg-gradient-fresh text-white h-100">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <div class="me-3">
+                                    <div class="text-white-75 small">Gender Quota</div>
+                                    <div class="text-lg fw-bold">Applicants by Status</div>
+                                </div>
+                                <div class="d-flex flex-column align-items-center">
+                                    <!-- Reload Icon -->
+                                    <i id="reload-gender-btn" class="text-white-50 reload-icon"
+                                        data-feather="refresh-cw"></i>
+
+                                    <!-- Users Icon -->
+                                    <i class="feather-xl text-white-50 mt-2" data-feather="users"></i>
+                                </div>
+                            </div>
+
+                            <div class="table-responsive">
+                                <table id="gender-quota-table" class="table table-sm   text-white mb-0">
+                                    <thead>
+                                        <tr class="text-center">
+                                            <th></th>
+                                            <th>Pending</th>
+                                            <th>Approved</th>
+                                            <th>Forwarded</th>
+                                            <th>Rejected</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="text-center">
+                                            <td class="text-start">Male</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr class="text-center">
+                                            <td class="text-start">Female</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr class="text-center">
+                                            <td class="text-start">Specila Persons</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr class="text-center">
+                                            <td class="text-start">Transgender</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="card-footer small text-white-50 text-center">
+                            Gender-wise status distribution
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12 col-xl-6 mb-4">
+                    <div class="card bg-primary text-white h-100">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <div class="me-3">
+                                    <div class="text-white-75 small">Tier Quota</div>
+                                    <div class="text-lg fw-bold">Applicants by Status</div>
+                                </div>
+                                <i class="feather-xl text-white-50" data-feather="users"></i>
+                            </div>
+
+                            <div class="table-responsive">
+                                <table class="table table-sm  text-white mb-0">
+                                    <thead>
+                                        <tr class="text-center">
+                                            <th></th>
+                                            <th>Pending</th>
+                                            <th>Approved</th>
+                                            <th>Forwarded</th>
+                                            <th>Rejected</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="text-center">
+                                            <td class="text-start">Tier 1</td>
+                                            <td>{{ $male_pending ?? '' }}</td>
+                                            <td>{{ $male_approved ?? '' }}</td>
+                                            <td>{{ $male_forwarded ?? '' }}</td>
+                                            <td>{{ $male_rejected ?? '' }}</td>
+                                        </tr>
+                                        <tr class="text-center">
+                                            <td class="text-start">Tier 2</td>
+                                            <td>{{ $female_pending ?? '' }}</td>
+                                            <td>{{ $female_approved ?? '' }}</td>
+                                            <td>{{ $female_forwarded ?? '' }}</td>
+                                            <td>{{ $female_rejected ?? '' }}</td>
+                                        </tr>
+                                        <tr class="text-center">
+                                            <td class="text-start">Tier 3</td>
+                                            <td>{{ $female_pending ?? '' }}</td>
+                                            <td>{{ $female_approved ?? '' }}</td>
+                                            <td>{{ $female_forwarded ?? '' }}</td>
+                                            <td>{{ $female_rejected ?? '' }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="card-footer small text-white-50 text-center">
+                            Tiers of Loan Limit
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12 col-xl-6 mb-4">
+                    <div class="card bg-primary text-white h-100">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <div class="me-3">
+                                    <div class="text-white-75 small">District</div>
+                                    <div class="text-lg fw-bold">Applicants by Status</div>
+                                </div>
+                                <i class="feather-xl text-white-50" data-feather="users"></i>
+                            </div>
+
+                            <div class="table-responsive">
+                                <table class="table table-sm  text-white mb-0">
+                                    <thead>
+                                        <tr class="text-center">
+                                            <th></th>
+                                            <th>Pending</th>
+                                            <th>Approved</th>
+                                            <th>Forwarded</th>
+                                            <th>Rejected</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="text-center">
+                                            <td class="text-start">Tier 1</td>
+                                            <td>{{ $male_pending ?? '' }}</td>
+                                            <td>{{ $male_approved ?? '' }}</td>
+                                            <td>{{ $male_forwarded ?? '' }}</td>
+                                            <td>{{ $male_rejected ?? '' }}</td>
+                                        </tr>
+                                        <tr class="text-center">
+                                            <td class="text-start">Tier 2</td>
+                                            <td>{{ $female_pending ?? '' }}</td>
+                                            <td>{{ $female_approved ?? '' }}</td>
+                                            <td>{{ $female_forwarded ?? '' }}</td>
+                                            <td>{{ $female_rejected ?? '' }}</td>
+                                        </tr>
+                                        <tr class="text-center">
+                                            <td class="text-start">Tier 3</td>
+                                            <td>{{ $female_pending ?? '' }}</td>
+                                            <td>{{ $female_approved ?? '' }}</td>
+                                            <td>{{ $female_forwarded ?? '' }}</td>
+                                            <td>{{ $female_rejected ?? '' }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="card-footer small text-white-50 text-center">
+                            Tiers of Loan Limit
+                        </div>
+                    </div>
+                </div>
+
             </div>
             <div class="row">
                 <div class="col-xxl-12">
@@ -348,6 +524,58 @@
                     }
                 }
             });
+
+            loadCardData("{{ route('ajax.gender-quota') }}", "gender-quota-table");
+
+            function loadCardData(url, targetId, rowMap = {}, callback = null) {
+                $.ajax({
+                    url: url,
+                    type: "GET",
+                    dataType: "json",
+                    success: function(response) {
+                        if (response.data) {
+                            renderGenderQuota(response.data, targetId)
+                        }
+                        if (callback && typeof callback === "function") {
+                            callback(response);
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("Error loading card data:", error);
+                    }
+                });
+            }
+
+            function renderGenderQuota(data, targetId) {
+                let tbodyHtml = "";
+                const rowMap = {
+                    male: "Male",
+                    female: "Female",
+                    special: "Special",
+                    transgender: "Transgender"
+                };
+
+                data.forEach(function(item) {
+                    let genderKey = item.gender.toLowerCase();
+                    let rowLabel = rowMap[genderKey] || item.gender;
+
+                    tbodyHtml += `
+                        <tr class="text-center">
+                            <td class="text-start">${rowLabel}</td>
+                            <td>${item.pending ?? '-'}</td>
+                            <td>${item.approved ?? '-'}</td>
+                            <td>${item.forwarded ?? '-'}</td>
+                            <td>${item.rejected ?? '-'}</td>
+                        </tr>
+                    `;
+                });
+                // Replace the table body
+                $("#" + targetId + " tbody").html(tbodyHtml);
+            }
+
+            function capitalize(str) {
+                return str.charAt(0).toUpperCase() + str.slice(1);
+            }
         </script>
     @endpush
 @endsection

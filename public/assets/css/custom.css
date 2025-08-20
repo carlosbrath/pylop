@@ -51,6 +51,36 @@
 .leaflet-control-attribution a:first-child {
     display: none;
 }
+.bg-gradient-fresh {
+    background: linear-gradient(
+        135deg,
+        rgba(33, 165, 101, 0.9),
+        rgba(0, 210, 170, 0.9),
+        rgba(33, 165, 101, 0.9)
+    );
+    background-size: 300% 300%;
+    animation: gradientMove 6s ease infinite;
+}
+
+@keyframes gradientMove {
+    0% {
+        background-position: 100% 100%;
+    }
+    50% {
+        background-position: 0% 0%;
+    }
+    100% {
+        background-position: 100% 100%;
+    }
+}
+.reload-icon {
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.reload-icon:hover {
+    color: #ffffff; /* hover pe pure white ho jayega */
+}
 
 @media print {
     body * {
@@ -69,4 +99,3 @@
         width: 100%;
     }
 }
-
