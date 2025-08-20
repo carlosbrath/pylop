@@ -203,58 +203,64 @@ class UserContoller extends Controller
         }
         return redirect()->route('user.show', $user->id);
     }
-    public function changePassword(Request $request, $id)
+    public function changePassword(Request $request)
     {
-        try {
-            $validator = Validator::make($request->all(), [
-                'password' => 'required|string|min:8|confirmed',
-            ]);
-            if ($validator->fails()) {
+        $id = auth()->user()->id;
+        if ($request->isMethod('get')) {
+            return view('users.change-password');
+        }
+        if ($request->isMethod('post')) {
+            try {
+                $validator = Validator::make($request->all(), [
+                    'password' => 'required|string|min:8|confirmed',
+                ]);
+                if ($validator->fails()) {
+                    if ($request->expectsJson()) {
+                        return response()->json([
+                            'error' => 'Validation failed',
+                            'errors' => $validator->errors()
+                        ], 422);
+                    } else {
+                        return redirect()->back()
+                            ->withErrors($validator->errors())
+                            ->withInput();
+                    }
+                }
+                $user = User::find($id);
+                if (!$user) {
+                    return redirect()->back()->with('error', 'User not found.');
+                }
+                $user->password = Hash::make($request->password);
+                $user->save();
+                return redirect()->route('user.show', $user->id)->with('success', 'Password updated successfully.');
+            } catch (QueryException $e) {
                 if ($request->expectsJson()) {
-                    return response()->json([
-                        'error' => 'Validation failed',
-                        'errors' => $validator->errors()
-                    ], 422);
+                    return response()->json(
+                        [
+                            'error' => 'Database error',
+                            'errors' => $e->getMessage()
+                        ],
+                        500
+                    );
                 } else {
                     return redirect()->back()
-                        ->withErrors($validator->errors())
+                        ->withErrors($e->errors())
                         ->withInput();
                 }
-            }
-            $user = User::find($id);
-            if (!$user) {
-                return redirect()->back()->with('error', 'User not found.');
-            }
-            $user->password = Hash::make($request->password);
-            $user->save();
-            return redirect()->route('user.show', $user->id)->with('success', 'Password updated successfully.');
-        } catch (QueryException $e) {
-            if ($request->expectsJson()) {
-                return response()->json(
-                    [
-                        'error' => 'Database error',
-                        'errors' => $e->getMessage()
-                    ],
-                    500
-                );
-            } else {
-                return redirect()->back()
-                    ->withErrors($e->errors())
-                    ->withInput();
-            }
-        } catch (Exception $e) {
-            if ($request->expectsJson()) {
-                return response()->json(
-                    [
-                        'error' => 'An unexpected error occurred',
-                        'errors' => $e->getMessage()
-                    ],
-                    500
-                );
-            } else {
-                return redirect()->back()
-                    ->withErrors($e->errors())
-                    ->withInput();
+            } catch (Exception $e) {
+                if ($request->expectsJson()) {
+                    return response()->json(
+                        [
+                            'error' => 'An unexpected error occurred',
+                            'errors' => $e->getMessage()
+                        ],
+                        500
+                    );
+                } else {
+                    return redirect()->back()
+                        ->withErrors($e->errors())
+                        ->withInput();
+                }
             }
         }
     }
