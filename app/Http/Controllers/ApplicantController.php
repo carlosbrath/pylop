@@ -58,7 +58,7 @@ class ApplicantController extends Controller
         $title = 'Applications';
         $page_title = 'Applications';
         $applicant = Applicant::find($id);
-        $applicant->updateStatus('Approved', 'Approved by admin');
+        // $applicant->updateStatus('Approved', 'Approved by admin');
         return view('applicants.show', compact('applicant', 'title', 'page_title'));
     }
 

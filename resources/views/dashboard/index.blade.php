@@ -37,18 +37,18 @@
             <div class="row">
                 <div class="col-xxl-12 col-xl-12 mb-4">
                     <!-- <div class="card h-100">
-                        <div class="card-body h-100 p-5">
-                            <div class="row align-items-center">
-                                <div class="col-xl-8 col-xxl-8">
-                                    <div class="text-center text-xl-start text-xxl-start mb-4 mb-xl-0 mb-xxl-4">
-                                        <h1 class="text-primary">Welcome to Visit AJ&K</h1>
-                                        <p class="text-gray-700 mb-0">Azad Government of the State of Jammu & Kashmir.</p>
+                            <div class="card-body h-100 p-5">
+                                <div class="row align-items-center">
+                                    <div class="col-xl-8 col-xxl-8">
+                                        <div class="text-center text-xl-start text-xxl-start mb-4 mb-xl-0 mb-xxl-4">
+                                            <h1 class="text-primary">Welcome to Visit AJ&K</h1>
+                                            <p class="text-gray-700 mb-0">Azad Government of the State of Jammu & Kashmir.</p>
+                                        </div>
                                     </div>
+                                    <div class="col-xl-4 col-xxl-4 text-center"><img class="img-fluid" src="{{ asset('images/full_map.png') }}" style="max-width: 10rem" /></div>
                                 </div>
-                                <div class="col-xl-4 col-xxl-4 text-center"><img class="img-fluid" src="{{ asset('images/full_map.png') }}" style="max-width: 10rem" /></div>
                             </div>
-                        </div>
-                    </div> -->
+                        </div> -->
                 </div>
             </div>
         </div>
@@ -145,9 +145,8 @@
                                 <div class="tab-pane fade show active" id="overview" role="tabpanel"
                                     aria-labelledby="overview-pill">
                                     <div class="chart-area mb-4 mb-lg-0" style="height: 20rem">
-                                        <canvas id="myAreaChart"
-                                            width="100%" height="30"></canvas>
-                                        </div>
+                                        <canvas id="myAreaChart" width="100%" height="30"></canvas>
+                                    </div>
                                 </div>
                                 <!-- Dashboard Tab Pane 2-->
                                 <div class="tab-pane fade" id="activities" role="tabpanel"
@@ -296,7 +295,7 @@
                         </div>
                     </div>
                 </div>
-               
+
             </div>
         </div>
     </main>
