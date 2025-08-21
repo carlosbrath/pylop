@@ -262,7 +262,7 @@
                         </ul>
 
                         <div class="no-print mt-3 text-end">
-                            <button onclick="window.print()" class="btn btn-primary">Print Application</button>
+                            <a  href="{{route('application.print', $applicant->id)}}" target="_blank" class="btn btn-gradient"><i class="bi bi-printer"></i></a>
                         </div>
                     </div>
                     @if ($applicant->fee_status != 'paid')

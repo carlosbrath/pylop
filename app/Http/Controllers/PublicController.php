@@ -55,7 +55,7 @@ class PublicController extends Controller
 
         $districts = Location::where('type', 'district')->get();
         $categories = BusinessCategory::where('parent_id', 0)->with('children')->get();
-       
+
         // $categories = Branch::where('parent_id', 0)->with('children')->get();
 
         return view('public.step2', compact('title', 'cnic', 'issueDate', 'tier', 'districts', 'categories'));
@@ -208,10 +208,10 @@ class PublicController extends Controller
     {
         $applicant = null;
         $branches  = Branch::get();
-      
+
         if (session('auto_track') && session('application_id')) {
             $applicant = Applicant::with(['feeBranch', 'educations', 'district', 'tehsil'])->find(session('application_id'));
-                
+
             if (!$applicant) {
                 return redirect()->route('track.application')->withErrors([
                     'application_id' => 'No application found with the provided ID.',
@@ -224,17 +224,23 @@ class PublicController extends Controller
         if ($request->isMethod('post')) {
             $request->validate([
                 'cnic' => 'required|regex:/^\d{5}-\d{7}-\d{1}$/',
-                // 'issue_date' => 'required|date',
-                // 'dob' => 'required|date',
             ]);
             $applicant = Applicant::with(['feeBranch', 'educations', 'district', 'tehsil'])
-            ->where('cnic', $request->cnic)
-            ->first();
+                ->where('cnic', $request->cnic)
+                ->first();
             if (!$applicant) {
                 return back()->withErrors(['cnic' => 'No application found with the provided details.'])->withInput();
             }
         }
         return view('public.track-application', compact('applicant', 'branches'));
+    }
+    function printDoc($id)
+    {
+
+        $applicant = Applicant::with(['feeBranch', 'educations', 'district', 'tehsil'])
+            ->where('id', $id)
+            ->first();
+        return view('public.print', compact('applicant'));
     }
     public function getTehsils($id)
     {
@@ -246,7 +252,7 @@ class PublicController extends Controller
         $subcategories = BusinessCategory::where('parent_id', $id)->get();
         return response()->json($subcategories);
     }
-     public function getBranches($id)
+    public function getBranches($id)
     {
         $branch = Branch::get();
         return response()->json($branch);

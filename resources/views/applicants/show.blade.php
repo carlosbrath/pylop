@@ -81,7 +81,7 @@
                                                 onclick="remarks('{{ route('applicants.forward', $applicant->id) }}','approveForm', 'approve-section')"
                                                 id="forwordbtnBtn">Forward to Bank</button>
                                         @endif
-                                        <button onclick="window.print()" class="btn btn-primary">Print Application</button>
+                                        <a href="{{route('application.print', $applicant->id)}}" target="_blank" class="btn btn-primary"><i class="fa fa-print"></i></a>
                                     </div>
                                     <div id="remarks-section">
                                         <!-- Hidden form -->
