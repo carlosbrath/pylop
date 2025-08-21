@@ -56,6 +56,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // ----------------------Ajax Loads------------------------------------------------------
     Route::get('/ajax/gender-quota', [\App\Http\Controllers\AjaxController::class, 'genderQuota'])->name('ajax.gender-quota');
+    Route::get('/ajax/tier-quota', [\App\Http\Controllers\AjaxController::class, 'tierQuota'])->name('ajax.tier-quota');
 
 
     Route::get('/run-migrations', [MigrationController::class, 'runMigrations']);
