@@ -58,7 +58,7 @@
     </style>
     <section class="py-4">
         <div class="container">
-            <div class="row justify-content-center form-bg pb-4">
+            <div class="row justify-content-center form-bg pb-4" style="min-height: 70vh">
                 <div class="no-print">
                     <!-- Header -->
                     <div class="col-md-12  green-gradient text-white py-3 mb-4 rounded text-center">
@@ -84,7 +84,7 @@
                         @csrf
                         <div class="row g-3">
 
-                            <div class="col-4 offset-3">
+                            <div class="col-md-4 offset-md-3">
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="bi bi-credit-card-2-front"></i></span>
                                     <div class="form-floating flex-grow-1">
@@ -120,7 +120,7 @@
                                 </div>
                             </div> --}}
 
-                            <div class="col-4 mt-3 pt-3">
+                            <div class="col-md-4 mt-3 pt-3">
                                 <button type="submit" class="btn btn-success px-5">
                                     <i class="bi bi-search me-1"></i> Track Application
                                 </button>
