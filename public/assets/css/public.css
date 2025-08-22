@@ -34,6 +34,10 @@ a {
 .btn-secondary {
     background-color: var(--secondary-color) !important;
 }
+.btn-gradient {
+    background: radial-gradient(#005066, #00191f);
+    color: #fff;
+}
 .top-strip {
     background-color: #006400;
     color: white;

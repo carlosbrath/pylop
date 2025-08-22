@@ -21,7 +21,7 @@ Route::get('/', [PublicController::class, 'home'])->name('home');
 Route::get('/loan/application', [PublicController::class, 'step1'])->name('loan.application');
 Route::get('loan/application/form', [PublicController::class, 'step2'])->name('loan.application.form');
 Route::post('/upload-challan', [PublicController::class, 'uploadChallan'])->name('upload.challan');
-Route::get('/application/{id}/print', [PublicController::class, 'print'])->name('application.print');
+Route::get('/application/{id}/print', [PublicController::class, 'printDoc'])->name('application.print');
 Route::post('/storeForm', [PublicController::class, 'storeForm'])->name('storeForm');
 
 Route::get('/get-tehsils/{district_id}', [PublicController::class, 'getTehsils'])->name('get.tehsils');
@@ -53,6 +53,12 @@ Route::middleware('auth:sanctum')->group(function () {
     // ---------------Avtivity Logs----------------------------------------------------------
     Route::get('activity-logs', [\App\Http\Controllers\ActivityLogController::class, 'index'])->name('activitylogs.index');
     Route::get('/activity-logs/{id}', [\App\Http\Controllers\ActivityLogController::class, 'show'])->name('activitylogs.show');
+    Route::match( ['post', 'get'], '/change/Password', [\App\Http\Controllers\UserContoller::class, 'changePassword'])->name('change.password');
+
+    // ----------------------Ajax Loads------------------------------------------------------
+    Route::get('/ajax/gender-quota', [\App\Http\Controllers\AjaxController::class, 'genderQuota'])->name('ajax.gender-quota');
+    Route::get('/ajax/tier-quota', [\App\Http\Controllers\AjaxController::class, 'tierQuota'])->name('ajax.tier-quota');
+
 
     Route::get('/run-migrations', [MigrationController::class, 'runMigrations']);
 });
