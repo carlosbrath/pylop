@@ -48,6 +48,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::post('/applicants/{id}/approve', [\App\Http\Controllers\ApplicantController::class, 'approve'])->name('applicants.approve');
     Route::post('/applicants/{id}/forward-to-bank', [\App\Http\Controllers\ApplicantController::class, 'forwardToBank'])->name('applicants.forward');
+    Route::post('/applicants/{id}/reject', [\App\Http\Controllers\ApplicantController::class, 'reject'])->name('applicants.reject');
 
     // ---------------Avtivity Logs----------------------------------------------------------
     Route::get('activity-logs', [\App\Http\Controllers\ActivityLogController::class, 'index'])->name('activitylogs.index');

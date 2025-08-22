@@ -214,7 +214,7 @@ class ApplicantController extends Controller
         return back()->with('success', 'Applicant approved successfully.');
     }
 
-    public function forwardToBank($id)
+    public function forwardToBank(Request $request, $id)
     {
         $applicant = Applicant::findOrFail($id);
 
@@ -222,12 +222,23 @@ class ApplicantController extends Controller
             return back()->with('error', 'Only approved applications can be forwarded to the bank.');
         }
 
-        $applicant->updateStatus('Forwarded', 'Forwarded by admin');
+        $applicant->updateStatus('Forwarded', $request->remarks);
         $applicant->status = 'Forwarded';
         $applicant->save();
 
         // you can log here too
         return back()->with('success', 'Applicant forwarded to bank successfully.');
+    }
+    function reject(Request $request, $id)
+    {
+        $applicant = Applicant::findOrFail($id);
+
+        $applicant->updateStatus('Rejected', $request->remarks);
+        $applicant->status = 'Rejected';
+        $applicant->save();
+
+        // you can log here too
+        return back()->with('success', 'Applications Rejected.');
     }
 
     public function destroy($id)

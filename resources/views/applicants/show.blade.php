@@ -70,6 +70,11 @@
 
                                 <div class="no-print mt-4 text-end">
                                     <div id="approve-section">
+                                        @if ($applicant->status === 'Approved' || $applicant->status === 'Pending' || $applicant->status === 'Approved' )
+                                            <button type="button"
+                                                onclick="remarks('{{ route('applicants.reject', $applicant->id) }}','approveForm', 'approve-section')"
+                                                class="btn btn-success d-inline" id="approveBtn">Approve</button>
+                                        @endif
                                         @if ($applicant->status === 'Pending')
                                             <button type="button"
                                                 onclick="remarks('{{ route('applicants.approve', $applicant->id) }}','approveForm', 'approve-section')"
@@ -91,7 +96,7 @@
                                             <div class="mb-2">
                                                 <textarea name="remarks" class="form-control" rows="3" placeholder="Enter approval remarks..." required></textarea>
                                             </div>
-                                            <button type="submit" class="btn btn-success">Confirm Approve</button>
+                                            <button type="submit" class="btn btn-success">Confirm</button>
                                             <button type="button" class="btn btn-secondary"
                                                 id="cancelApprove">Cancel</button>
                                         </form>
