@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Crypt;
+use Yajra\DataTables\Facades\DataTables;
 
 class UserContoller extends Controller
 {
@@ -21,7 +22,7 @@ class UserContoller extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function index(Request $request)
+    public function indexold(Request $request)
     {
         $title = 'Users';
         $page_title = 'Users';
@@ -43,7 +44,28 @@ class UserContoller extends Controller
         }
         return view('users.list', compact('users', 'title', 'page_title'));
     }
+    
+    public function index(Request $request)
+    {
+        if ($request->ajax()) {
+            $User = User::with('role')->latest();
 
+            return DataTables::of($User)
+                ->addIndexColumn()
+                ->addColumn('status_label', function ($row) {
+                    return applicant_status_badge($row); // your helper
+                })
+                ->addColumn('action', function ($row) {
+                    return view('users.actions', compact('row'))->render();
+                })
+                ->rawColumns(['status_label', 'action']) // prevent escaping HTML
+                ->make(true);
+        }
+
+        $title = 'Users';
+        $page_title = 'Users';
+        return view('users.list', compact('title', 'page_title'));
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -203,7 +225,7 @@ class UserContoller extends Controller
         }
         return redirect()->route('user.show', $user->id);
     }
-public function changePassword(Request $request)
+    public function changePassword(Request $request)
     {
         $id = auth()->user()->id;
         if ($request->isMethod('get')) {

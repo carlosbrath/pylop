@@ -5,7 +5,6 @@
 @section('content')
 <main>
     @include('include.page_header')
-    <!-- Example DataTable for Dashboard Demo-->
     <div class="container-xl px-4 mt-4">
         <div class="card card-header-actions mb-4">
             <div class="card-header">
@@ -14,7 +13,7 @@
             </div>
            
             <div class="card-body">
-                <table id="datatablesSimple">
+                <table id="users-table" class="table table-bordered table-striped">
                     <thead>
                         <tr>
                             <th>Sr.No</th>
@@ -25,7 +24,7 @@
                             <th>Actions</th>
                         </tr>
                     </thead>
-                    <tfoot>
+                    {{-- <tfoot>
                         <tr>
                             <th>Name</th>
                             <th>Email</th>
@@ -33,28 +32,9 @@
                             <th>Status</th>
                             <th>Actions</th>
                         </tr>
-                    </tfoot>
+                    </tfoot> --}}
                     <tbody>
-                        @foreach($users as $user)
-                        <tr>
-                            <td>{{$loop->iteration}}</td>
-                            <td>{{$user->name}}</td>
-                            {{-- <td><img  src="{{ asset('images/profile_pictures/' . ($user->profile_picture ?? 'default.png')) }}" style="width: 50px; border-radius: 24px;" alt="profile Picture"></td> --}}
-                            <td>{{$user->email ?? $user->phone }}</td>
-                            <td>{{$user->role->title}}</td>
-                            <td>
-                                <div class="badge bg-primary text-white rounded-pill">Active</div>
-                            </td>
-                            <td>
-                                <button class="btn btn-datatable btn-icon btn-transparent-dark me-2" id="actionDropdown" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-ellipsis-vertical"></i></button>
-                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="actionDropdown">
-                                    <li><a class="dropdown-item" href="{{route('user.show', $user->id)}}">View</a></li>
-                                    <li><a class="dropdown-item" href="{{route('user.edit', $user->id)}}">Edit</a></li>
-                                </ul>
-                                <button class="btn btn-datatable btn-icon btn-transparent-dark" onclick="confirmDelete('{{ route('user.destroy', $user->id) }}', '{{ $user->id }}')"><i class="fa-regular fa-trash-can"></i></button>
-                            </td>
-                        </tr>
-                        @endforeach
+
                     </tbody>
                 </table>
             </div>
@@ -63,3 +43,31 @@
 </main>
 
 @endsection
+
+@push('scripts')
+<script>
+$(document).ready(function() {
+    $('#users-table').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: '{{ route('user.index') }}', // your route
+        columns: [
+            { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false },
+            { data: 'name', name: 'name' },
+            { data: 'email', name: 'email' },
+            { data: 'role.title', name: 'role' },
+            { data: 'status_label', name: 'status' },
+            { data: 'action', name: 'action', orderable: false, searchable: false },
+        ],
+        dom: 'Bfrtip',
+        buttons: ['pageLength','copy','csv','excel','pdf','print'],
+        responsive: true,
+        pageLength: 10,
+        lengthMenu: [
+            [10, 50, 100, 500, -1],
+            ['10 rows', '50 rows', '100 rows', '500 rows', 'Show all']
+        ],
+    });
+});
+</script>
+@endpush

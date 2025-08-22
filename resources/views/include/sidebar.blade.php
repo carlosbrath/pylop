@@ -56,12 +56,12 @@
                 
                 <!-- Sidenav Heading (Custom)-->
 
-                <div class="sidenav-menu-heading">Reports</div>
+                {{-- <div class="sidenav-menu-heading">Reports</div>
                 <!-- Sidenav Accordion (Utilities)-->
                 <a class="nav-link" href="">
                     <div class="nav-link-icon"><i data-feather="book"></i></div>
                     Reports
-                </a>
+                </a> --}}
                 
             </div>
         </div>
