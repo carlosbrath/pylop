@@ -73,20 +73,20 @@
                                         @if ($applicant->status === 'Approved' || $applicant->status === 'Pending' || $applicant->status === 'Approved' )
                                             <button type="button"
                                                 onclick="remarks('{{ route('applicants.reject', $applicant->id) }}','approveForm', 'approve-section')"
-                                                class="btn btn-success d-inline" id="approveBtn">Approve</button>
+                                                class="btn btn-danger d-inline" id="approveBtn" data-bs-toggle="tooltip" data-bs-placement="top" title="Reject"><i class="fa fa-close"></i></button>
                                         @endif
                                         @if ($applicant->status === 'Pending')
                                             <button type="button"
                                                 onclick="remarks('{{ route('applicants.approve', $applicant->id) }}','approveForm', 'approve-section')"
-                                                class="btn btn-success d-inline" id="approveBtn">Approve</button>
+                                                class="btn btn-success d-inline" id="approveBtn" data-bs-toggle="tooltip" data-bs-placement="top" title="Approve"><i class="fa fa-check"></i></button>
                                         @endif
 
                                         @if ($applicant->status === 'Approved')
-                                            <button type="button" class="btn btn-success d-inline"
+                                            <button type="button" class="btn btn-info d-inline"
                                                 onclick="remarks('{{ route('applicants.forward', $applicant->id) }}','approveForm', 'approve-section')"
-                                                id="forwordbtnBtn">Forward to Bank</button>
+                                                id="forwordbtnBtn" data-bs-toggle="tooltip" data-bs-placement="top" title="Forword to Bank"><i class="fa fa-building-columns"></i> </button>
                                         @endif
-                                        <a href="{{route('application.print', $applicant->id)}}" target="_blank" class="btn btn-primary"><i class="fa fa-print"></i></a>
+                                        <a href="{{route('application.print', $applicant->id)}}" target="_blank" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="top" title="Print"><i class="fa fa-print"></i></a>
                                     </div>
                                     <div id="remarks-section">
                                         <!-- Hidden form -->
