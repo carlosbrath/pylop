@@ -61,6 +61,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
 
     Route::get('/run-migrations', [MigrationController::class, 'runMigrations']);
+    Route::get('/run-composer', [MigrationController::class, 'runComposer']);
 });
 Route::post('/logout', [\App\Http\Controllers\AuthController::class, 'logout'])->name('logout');
 

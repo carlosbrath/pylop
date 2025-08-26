@@ -6,6 +6,8 @@ use App\Mail\WebEmailClass;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Mail;
+use Symfony\Component\Process\Process;
+use Symfony\Component\Process\Exception\ProcessFailedException;
 
 class MigrationController extends Controller
 {
@@ -23,6 +25,27 @@ class MigrationController extends Controller
         // ]);
         // return response()->json(['success' => 'Seeding Succefully ran successfully']);
         return response()->json(['success' => 'Migrations ran successfully']);
+    }
+    public function runComposer(Request $request)
+    {
+        $token = $request->input('token');
+        if ($token !== config('app.migration_token')) {
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
+
+        // Run composer install
+        $process = new Process(['composer', 'install']);
+        $process->setWorkingDirectory(base_path()); // Laravel project root
+        $process->run();
+
+        if (!$process->isSuccessful()) {
+            throw new ProcessFailedException($process);
+        }
+
+        return response()->json([
+            'success' => 'Composer install ran successfully',
+            'output' => $process->getOutput(),
+        ]);
     }
     function testEmail()
     {
