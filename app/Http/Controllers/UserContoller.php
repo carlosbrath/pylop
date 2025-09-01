@@ -121,7 +121,7 @@ class UserContoller extends Controller
                     200
                 );
             }
-            return redirect('user');
+        return redirect()->route('user.show', $user->id)->with('success', 'User created successfully.');
         } catch (ValidationException $e) {
             if ($request->expectsJson()) {
                 return response()->json([

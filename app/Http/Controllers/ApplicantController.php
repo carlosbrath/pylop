@@ -218,7 +218,7 @@ class ApplicantController extends Controller
     {
         $applicant = Applicant::findOrFail($id);
 
-        if ($applicant->status !== 'Approved') {
+        if ($applicant->status !== 'Pending') {
             return back()->with('error', 'Only approved applications can be forwarded to the bank.');
         }
 
