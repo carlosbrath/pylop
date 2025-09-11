@@ -37,34 +37,24 @@
                                 @csrf
                                 <div class="row gx-3 mb-3">
                                     <div class="col-md-6">
-                                        <label class="small mb-1" for="Name">Name</label>
+                                        <label class="small mb-1" for="name">Name</label>
                                         <input class="form-control" id="name" type="text" name="name"
-                                            placeholder="Enter Name" Value="{{ $user->name }}" />
+                                            value="{{ $user->name }}" readonly />
                                     </div>
+
                                     <div class="col-md-6">
                                         <label class="small mb-1" for="email">Email</label>
                                         <input class="form-control" id="email" type="email" name="email"
-                                            placeholder="Enter Name" Value="{{ $user->email }}" />
+                                            value="{{ $user->email }}" readonly />
                                     </div>
-                                </div>
-                                <div class="row gx-3 mb-3">
+
                                     <div class="col-md-6">
-                                        <label class="small mb-1" for="phone">Phone</label>
-                                        <input class="form-control" id="phone" type="text" name="phone"
-                                            placeholder="Enter Name" Value="{{ $user->phone }}" />
+                                        <label class="small mb-1" for="role">Role</label>
+                                        <input class="form-control" id="role" type="text" name="role"
+                                            value="{{ $user->role->title }}" readonly />
                                     </div>
-                                    <div class="col-md-6">
-                                        <label class="small mb-1" for="district">District</label>
-                                        <input class="form-control" id="district" type="text" name="district"
-                                            placeholder="Enter Name" Value="{{ $user->district }}" />
-                                    </div>
-                                </div>
-                                <div class="row gx-3 mb-3">
-                                    <div class="col-md-6">
-                                        <label class="small mb-1" for="epo_id">Entry point Office</label>
-                                        <input class="form-control" id="epo_id" type="text" name="epo_id"
-                                            placeholder="Enter Name" Value="{{ $user->entry_point_office->title ?? '' }}" />
-                                    </div>
+
+
                                 </div>
                             </form>
                         </div>
@@ -84,7 +74,7 @@
                     </div>
                 </div>
             </div> --}}
-            {{-- <div class="row">
+                {{-- <div class="row">
                 <div class="col-lg-8">
                     <div class="card mb-4">
                         <div class="card-header">Update Password</div>
@@ -114,7 +104,7 @@
                     </div>
                 </div>
             </div> --}}
-        </div>
+            </div>
     </main>
 
 @endsection

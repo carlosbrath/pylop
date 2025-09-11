@@ -20,7 +20,6 @@
                             <th>Name</th>
                             <th>Email</th>
                             <th>Role</th>
-                            <th>Status</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -56,7 +55,6 @@ $(document).ready(function() {
             { data: 'name', name: 'name' },
             { data: 'email', name: 'email' },
             { data: 'role.title', name: 'role' },
-            { data: 'status_label', name: 'status' },
             { data: 'action', name: 'action', orderable: false, searchable: false },
         ],
         dom: 'Bfrtip',

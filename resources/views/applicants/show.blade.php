@@ -70,22 +70,22 @@
 
                                 <div class="no-print mt-4 text-end">
                                     <div id="approve-section">
-                                        @if ($applicant->status === 'Approved' || $applicant->status === 'Pending' || $applicant->status === 'Approved' )
+                                         @if ($applicant->status === 'Approved' || $applicant->status === 'Pending' || $applicant->status === 'Approved' )
                                             <button type="button"
                                                 onclick="remarks('{{ route('applicants.reject', $applicant->id) }}','approveForm', 'approve-section')"
                                                 class="btn btn-danger d-inline" id="approveBtn" data-bs-toggle="tooltip" data-bs-placement="top" title="Reject"><i class="fa fa-close"></i></button>
                                         @endif
-                                        @if ($applicant->status === 'Pending')
+                                       {{-- @if ($applicant->status === 'Pending')
                                             <button type="button"
                                                 onclick="remarks('{{ route('applicants.approve', $applicant->id) }}','approveForm', 'approve-section')"
                                                 class="btn btn-success d-inline" id="approveBtn" data-bs-toggle="tooltip" data-bs-placement="top" title="Approve"><i class="fa fa-check"></i></button>
-                                        @endif
+                                        @endif --}}
 
-                                        @if ($applicant->status === 'Approved')
+                                        @if ($applicant->status === 'Pending')
                                             <button type="button" class="btn btn-info d-inline"
                                                 onclick="remarks('{{ route('applicants.forward', $applicant->id) }}','approveForm', 'approve-section')"
                                                 id="forwordbtnBtn" data-bs-toggle="tooltip" data-bs-placement="top" title="Forword to Bank"><i class="fa fa-building-columns"></i> </button>
-                                        @endif
+                                        @endif 
                                         <a href="{{route('application.print', $applicant->id)}}" target="_blank" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="top" title="Print"><i class="fa fa-print"></i></a>
                                     </div>
                                     <div id="remarks-section">
@@ -116,7 +116,7 @@
                                             <div class="border rounded p-3 mb-2">
                                                 <x-info-row label="Old Status" :value="$log->old_status ?? '-'" />
                                                 <x-info-row label="New Status" :value="$log->new_status ?? '-'" />
-                                                <x-info-row label="Changed By" :value="$log->actor->name ?? 'System'" />
+                                                <x-info-row label="Changed By" :value="$log->name ?? 'System'" />
                                                 <x-info-row label="Remarks" :value="$log->remarks ?? '-'" />
                                                 <x-info-row label="Changed At" :value="$log->created_at->format('d M Y h:i A')" />
                                             </div>
