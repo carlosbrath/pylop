@@ -55,22 +55,24 @@
             border-bottom: 1px solid #ccc;
             padding-bottom: 2px;
         }
+
         .appno-container {
-    display: flex;
-    align-items: center;
-    font-family: Arial, sans-serif;
-    font-size: 14px;
-    font-weight: bold;
-}
+            display: flex;
+            align-items: center;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            font-weight: bold;
+        }
 
-.appno-label {
-    margin-right: 6px;
-    color: #333;
-}
+        .appno-label {
+            margin-right: 6px;
+            color: #333;
+        }
 
-.appno-value {
-    color: #000000; /* blue, you can change */
-}
+        .appno-value {
+            color: #000000;
+            /* blue, you can change */
+        }
     </style>
     <section class="py-4">
         <div class="container">

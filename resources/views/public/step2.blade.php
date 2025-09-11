@@ -30,7 +30,7 @@
 
                     <div class="col-md-2 d-flex justify-content-center align-items-center">
                         <a href="{{ route('home') }}" style="cursor: pointer;">
-                            <img src="{{ asset('./images/pmyp-01.png') }}" alt="PMYP Logo" class="img-fluid px-3">
+                            <img src="{{ asset('/assets/img/public/logo.png') }}" alt="PMYP Logo" class="img-fluid px-3">
                         </a>
                     </div>
 
