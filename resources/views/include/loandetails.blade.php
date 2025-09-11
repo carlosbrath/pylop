@@ -10,8 +10,7 @@
                 Industries
                 Corporation. In case of late repayment, the borrower must pay the additional markup / penalty.
             </li>
-            <li>📊 <strong>Quota:</strong> Loans will be issued based on district-wise population ratio and
-                gender quota.</li>
+            <li>📊 <strong>Loan Disbursement:</strong> Loans will be disbursed keeping inview population and gender.</li>
             <li>🏪 <strong>Business Nature:</strong> 75% for new businesses and 25% for startup.
             </li>
             <li>📝 <strong>Form Fee:</strong> For offline applications, the form fee must be deposited in the
@@ -32,8 +31,8 @@
                 جبکہ مارک اپ کی رقم حکومت آزاد کشمیر بذریعہ آزاد کشمیر سمال انڈسٹریز کارپوریشن ادا کرے گی۔قرضہ
                 کی اقساط کی ریکوری میں تاخیر کی صورت میں زائد مارک اپ / جرمانہ کی رقم مقروض ادا کرنے کا پابند
                 ہوگا۔</li>
-            <li>📊 <strong>کوٹہ:</strong>
-                قرضہ کی اجرائیگی ضلع وائز آبادی کے تناسب اور Gender کوٹہ کے مطابق ہوگی ۔</li>
+            <li>📊 <strong>قرضہ کی اجرائیگی:</strong>
+                قرضہ کی اجرائیگی آبادی اور  Gender کے تناسب کو مدنظر رکھتے ہوۓ کی جاۓ گی۔</li>
             <li>🏪 <strong>کاروباری نوعیت:</strong> نیا کاروبار (75 فیصد ) اور سٹارٹ اپ بزنس (25) فیصد )</li>
             <li>📝 <strong>قیمت فارم:</strong> قیمت فارم آزاد کشمیر سمال انڈسٹریز کارپوریشن بنام منیجنگ ڈائر
                 یکٹر آزاد کشمیر سمال انڈسٹریز کارپوریشن، اکاؤنٹ نمبر 14027001-040 بینک آف آزاد جموں وکشمیر میں

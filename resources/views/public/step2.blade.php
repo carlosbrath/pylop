@@ -230,11 +230,11 @@
                                                         ],
                                                         [
                                                             'id' => 'quota',
-                                                            'label' => 'Quota / کوٹہ',
+                                                            'label' => 'Gender',
                                                             'icon' => 'people-fill',
                                                             'field_type' => 'select',
                                                             'required' => true,
-                                                            'select_field' => 'Quota',
+                                                            'select_field' => 'Gender',
                                                             'options' => [
                                                                 ['value' => 'Men', 'label' => 'Men / مرد'],
                                                                 ['value' => 'Women', 'label' => 'Women / خواتین'],

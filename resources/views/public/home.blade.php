@@ -49,7 +49,7 @@
                 <div class="col-md-4">
                     <div class="card h-100 border-0 shadow-sm text-center">
                         <div class="card-body">
-                            <h5 class="card-title fw-bold text-success">👥 Gender Quota</h5>
+                            <h5 class="card-title fw-bold text-success">👥 Gender</h5>
                             <ul class="list-unstyled mb-0">
                                 <li>Male – 48%       Female – 48%</li>
                                 <li>Special Persons – 2%       Transgender – 2%</li>
@@ -64,8 +64,8 @@
                         <div class="card-body">
                             <div>
 
-                                <h5 class="card-title fw-bold text-success">🌍 Population Quota</h5>
-                                <p class="card-text">Loan disbursement based on district-wise population ratio.</p>
+                                <h5 class="card-title fw-bold text-success">🌍 Loan Disbursement</h5>
+                                <p class="card-text">Loan disbursement based on population and gender.</p>
                             </div>
                             {{-- <a href="#population-quota" class="btn btn-outline-success mt-3">View More</a> --}}
                         </div>
