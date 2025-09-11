@@ -38,8 +38,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/dashboard', [\App\Http\Controllers\AdminController::class, 'dashboard'])->name('dashboard');
     // Route::get('/applicant/list', [\App\Http\Controllers\ApplicantController::class, 'index'])->name('applicant.list');
     Route::resource('/applicant', \App\Http\Controllers\ApplicantController::class);
-    Route::post('/applicant/{id}/approve', [\App\Http\Controllers\ApplicantController::class, 'approve'])
-        ->name('applicant.Approve');
+    // Route::post('/applicant/{id}/approve', [\App\Http\Controllers\ApplicantController::class, 'approve'])
+    //     ->name('applicant.Approve');
 
     Route::post('/applicant/{id}/forward', [\App\Http\Controllers\ApplicantController::class, 'forward'])
         ->name('applicant.forward');

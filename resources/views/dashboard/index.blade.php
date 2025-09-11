@@ -60,23 +60,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-6 col-xl-3 mb-4">
-                    <div class="card bg-success text-white h-100">
-                        <div class="card-body">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="me-3">
-                                    <div class="text-white-75 small">Approved</div>
-                                    <div class="text-lg fw-bold">{{ $approved }}</div>
-                                </div>
-                                <i class="feather-xl text-white-50" data-feather="home"></i>
-                            </div>
-                        </div>
-                        <div class="card-footer d-flex align-items-center justify-content-between small">
-                            {{-- <a class="text-white stretched-link" href="">View</a> --}}
-                            {{-- <div class="text-white"><i class="fas fa-angle-right"></i></div> --}}
-                        </div>
-                    </div>
-                </div>
+                
                 <div class="col-lg-6 col-xl-3 mb-4">
                     <div class="card bg-primary text-white h-100">
                         <div class="card-body">
@@ -86,6 +70,23 @@
                                     <div class="text-lg fw-bold">{{ $forwarded }}</div>
                                 </div>
                                 <i class="feather-xl text-white-50" data-feather="activity"></i>
+                            </div>
+                        </div>
+                        <div class="card-footer d-flex align-items-center justify-content-between small">
+                            {{-- <a class="text-white stretched-link" href="">View</a> --}}
+                            {{-- <div class="text-white"><i class="fas fa-angle-right"></i></div> --}}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-xl-3 mb-4">
+                    <div class="card bg-success text-white h-100">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="me-3">
+                                    <div class="text-white-75 small">Approved</div>
+                                    <div class="text-lg fw-bold">{{ $approved }}</div>
+                                </div>
+                                <i class="feather-xl text-white-50" data-feather="home"></i>
                             </div>
                         </div>
                         <div class="card-footer d-flex align-items-center justify-content-between small">
@@ -137,8 +138,8 @@
                                         <tr class="text-center">
                                             <th></th>
                                             <th>Pending</th>
-                                            <th>Approved</th>
                                             <th>Forwarded</th>
+                                            <th>Approved</th>
                                             <th>Rejected</th>
                                         </tr>
                                     </thead>
@@ -337,8 +338,8 @@
                     tbodyHtml += `<tr class="text-center">
                             <td class="text-start">${rowLabel}</td>
                             <td>${item.pending ?? '-'}</td>
-                            <td>${item.approved ?? '-'}</td>
                             <td>${item.forwarded ?? '-'}</td>
+                            <td>${item.approved ?? '-'}</td>
                             <td>${item.rejected ?? '-'}</td>
                         </tr>`;
                 });

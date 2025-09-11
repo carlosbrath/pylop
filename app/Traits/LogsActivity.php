@@ -13,7 +13,7 @@ trait LogsActivity
         // GitHub : github.com/carlosbrath | LinkedIn: linkedin.com/in/ahsandanishrad/
         // Note   : Module created/updated by Ahsan Danish
     // ─────────────────────────────────────────────────────────────
-    protected static $ignoreFields = ['last_login_at', 'updated_at', 'lastActivity'];
+    protected static $ignoreFields = ['last_login_at', 'updated_at', 'lastActivity', 'application_no'];
     public static function bootLogsActivity()
     {
         

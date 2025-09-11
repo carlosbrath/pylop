@@ -13,13 +13,17 @@
                         @include('include.alerts')
                         <div class="card mb-4">
                             <div class="card-body page">
-                                @if($applicant->status =='Pending' || $applicant->status =='NotCompleted')
-                                <div class="d-flex justify-content-end mb-2 no-print">
-                                    <a href="{{ route('applicant.edit', $applicant->id) }}" class="btn btn-outline-teal">
-                                        <i class="bi bi-pencil-square"></i> Edit Application
-                                    </a>
-                                </div>
+                                @if ($applicant->status == 'Pending' || $applicant->status == 'NotCompleted')
+                                    <div class="d-flex justify-content-end mb-2 no-print">
+                                        <a href="{{ route('applicant.edit', $applicant->id) }}" class="btn btn-outline-teal">
+                                            <i class="bi bi-pencil-square"></i> Edit Application
+                                        </a>
+                                    </div>
                                 @endif
+                                <div class="appno-container">
+                                    <div class="appno-label">Application No:</div>
+                                    <div class="appno-value">{{ $applicant->application_no }}</div>
+                                </div>
                                 <div class="d-flex align-items-center justify-content-between mb-4 text-center"
                                     style="gap: 10px;">
                                     <img src="{{ asset('/assets/img/public/ajklogo.png') }}" style="height: 100px;"
@@ -47,7 +51,7 @@
                                 <x-info-row label="Business Type" :value="$applicant->businessType" />
                                 <x-info-row label="Business Address" :value="$applicant->businessAddress" />
                                 <x-info-row label="Tier" :value="tierLabel($applicant->tier)" />
-                                <x-info-row label="Quota" :value="$applicant->quota" />
+                                <x-info-row label="Gender" :value="$applicant->quota" />
                                 <x-info-row label="District" :value="$applicant->district->name ?? '-'" />
                                 <x-info-row label="Tehsil" :value="$applicant->tehsil->name ?? '-'" />
 
@@ -70,12 +74,13 @@
 
                                 <div class="no-print mt-4 text-end">
                                     <div id="approve-section">
-                                         @if ($applicant->status === 'Approved' || $applicant->status === 'Pending' || $applicant->status === 'Approved' )
+                                        @if ($applicant->status === 'Approved' || $applicant->status === 'Pending' || $applicant->status === 'Approved')
                                             <button type="button"
                                                 onclick="remarks('{{ route('applicants.reject', $applicant->id) }}','approveForm', 'approve-section')"
-                                                class="btn btn-danger d-inline" id="approveBtn" data-bs-toggle="tooltip" data-bs-placement="top" title="Reject"><i class="fa fa-close"></i></button>
+                                                class="btn btn-danger d-inline" id="approveBtn" data-bs-toggle="tooltip"
+                                                data-bs-placement="top" title="Reject"><i class="fa fa-close"></i></button>
                                         @endif
-                                       {{-- @if ($applicant->status === 'Pending')
+                                        {{-- @if ($applicant->status === 'Pending')
                                             <button type="button"
                                                 onclick="remarks('{{ route('applicants.approve', $applicant->id) }}','approveForm', 'approve-section')"
                                                 class="btn btn-success d-inline" id="approveBtn" data-bs-toggle="tooltip" data-bs-placement="top" title="Approve"><i class="fa fa-check"></i></button>
@@ -84,9 +89,12 @@
                                         @if ($applicant->status === 'Pending')
                                             <button type="button" class="btn btn-info d-inline"
                                                 onclick="remarks('{{ route('applicants.forward', $applicant->id) }}','approveForm', 'approve-section')"
-                                                id="forwordbtnBtn" data-bs-toggle="tooltip" data-bs-placement="top" title="Forword to Bank"><i class="fa fa-building-columns"></i> </button>
-                                        @endif 
-                                        <a href="{{route('application.print', $applicant->id)}}" target="_blank" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="top" title="Print"><i class="fa fa-print"></i></a>
+                                                id="forwordbtnBtn" data-bs-toggle="tooltip" data-bs-placement="top"
+                                                title="Forword to Bank"><i class="fa fa-building-columns"></i> </button>
+                                        @endif
+                                        <a href="{{ route('application.print', $applicant->id) }}" target="_blank"
+                                            class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="top"
+                                            title="Print"><i class="fa fa-print"></i></a>
                                     </div>
                                     <div id="remarks-section">
                                         <!-- Hidden form -->

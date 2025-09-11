@@ -18,14 +18,6 @@ class ApplicantController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function indexold()
-    {
-
-        $title = 'Applications';
-        $page_title = 'Applications';
-        $applicants = Applicant::get();
-        return view('applicants.list', compact('applicants', 'title', 'page_title'));
-    }
     public function index(Request $request)
     {
         if ($request->ajax()) {
@@ -218,8 +210,24 @@ class ApplicantController extends Controller
     {
         $applicant = Applicant::findOrFail($id);
 
+         if ($applicant->status === 'Forwarded') {
+            return back()->with('info', 'Applicant is already forwarded.');
+        }
+          if ($applicant->fee_status !== 'paid') {
+            return back()->with('error', 'Applicant cannot be forward until the fee is paid.');
+        }
+          // 2. Check if required documents exist
+        if (empty($applicant->cnic_front) || empty($applicant->cnic_back) || empty($applicant->challan_image)) {
+            return back()->with('error', 'Applicant cannot be forward. Required documents are missing.');
+        }
+
         if ($applicant->status !== 'Pending') {
             return back()->with('error', 'Only approved applications can be forwarded to the bank.');
+        }
+
+         $yearsSinceIssued = \Carbon\Carbon::parse($applicant->cnic_issue_date)->diffInYears(now());
+        if ($yearsSinceIssued > 10) {
+            return back()->with('error', 'Applicant\'s CNIC was expired.');
         }
 
         $applicant->updateStatus('Forwarded', $request->remarks);

@@ -154,6 +154,8 @@ class PublicController extends Controller
                 'grade_or_percentage' => $education['grade_or_percentage'] ?? null,
             ]);
         }
+        $applicant->application_no = generateApplicationNo($applicant->id);
+        $applicant->save();
 
         // return redirect()->route('application.print', ['id' => $applicant->id])->with('success', 'Application submitted successfully!');
         return redirect()->route('track.application')->with([

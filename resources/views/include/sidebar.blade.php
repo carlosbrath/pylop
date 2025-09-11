@@ -53,6 +53,16 @@
                         <a class="nav-link" href="{{route('user.create')}}">Add User</a>
                     </nav>
                 </div>
+                <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseLogs" aria-expanded="false" aria-controls="collapseUtilities">
+                    <div class="nav-link-icon"><i data-feather="users"></i></div>
+                    Logs
+                    <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                </a>
+                <div class="collapse" id="collapseLogs" data-bs-parent="#accordionSidenav">
+                    <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
+                        <a class="nav-link" href="{{route('activitylogs.index')}}">Activity Logs</a>
+                    </nav>
+                </div>
                 
                 <!-- Sidenav Heading (Custom)-->
 

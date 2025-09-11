@@ -8,7 +8,7 @@
         <div class="container-xl px-4 mt-4">
             <div class="card card-header-actions mb-4">
                 <div class="card-header">
-                    Applicants
+                    Activity Logs
                 </div>
 
                 <div class="card-body">

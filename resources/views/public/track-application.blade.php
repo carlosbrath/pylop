@@ -55,6 +55,22 @@
             border-bottom: 1px solid #ccc;
             padding-bottom: 2px;
         }
+        .appno-container {
+    display: flex;
+    align-items: center;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.appno-label {
+    margin-right: 6px;
+    color: #333;
+}
+
+.appno-value {
+    color: #000000; /* blue, you can change */
+}
     </style>
     <section class="py-4">
         <div class="container">
@@ -91,7 +107,8 @@
                                         <input type="text" name="cnic" id="track_cnic" class="form-control required"
                                             placeholder="xxxxx-xxxxxxx-x" value="{{ $applicant?->cnic ?? old('cnic') }}"
                                             required maxlength="15">
-                                        <label for="track_cnic">CNIC / شناختی کارڈ نمبر <span class="text-danger">*</span></label>
+                                        <label for="track_cnic">CNIC / شناختی کارڈ نمبر <span
+                                                class="text-danger">*</span></label>
                                     </div>
                                 </div>
                             </div>
@@ -132,9 +149,12 @@
 
                 @if (isset($applicant))
                     <div class="page">
+                        <div class="appno-container">
+                            <div class="appno-label">Application No:</div>
+                            <div class="appno-value">{{ $applicant->application_no }}</div>
+                        </div>
                         <div class="d-flex align-items-center justify-content-between mb-4 text-center" style="gap: 10px;">
-                            <img src="{{ asset('/assets/img/public/ajklogo.png') }}" alt="AJK Logo"
-                                style="height: 100px;">
+                            <img src="{{ asset('/assets/img/public/ajklogo.png') }}" alt="AJK Logo" style="height: 100px;">
 
                             <div class="flex-grow-1 text-center">
                                 <h5 class="mb-1">Government of Azad Jammu & Kashmir</h5>
@@ -193,17 +213,17 @@
                         <div class="info-row">
                             <div class="info-label">Tier:</div>
                             <div class="info-value">
-                                @if($applicant->tier==1)
-                                    Tier 1 (Up to 5  Lakh)
-                                @elseif($applicant->tier==2)
-                                    Tier 1 (5 to 10  Lakh)
+                                @if ($applicant->tier == 1)
+                                    Tier 1 (Up to 5 Lakh)
+                                @elseif($applicant->tier == 2)
+                                    Tier 1 (5 to 10 Lakh)
                                 @else
-                                    Tier 1 (10 to 20  Lakh)
+                                    Tier 1 (10 to 20 Lakh)
                                 @endif
                             </div>
                         </div>
                         <div class="info-row">
-                            <div class="info-label">Quota:</div>
+                            <div class="info-label">Gender:</div>
                             <div class="info-value">{{ $applicant->quota }}</div>
                         </div>
                         <div class="info-row">
@@ -225,7 +245,9 @@
                         <div class="section-title">Application Status</div>
                         <div class="info-row">
                             <div class="info-label">Challan Fee</div>
-                            <div class="info-value">{{ challanFee($applicant->tier)}} {!!($applicant->fee_status=='paid'?'<span class="badge bg-success"">Paid</span>':'<span class="badge bg-danger">Unpaid</span>')!!}</div>
+                            <div class="info-value">{{ challanFee($applicant->tier) }} {!! $applicant->fee_status == 'paid'
+                                ? '<span class="badge bg-success"">Paid</span>'
+                                : '<span class="badge bg-danger">Unpaid</span>' !!}</div>
                         </div>
                         <div class="info-row">
                             <div class="info-label">Loan Status:</div>
@@ -254,15 +276,18 @@
 
                         <div class="section-title no-print">Important Instructions</div>
                         <ul class="no-print">
-                           <li>
+                            <li>
                                 <strong>Submit your challan</strong> at the nearest <strong>Bank of AJK branch</strong>.<br>
-                                After submission, <strong>please upload a scanned copy or clear image</strong> of the challan below.
+                                After submission, <strong>please upload a scanned copy or clear image</strong> of the
+                                challan below.
                             </li>
-                            <li><strong>All information provided</strong> will be verified from <strong>NADRA</strong> and relevant institutions.</li>
+                            <li><strong>All information provided</strong> will be verified from <strong>NADRA</strong> and
+                                relevant institutions.</li>
                         </ul>
 
                         <div class="no-print mt-3 text-end">
-                            <a  href="{{route('application.print', $applicant->id)}}" target="_blank" class="btn btn-gradient"><i class="bi bi-printer"></i></a>
+                            <a href="{{ route('application.print', $applicant->id) }}" target="_blank"
+                                class="btn btn-gradient"><i class="bi bi-printer"></i></a>
                         </div>
                     </div>
                     @if ($applicant->fee_status != 'paid')
@@ -281,7 +306,8 @@
                                                     class="form-select custom-select2" required>
                                                     <option value="" disabled selected hidden>Select Branch</option>
                                                     @foreach ($branches as $branch)
-                                                        <option value="{{ $branch->id }}">{{$branch->branch_code .' '. $branch->branch_name }}
+                                                        <option value="{{ $branch->id }}">
+                                                            {{ $branch->branch_code . ' ' . $branch->branch_name }}
                                                         </option>
                                                     @endforeach
                                                 </select>

@@ -15,6 +15,7 @@
                     <thead>
                         <tr>
                             <th>Sr.No</th>
+                            <th>Appli No</th>
                             <th>Name</th>
                             <th>Father Name</th>
                             <th>CNIC</th>
@@ -40,6 +41,7 @@ $(document).ready(function() {
         ajax: '{{ route('applicant.index') }}', // your route
         columns: [
             { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false },
+            { data: 'application_no', name: 'application_no' },
             { data: 'name', name: 'name' },
             { data: 'fatherName', name: 'fatherName' },
             { data: 'cnic', name: 'cnic' },

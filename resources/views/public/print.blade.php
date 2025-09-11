@@ -52,6 +52,24 @@
                 display: none;
             }
 
+            .appno-container {
+                display: flex;
+                align-items: center;
+                font-family: Arial, sans-serif;
+                font-size: 14px;
+                font-weight: bold;
+            }
+
+            .appno-label {
+                margin-right: 6px;
+                color: #333;
+            }
+
+            .appno-value {
+                color: #000;
+               
+            }
+
             .footer-note {
                 font-size: 12px;
                 color: #555;
@@ -80,6 +98,10 @@
     @section('content')
         <div class="page">
             {{-- Header --}}
+            <div class="appno-container">
+                <div class="appno-label">Application No:</div>
+                <div class="appno-value">{{ $applicant->application_no }}</div>
+            </div>
             <div class="d-flex align-items-center justify-content-between page-heading mb-4 text-center" style="gap: 10px;">
                 <img src="{{ asset('/assets/img/public/ajklogo.png') }}" alt="AJK Logo" style="height: 100px;">
 
@@ -191,7 +213,7 @@
                 </div>
                 <div class="col-6">
                     <div class="info-row">
-                        <div class="info-label">Quota:</div>
+                        <div class="info-label">Gender:</div>
                         <div class="info-value">{{ $applicant->quota }}</div>
                     </div>
                 </div>

@@ -61,6 +61,21 @@
     background-size: 300% 300%;
     animation: gradientMove 6s ease infinite;
 }
+.appno-container {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.appno-label {
+    margin-right: 6px;
+    color: #333;
+}
+
+.appno-value {
+    color: #000000; /* blue, you can change */
+}
 
 @keyframes gradientMove {
     0% {
