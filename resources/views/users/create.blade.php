@@ -28,18 +28,18 @@
                             @endif
                             <div class="mb-3">
                                 <label class="small mb-1" for="Name">Name</label>
-                                <input class="form-control" id="name" type="text" name="name" placeholder="Enter Name" />
+                                <input class="form-control required" id="name" type="text" name="name" placeholder="Enter Name" />
                             </div>
 
                             <div class="mb-3">
                                 <label class="small mb-1" for="email">Email</label>
-                                <input class="form-control" id="email" type="email" name="email" placeholder="Enter Email" />
+                                <input class="form-control required" id="email" type="email" name="email" placeholder="Enter Email" />
                             </div>
                             <!-- Form Group (new password)-->
                             <div class="mb-3">
                                 <label class="small mb-1" for="phone">User Role</label>
-                                <select class="form-control" id="role_id" name="role_id">
-                                    <option>Chose Role</option>
+                                <select class="form-control required" id="role_id" name="role_id">
+                                    <option value="">Chose Role</option>
                                     @foreach($roles as $role)
                                     <option value="{{$role->id}}">{{$role->title}}</option>
                                     @endforeach
@@ -48,11 +48,11 @@
  
                             <div class="mb-3">
                                 <label class="small mb-1" for="password">Password</label>
-                                <input class="form-control" id="password" type="password" name="password" placeholder="Password" />
+                                <input class="form-control required" id="password" type="password" name="password" placeholder="Password" />
                             </div>
                             <div class="mb-3">
                                 <label class="small mb-1" for="password_confirmation">Confirm Password</label>
-                                <input class="form-control" id="password_confirmation" type="password" name="password_confirmation" placeholder="Confirm Password" />
+                                <input class="form-control required" id="password_confirmation" type="password" name="password_confirmation" placeholder="Confirm Password" />
                             </div>
                             <!-- Form Group (confirm password)-->
                             <button type="submit" class="btn btn-primary" type="button">Save</button>

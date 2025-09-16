@@ -8,8 +8,8 @@
     <div class="container-xl px-4 mt-4">
         <div class="card card-header-actions mb-4">
             <div class="card-header">
-                Users
-            <a href="{{route('user.create')}}" class="btn btn-outline-teal">Add New</a>
+                 <i data-feather="users" class="me-2"></i>
+            <a href="{{route('user.create')}}" class="btn btn-outline-teal"><i data-feather="user-plus" class="me-2"></i></a>
             </div>
            
             <div class="card-body">

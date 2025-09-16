@@ -16,35 +16,6 @@ use Yajra\DataTables\Facades\DataTables;
 
 class UserContoller extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-
-    public function indexold(Request $request)
-    {
-        $title = 'Users';
-        $page_title = 'Users';
-        $userRole = auth()->user()->role_id;
-        $roleMapping = [
-            1 => [],
-            2 => [2, 4, 5, 6],
-            7 => [2, 4, 5, 6, 7],
-            5 => [4, 5],
-        ];
-        $users = User::when($userRole != 1, function ($query) use ($userRole, $roleMapping) {
-            return $query->whereIn('role_id', $roleMapping[$userRole] ?? []);
-        })->latest()->get();
-        if ($request->expectsJson()) {
-            return response()->json(
-                ['users' => $users],
-                200
-            );
-        }
-        return view('users.list', compact('users', 'title', 'page_title'));
-    }
-    
     public function index(Request $request)
     {
         if ($request->ajax()) {
@@ -76,7 +47,7 @@ class UserContoller extends Controller
         //
         $title = 'Add User';
         $page_title = 'Add Users';
-        $roles = Role::all();
+        $roles = Role::where('id', '!=', 1)->get();
         return view('users.create', compact('title', 'page_title', 'roles'));
     }
     /**
@@ -293,46 +264,23 @@ class UserContoller extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request, $id)
-    {
-        try {
-            if (!$request->expectsJson()) {
-                $id = Crypt::decrypt($id);
-            }
-            $user = User::findOrFail($id);
-            $user->delete();
-            $message = 'User deleted successfully';
-            if ($request->expectsJson()) {
-                return response()->json(['message' => $message], 200);
-            }
-            return redirect()->back()->with('success', $message);
-        } catch (Exception $e) {
-            $errorMessage = 'An error occurred: ' . $e->getMessage();
-            if ($request->expectsJson()) {
-                return response()->json(['error' => 'Failed to delete user', 'message' => $errorMessage], 500);
-            }
-            return redirect()->back()->with('error', $errorMessage);
-        }
-    }
+    public function destroy($id)
+{
+    try {
+        $user = User::findOrFail($id);
+        $user->delete();
 
-    public function operators(Request $request)
-    {
-        $title = 'Operators';
-        $page_title = 'Operators';
-        $users = User::wherein('role_id', [6])->latest()->get();
-        if ($request->expectsJson()) {
-            return response()->json(
-                ['users' => $users],
-                200
-            );
-        }
-        return view('users.operators', compact('users'), compact('title'), compact('page_title'));
+        return response()->json([
+            'status'   => 'success',
+            'message'  => 'User deleted successfully.',
+            'redirect' => route('user.index') // 👈 redirect to users.index
+        ], 200);
+
+    } catch (\Exception $e) {
+        return response()->json([
+            'status'  => 'error',
+            'message' => 'Failed to delete user: ' . $e->getMessage()
+        ], 500);
     }
-    public function create_operators(Request $request)
-    {
-        $title = 'Add User';
-        $page_title = 'Add Users';
-        $roles = Role::whereNotIn('id', [1])->get();
-        return view('users.create-operator', compact('roles'), compact('title'), compact('page_title'));
-    }
+}
 }

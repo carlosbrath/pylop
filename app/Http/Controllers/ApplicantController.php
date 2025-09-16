@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Applicant;
+use App\Models\ApplicantEducation;
 use App\Models\ApplicantStatusLog;
 use App\Models\BusinessCategory;
 use App\Models\Location;
@@ -210,13 +211,13 @@ class ApplicantController extends Controller
     {
         $applicant = Applicant::findOrFail($id);
 
-         if ($applicant->status === 'Forwarded') {
+        if ($applicant->status === 'Forwarded') {
             return back()->with('info', 'Applicant is already forwarded.');
         }
-          if ($applicant->fee_status !== 'paid') {
+        if ($applicant->fee_status !== 'paid') {
             return back()->with('error', 'Applicant cannot be forward until the fee is paid.');
         }
-          // 2. Check if required documents exist
+        // 2. Check if required documents exist
         if (empty($applicant->cnic_front) || empty($applicant->cnic_back) || empty($applicant->challan_image)) {
             return back()->with('error', 'Applicant cannot be forward. Required documents are missing.');
         }
@@ -225,7 +226,7 @@ class ApplicantController extends Controller
             return back()->with('error', 'Only approved applications can be forwarded to the bank.');
         }
 
-         $yearsSinceIssued = \Carbon\Carbon::parse($applicant->cnic_issue_date)->diffInYears(now());
+        $yearsSinceIssued = \Carbon\Carbon::parse($applicant->cnic_issue_date)->diffInYears(now());
         if ($yearsSinceIssued > 10) {
             return back()->with('error', 'Applicant\'s CNIC was expired.');
         }
@@ -251,6 +252,25 @@ class ApplicantController extends Controller
 
     public function destroy($id)
     {
-        //
+        try {
+            $applicant = Applicant::findOrFail($id);
+
+            // Delete applicant's education(s)
+           $applicant->educations()->delete();
+
+            // Delete applicant
+            $applicant->delete();
+
+            return response()->json([
+                'status'  => 'success',
+                'message' => 'Application deleted successfully.',
+                'redirect' => route('applicant.index')
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status'  => 'error',
+                'message' => 'Failed to delete application: ' . $e->getMessage()
+            ], 500);
+        }
     }
 }

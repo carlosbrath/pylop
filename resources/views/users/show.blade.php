@@ -29,7 +29,25 @@
                 <div class="col-lg-8">
                     <!-- Change password card-->
                     <div class="card mb-4">
-                        <div class="card-header">User Profile</div>
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <!-- Left side: User icon and Profile title -->
+                            <div class="d-flex align-items-center">
+                                <i data-feather="user" class="me-2"></i>
+                                <span>Profile</span>
+                            </div>
+
+                            <!-- Right side: Edit and Delete buttons -->
+                            <div class="" role="group">
+                                <a type="button" href="{{ route('user.edit', $user->id) }}" class="btn btn-sm btn-outline-primary" data-toggle="tooltip"
+                                    data-placement="top" title="Edit Profile">
+                                    <i data-feather="edit-2"></i>
+                                </a>
+                                <button type="button" data-href="{{ route('user.destroy', $user->id) }}" class="btn btn-sm btn-outline-danger delete-btn" data-toggle="tooltip"
+                                    data-placement="top" title="Delete Profile">
+                                    <i data-feather="trash-2"></i>
+                                </button>
+                            </div>
+                        </div>
                         <div class="card-body">
                             <form action="{{ route('user.store') }}" method="POST" enctype="multipart/form-data"
                                 onsubmit="validateForm(event, this, 1)" autocomplete="off">
@@ -60,50 +78,6 @@
                         </div>
                     </div>
                 </div>
-                {{-- <div class="col-lg-4">
-                    <!-- Profile picture card-->
-                    <div class="card mb-4 mb-xl-0">
-                        <div class="card-header">Profile Picture</div>
-                        <div class="card-body text-center">
-                            <!-- Profile picture image-->
-                            <img class="img-account-profile rounded-circle mb-2" id="profile-image"
-                                src="{{ asset('images/profile_pictures/default.png') }}" alt="" />
-                            <!-- Profile picture help block-->
-
-                        </div>
-                    </div>
-                </div>
-            </div> --}}
-                {{-- <div class="row">
-                <div class="col-lg-8">
-                    <div class="card mb-4">
-                        <div class="card-header">Update Password</div>
-                        <div class="card-body">
-                            <form action="{{ route('change.password', $user->id) }}" method="POST"
-                                enctype="multipart/form-data" onsubmit="validateForm(event, this, 1)" autocomplete="off">
-                                @csrf
-                                @method('PUT')
-                                <div class="row gx-3 mb-3">
-                                    <div class="col-md-12">
-                                        <label class="small mb-1" for="password">Password</label>
-                                        <input class="form-control" id="password" type="password" name="password"
-                                            placeholder="New Password" Value="" required />
-                                    </div>
-                                </div>
-                                <div class="row gx-3 mb-3">
-                                    <div class="col-md-12">
-                                        <label class="small mb-1" for="password_confirmation">Confirm Password</label>
-                                        <input class="form-control" id="password_confirmation" type="password"
-                                            name="password_confirmation" placeholder="Confirm Password" Value=""
-                                            required />
-                                    </div>
-                                </div>
-                                <button type="submit" class="btn btn-primary" type="button">Update</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div> --}}
             </div>
     </main>
 

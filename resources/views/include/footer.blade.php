@@ -12,19 +12,19 @@
  <!-- <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"></script> -->
  {{-- <script src="{{ asset('assets/vendor/datatables/simple-datatables.min.js') }}"></script>
  <script src="{{ asset('assets/js/datatables/datatables.js') }}"></script> --}}
-    
-<!-- DataTables core + Bootstrap 4 integration -->
-<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap4.min.js"></script>
 
-<!-- DataTables buttons (export, print, etc.) -->
-<script src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.bootstrap4.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
-<script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js"></script>
+ <!-- DataTables core + Bootstrap 4 integration -->
+ <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+ <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap4.min.js"></script>
+
+ <!-- DataTables buttons (export, print, etc.) -->
+ <script src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js"></script>
+ <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.bootstrap4.min.js"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+ <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js"></script>
+ <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js"></script>
 
  <script src="https://cdn.jsdelivr.net/npm/litepicker/dist/bundle.js"></script>
  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -72,6 +72,49 @@
              });
          }
      })
+     document.addEventListener('click', function(e) {
+         const btn = e.target.closest('.delete-btn');
+         if (!btn) return;
+
+         e.preventDefault();
+         const url = btn.getAttribute('data-href');
+         const csrf = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+         Swal.fire({
+             title: 'Are you sure?',
+             text: "This record will be permanently deleted!",
+             icon: 'warning',
+             showCancelButton: true,
+             confirmButtonColor: '#d33',
+             cancelButtonColor: '#6c757d',
+             confirmButtonText: 'Yes, delete it!',
+             cancelButtonText: 'Cancel'
+         }).then((result) => {
+             if (result.isConfirmed) {
+                 fetch(url, {
+                         method: 'DELETE',
+                         headers: {
+                             'X-CSRF-TOKEN': csrf,
+                             'Accept': 'application/json'
+                         }
+                     })
+                     .then(res => res.json())
+                     .then(data => {
+                         if (data.status === 'success') {
+                             Swal.fire('Deleted!', data.message, 'success').then(() => {
+                                 // Redirect to applicants.index
+                                 window.location.href = data.redirect;
+                             });
+                         } else {
+                             Swal.fire('Error!', data.message || 'Failed to delete.', 'error');
+                         }
+                     })
+                     .catch(() => {
+                         Swal.fire('Error!', 'Something went wrong.', 'error');
+                     });
+             }
+         });
+     });
 
      function validateForm(event, form, id) {
          event.preventDefault();
@@ -79,18 +122,25 @@
          var selects = form.querySelectorAll('select');
          var isValid = true;
          selects.forEach(function(select) {
-
+             if ((select.value === '' || select.value === null) && select.classList.contains('required')) {
+                 select.classList.add('error');
+                 isValid = false;
+                 field_name = formatFieldName(select.name)
+                 removeErrorComponent(select);
+                 createErrorComponent(select, field_name + ' is required.');
+             } else {
+                 removeErrorComponent(select);
+                 select.classList.remove('error');
+             }
          })
          inputs.forEach(function(input) {
-             if (input.value.trim() === '') {
-                 if (input.name == 'name' || input.name == 'cnic' || input.name == 'password' || input.name ==
-                     'password_confirmationd') {
+             if ((!input.value || input.value.trim() === '') && input.classList.contains('required')) {
                      input.classList.add('error');
                      isValid = false;
                      field_name = formatFieldName(input.name)
                      removeErrorComponent(input);
                      createErrorComponent(input, '' + field_name + ' required.', '');
-                 }
+                 
              } else {
                  if (input.name == 'email') {
                      if (!emailValidations(input, input.name, input.value.trim(), '1')) {
