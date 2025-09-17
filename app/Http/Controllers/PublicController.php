@@ -244,6 +244,14 @@ class PublicController extends Controller
             ->first();
         return view('public.print', compact('applicant'));
     }
+    function printChallan($id)
+    {
+
+        $applicant = Applicant::with(['feeBranch', 'educations', 'district', 'tehsil'])
+            ->where('id', $id)
+            ->first();
+        return view('public.challan', compact('applicant'));
+    }
     public function getTehsils($id)
     {
         $tehsils = Location::where('type', 'Tehsil')->where('parent_id', $id)->get();

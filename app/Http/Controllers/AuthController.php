@@ -25,6 +25,20 @@ class AuthController extends Controller
             }
             return view('auth.login', compact('title'));
         }
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|string|email',
+            'password' => 'required|string',
+        ]);
+        if ($validator->fails()) {
+            if ($request->expectsJson()) {
+                return response()->json([
+                    'error' => 'Validation failed',
+                    'errors' => $validator->errors()
+                ], 422);
+            } else {
+                return redirect()->back()->withErrors($validator)->withInput();
+            }
+        }
         $input = $request->input('email_or_phone'); // Assuming the input field is named 'email_or_phone'
         if ($request->has('email')) {
             $input = $request->input('email');
@@ -77,7 +91,7 @@ class AuthController extends Controller
             ], 422);
         } else {
             return redirect()->back()->withErrors([
-                'email_or_phone' => 'Incorrect email|phone or password'
+                'email' => 'Incorrect email or password'
             ])->withInput();
         }
     }
@@ -90,7 +104,7 @@ class AuthController extends Controller
         try {
             $validator = Validator::make($request->all(), [
                 'name' => 'required|string|max:255',
-                'email' => 'nullable|string|max:255',
+                'email' => 'required|string|max:255',
                 'phone' => 'string|max:255|unique:users',
                 'password' => 'required|string|min:8|confirmed',
             ]);
