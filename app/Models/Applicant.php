@@ -39,18 +39,31 @@ class Applicant extends Model
         'fee_status',
         'status',
     ];
-    public function feeBranch(){
-         return $this->belongsTo(Branch::class, 'challan_branch_id');
+    public function feeBranch()
+    {
+        return $this->belongsTo(Branch::class, 'challan_branch_id');
     }
-    public function educations(){
+    public function educations()
+    {
         return $this->hasMany(ApplicantEducation::class, 'applicant_id');
     }
-    public function district(){
-         return $this->belongsTo(Location::class, 'district_id')
-                    ->where('type', 'district');
+    public function district()
+    {
+        return $this->belongsTo(Location::class, 'district_id')
+            ->where('type', 'district');
     }
-    public function tehsil(){
-         return $this->belongsTo(Location::class, 'tehsil_id')
-                    ->where('type', 'tehsil');
+    public function tehsil()
+    {
+        return $this->belongsTo(Location::class, 'tehsil_id')
+            ->where('type', 'tehsil');
+    }
+    public function statusLogs()
+    {
+        return $this->hasMany(ApplicantStatusLog::class, 'applicant_id');
+    }
+    public function latestStatusLog()
+    {
+        return $this->hasOne(ApplicantStatusLog::class, 'applicant_id')
+            ->latestOfMany(); 
     }
 }

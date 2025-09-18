@@ -225,6 +225,10 @@
                             </div>
                         </div>
                         <div class="info-row">
+                            <div class="info-label">Amount:</div>
+                            <div class="info-value">{{ $applicant->amount }}</div>
+                        </div>
+                        <div class="info-row">
                             <div class="info-label">Gender:</div>
                             <div class="info-value">{{ $applicant->quota }}</div>
                         </div>
@@ -252,8 +256,12 @@
                                 : '<span class="badge bg-danger">Unpaid</span>' !!}</div>
                         </div>
                         <div class="info-row">
-                            <div class="info-label">Loan Status:</div>
-                            <div class="info-value">{{ $applicant->status }}</div>
+                            <div class="info-label">Application Status:</div>
+                            <div class="info-value">{{ $applicant->status }} </div>
+                        </div>
+                        <div class="info-row">
+                            <div class="info-label">Remarks:</div>
+                            <div class="info-value"> {{$applicant->latestStatusLog->remarks??''}} </div>
                         </div>
 
                         @if ($applicant->fee_status === 'paid')
@@ -278,18 +286,34 @@
 
                         <div class="section-title no-print">Important Instructions</div>
                         <ul class="no-print">
+                        
                             <li>
-                                <strong>Submit your challan</strong> at the nearest <strong>Bank of AJK branch</strong>.<br>
-                                After submission, <strong>please upload a scanned copy or clear image</strong> of the
-                                challan below.
+                               <strong> Print</strong>  Challan form and <strong> Submit your challan</strong> at the nearest <strong>Bank of AJK branch</strong>.<br>
+                                After submission, <strong>upload a scanned copy or clear image</strong> of the challan
+                                below.
                             </li>
-                            <li><strong>All information provided</strong> will be verified from <strong>NADRA</strong> and
-                                relevant institutions.</li>
+                            <li>
+                                <strong>Keep the original challan receipt</strong> safe for future reference and
+                                verification.
+                            </li>
+                            <li>
+                                Applications with <strong>incorrect or incomplete information</strong> may be rejected
+                                without notice.
+                            </li>
+                            <li>
+                                For any queries, please <strong>contact the helpline or support team</strong> before the
+                                deadline.
+                            </li>
                         </ul>
 
                         <div class="no-print mt-3 text-end">
-                            <a href="{{ route('application.print', $applicant->id) }}" target="_blank"
-                                class="btn btn-gradient"><i class="bi bi-printer"></i></a>
+                            @if($applicant->fee_status == 'paid')
+                                <a href="{{ route('application.print', $applicant->id) }}" target="_blank"
+                                    class="btn btn-gradient"><i class="bi bi-printer"></i></a>
+                            @else 
+                                     <a href="{{ route('application.challan', $applicant->id) }}" target="_blank"
+                                    class="btn btn-gradient"><i class="bi bi-printer"></i></a>
+                            @endif
                         </div>
                     </div>
                     @if ($applicant->fee_status != 'paid')

@@ -23,17 +23,21 @@
                 <h6 class="fw-bold">Quick Links</h6>
                 <ul class="list-unstyled">
                     <li>
-                        <a href="#about" class="text-white text-decoration-none">About</a>
+                        <a href="{{ route('home') }}#about" class="text-white text-decoration-none">About</a>
                     </li>
                     <li>
-                        <a href="#eligibility" class="text-white text-decoration-none">Eligibility</a>
+                        <a href="{{ route('home') }}#eligibility" class="text-white text-decoration-none">Eligibility</a>
                     </li>
                     <li>
-                        <a href="#loan_links" class="text-white text-decoration-none">Apply</a>
+                        <a href="{{ route('loan.application') }}" class="text-white text-decoration-none">Apply</a>
                     </li>
                     <li>
-                        <a href="#faq" class="text-white text-decoration-none">FAQs</a>
+                        <a href="{{ route('track.application') }}" class="text-white text-decoration-none">Track</a>
                     </li>
+                    <li>
+                        <a href="{{ route('home') }}#faq" class="text-white text-decoration-none">FAQs</a>
+                    </li>
+
                 </ul>
             </div>
 

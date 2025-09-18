@@ -212,8 +212,8 @@ class PublicController extends Controller
         $branches  = Branch::get();
 
         if (session('auto_track') && session('application_id')) {
-            $applicant = Applicant::with(['feeBranch', 'educations', 'district', 'tehsil'])->find(session('application_id'));
-
+            $applicant = Applicant::with(['feeBranch', 'educations',  'district', 'tehsil', 'latestStatusLog'])->find(session('application_id'));
+            
             if (!$applicant) {
                 return redirect()->route('track.application')->withErrors([
                     'application_id' => 'No application found with the provided ID.',
@@ -227,9 +227,10 @@ class PublicController extends Controller
             $request->validate([
                 'cnic' => 'required|regex:/^\d{5}-\d{7}-\d{1}$/',
             ]);
-            $applicant = Applicant::with(['feeBranch', 'educations', 'district', 'tehsil'])
+            $applicant = Applicant::with(['feeBranch', 'educations', 'district', 'tehsil', 'latestStatusLog'])
                 ->where('cnic', $request->cnic)
                 ->first();
+
             if (!$applicant) {
                 return back()->withErrors(['cnic' => 'No application found with the provided details.'])->withInput();
             }
@@ -251,6 +252,10 @@ class PublicController extends Controller
             ->where('id', $id)
             ->first();
         return view('public.challan', compact('applicant'));
+    }
+    function blankChall()
+    { 
+        return view('public.blank-challan');
     }
     public function getTehsils($id)
     {

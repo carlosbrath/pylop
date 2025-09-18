@@ -63,7 +63,7 @@
 
         @foreach ($copies as $copy)
             <div class="challan-container">
-                 <div class="challan-header">
+                <div class="challan-header">
                     <img src="{{ asset('/assets/img/public/logo.png') }}" height="60" style="float:left;"> 
                     <img src="{{ asset('/assets/img/public/bajk-logo.png') }}" height="60" style="float:right;"> 
                     <div class="challan-title">Azad Kashmir Small Industries Corporation</div>
@@ -74,21 +74,21 @@
 
                 <table class="challan-info">
                     <tr>
-                        <td><strong>Challan No:</strong> {{ $applicant->application_no }}</td>
-                        <td><strong>Date:</strong> {{ now()->format('d-M-Y') }}</td>
+                        <td><strong>Challan No (Form No):</strong></td>
+                        <td><strong>Date:</strong></td>
                     </tr>
                     <tr>
-                        <td><strong>Applicant Name:</strong> {{ $applicant->name }}</td>
-                        <td><strong>CNIC:</strong> {{ $applicant->cnic }}</td>
+                        <td><strong>Applicant Name:</strong> </td>
+                        <td><strong>CNIC:</strong> </td>
                     </tr>
                     <tr>
                         <td><strong>Loan Amount:</strong>
-                            {{ $applicant->amount }}
+                            
                         </td>
-                        <td><strong>Phone:</strong> {{ $applicant->phone }}</td>
+                        <td><strong>Phone:</strong> </td>
                     </tr>
                     <tr>
-                        <td><strong>Form Fee:</strong> {{ challanFee($applicant->tier) }}</td>
+                        <td><strong>Form Fee:</strong> </td>
                         <td><strong>Bank:</strong> Bank of AJK</td>
                     </tr>
                     <tr>
@@ -105,7 +105,7 @@
                 </table>
 
                 <div class="footer-note">
-                    This challan is computer generated. Please pay the fee at  Bank of AJK branch only.
+                    Please pay the fee at  Bank of AJK branch only.
                 </div>
             </div>
         @endforeach

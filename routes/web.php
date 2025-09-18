@@ -23,6 +23,7 @@ Route::get('loan/application/form', [PublicController::class, 'step2'])->name('l
 Route::post('/upload-challan', [PublicController::class, 'uploadChallan'])->name('upload.challan');
 Route::get('/application/{id}/print', [PublicController::class, 'printDoc'])->name('application.print');
 Route::get('/application/{id}/challan', [PublicController::class, 'printChallan'])->name('application.challan');
+Route::get('/blank/challan', [PublicController::class, 'blankChall'])->name('blank.challan');
 Route::post('/storeForm', [PublicController::class, 'storeForm'])->name('storeForm');
 
 Route::get('/get-tehsils/{district_id}', [PublicController::class, 'getTehsils'])->name('get.tehsils');
