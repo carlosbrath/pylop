@@ -94,15 +94,13 @@
                     </tr>
                     <tr>
                         <td><strong>Challan Fee:</strong> {{ challanFee($applicant->tier) }}</td>
-                        <td><strong>Status:</strong>
-                            {!! $applicant->fee_status == 'paid'
-                                ? '<span style="color:green;">Paid</span>'
-                                : '<span style="color:red;">Unpaid</span>' !!}
+                        <td><strong>Account No:</strong>
+                            040-14027001
                         </td>
                     </tr>
                     <tr>
-                        <td><strong>Bank / Branch:</strong> {{ $applicant->feeBranch->branch_name ?? '________' }}</td>
-                        <td><strong>Branch Code:</strong> {{ $applicant->feeBranch->branch_code ?? '______' }}</td>
+                        <td><strong>Bank</strong> Bank of AJK</td>
+                        
                     </tr>
                     <tr>
                         <td colspan="2" style="height:40px;"><strong>Bank Officer’s Signature & Stamp:</strong></td>
@@ -110,7 +108,7 @@
                 </table>
 
                 <div class="footer-note">
-                    This challan is computer generated. Please pay the fee at designated bank branches only.
+                    This challan is computer generated. Please pay the fee at  Bank of AJK branch only.
                 </div>
             </div>
         @endforeach
