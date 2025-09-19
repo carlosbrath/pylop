@@ -271,7 +271,7 @@
                                                                         value="{{ $field['value'] ?? old($field['id']) }}"
                                                                         {{ isset($field['placeholder']) ? "placeholder='" . $field['placeholder'] . "'" : '' }}
                                                                         {{ isset($field['readonly']) && $field['readonly'] ? 'readonly' : '' }}
-                                                                        data-name="{{$field['label'] ?? ''}}">
+                                                                        data-name="{{ $field['label'] ?? '' }}">
                                                                     <label for="{{ $field['id'] }}">{{ $field['label'] }}
                                                                         / {{ $field['urdu'] ?? '' }}
                                                                         {!! isset($field['required']) && $field['required'] ? '<span class="text-danger">*</span>' : '' !!}</label>
@@ -281,7 +281,7 @@
                                                                         id="{{ $field['id'] }}"
                                                                         name="{{ $field['id'] }}"
                                                                         {{ isset($field['readonly']) && $field['readonly'] ? 'readonly' : '' }}
-                                                                        data-name="{{$field['label'] ?? ''}}">
+                                                                        data-name="{{ $field['label'] ?? '' }}">
                                                                         <option disabled selected value="">Select
                                                                             {{ $field['select_field'] ?? '' }}
                                                                         </option>
@@ -336,7 +336,7 @@
                                                     </div>
                                                     <div class="border rounded p-3 bg-white" id="educationSection">
 
-                                                        <span class="text-danger d-block mb-5">
+                                                        <span class="text-success d-block mb-5">
                                                             * Add your highest level of education only.
                                                         </span>
 
@@ -348,7 +348,8 @@
                                                                                 class="bi bi-mortarboard"></i></span>
                                                                         <div class="form-floating flex-grow-1">
                                                                             <select name="educations[0][education_level]"
-                                                                                class="form-select required" data-name="Degree Title">
+                                                                                class="form-select required"
+                                                                                data-name="Degree Title">
                                                                                 <option value="">Select</option>
                                                                                 <option value="Illiterate">Illiterate /
                                                                                     ناخواندہ</option>
@@ -362,21 +363,27 @@
                                                                                     انٹرمیڈیٹ</option>
                                                                                 <option value="Diploma">Diploma / ڈپلومہ
                                                                                 </option>
-                                                                                <option value="Bachelor 14
-                                                                                    Years">Bachelor (14
+                                                                                <option
+                                                                                    value="Bachelor 14
+                                                                                    Years">
+                                                                                    Bachelor (14
                                                                                     Years) / بیچلر (14 سال)</option>
-                                                                                <option value="Bachelor 16 Years">Bachelor (16
+                                                                                <option value="Bachelor 16 Years">Bachelor
+                                                                                    (16
                                                                                     Years) / بیچلر (16 سال)</option>
-                                                                                <option value="Master 16 Years">Master (16 Years)
+                                                                                <option value="Master 16 Years">Master (16
+                                                                                    Years)
                                                                                     / ماسٹر (16 سال)</option>
-                                                                                <option value="Master 18 Years">Master (18 Years)
+                                                                                <option value="Master 18 Years">Master (18
+                                                                                    Years)
                                                                                     / ماسٹر (18 سال)</option>
                                                                                 <option value="MPhil">MPhil / ایم فل
                                                                                 </option>
                                                                                 <option value="PhD">PhD / پی ایچ ڈی
                                                                                 </option>
                                                                             </select>
-                                                                            <label>Education Level / تعلیمی سطح <span class="text-danger">*</span></label>
+                                                                            <label>Education Level / تعلیمی سطح <span
+                                                                                    class="text-danger">*</span></label>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -389,8 +396,10 @@
                                                                             <input type="text"
                                                                                 name="educations[0][degree_title]"
                                                                                 class="form-control "
-                                                                                placeholder="Degree Title" data-name="Degree Title">
-                                                                            <label>Degree/Diploma Title / ڈگری/ڈپلومہ عنوان</label>
+                                                                                placeholder="Degree Title"
+                                                                                data-name="Degree Title">
+                                                                            <label>Degree/Diploma Title / ڈگری/ڈپلومہ
+                                                                                عنوان</label>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -403,40 +412,15 @@
                                                                             <input type="text"
                                                                                 name="educations[0][institute]"
                                                                                 class="form-control"
-                                                                                placeholder="Institute Name" data-name="Institute">
+                                                                                placeholder="Institute Name"
+                                                                                data-name="Institute">
                                                                             <label>Institute / ادارہ</label>
                                                                         </div>
                                                                     </div>
-                                                                   
+
                                                                 </div>
 
                                                                 <!-- Passing Year -->
-                                                                {{-- <div class="col-md-3">
-                                                                    <div class="input-group">
-                                                                        <span class="input-group-text"><i
-                                                                                class="bi bi-calendar2-check"></i></span>
-                                                                        <div class="form-floating flex-grow-1">
-                                                                            <input type="text"
-                                                                                name="educations[0][passing_year]"
-                                                                                class="form-control" placeholder="Year">
-                                                                            <label>Passing Year / سال</label>
-                                                                        </div>
-                                                                    </div>
-                                                                </div> --}}
-                                                                <!-- Grade or Percentage -->
-                                                                {{-- <div class="col-md-4">
-                                                                    <div class="input-group">
-                                                                        <span class="input-group-text"><i
-                                                                                class="bi bi-graph-up"></i></span>
-                                                                        <div class="form-floating flex-grow-1">
-                                                                            <input type="text"
-                                                                                name="educations[0][grade_or_percentage]"
-                                                                                class="form-control"
-                                                                                placeholder="Grade or Percentage">
-                                                                            <label>Grade / Percentage / گریڈ یا فیصد</label>
-                                                                        </div>
-                                                                    </div>
-                                                                </div> --}}
 
                                                                 <div class="col-md-1 d-flex align-items-end">
                                                                     <button type="button"
@@ -463,9 +447,12 @@
                                                     </div>
 
                                                     <div class="border rounded p-3 bg-white" id="cnic section">
+                                                        <span class="text-success d-block mt-1">
+                                                            * Only JPG, PNG files are allowed. Maximum size 1 MB. For reduce file size visit <a href="https://imageresizer.com/">Image Resizer</a>
+                                                        </span>
                                                         <div class="row g-3">
                                                             <!-- CNIC Front -->
-                                                            <div class="col-md-6">
+                                                            <div class="col-md-6 cnic-block">
                                                                 <label for="cnic_front" class="form-label">CNIC Front Side
                                                                     /
                                                                     سامنے <span class="text-danger">*</span></label>
@@ -482,13 +469,14 @@
                                                                         alt="" class="img-fluid d-none"
                                                                         style="max-height: 350px;">
                                                                     <input type="file" name="cnic_front"
-                                                                        id="cnic_front" class="d-none required" data-name="Cnic copy" accept="image/*"
+                                                                        id="cnic_front" class="d-none required"
+                                                                        data-name="Cnic copy" accept="image/*"
                                                                         onchange="previewImage(this, 'cnic_front_preview')">
                                                                 </div>
                                                             </div>
 
                                                             <!-- CNIC Back -->
-                                                            <div class="col-md-6">
+                                                            <div class="col-md-6 cnic-block">
                                                                 <label for="cnic_back" class="form-label">CNIC Back Side /
                                                                     پیچھے <span class="text-danger">*</span></label>
                                                                 <div class="border p-3 rounded text-center bg-light dropzone"
@@ -501,7 +489,8 @@
                                                                         alt="" class="img-fluid d-none"
                                                                         style="max-height: 350px;">
                                                                     <input type="file" name="cnic_back" id="cnic_back"
-                                                                        class="d-none required" data-name="Cnic copy" accept="image/*"
+                                                                        class="d-none required" data-name="Cnic copy"
+                                                                        accept="image/*"
                                                                         onchange="previewImage(this, 'cnic_back_preview')">
                                                                 </div>
                                                             </div>

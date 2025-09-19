@@ -233,6 +233,14 @@
                     </div>
                 </div>
             </div>
+            <div class="row">
+                  <div class="col-6">
+                    <div class="info-row">
+                        <div class="info-label">Loan Amount:</div>
+                        <div class="info-value">{{ $applicant->amount ? number_format($applicant->amount, 2) : '-' }}</div>
+                    </div>
+                </div>
+            </div>
 
             {{-- Education --}}
             <div class="section-title">Educations</div>

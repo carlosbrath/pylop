@@ -63,6 +63,11 @@
                          isValid = false;
                      }
                  }
+                 if (input.name === 'amount') {
+                     if (!amountValidation(input)) {
+                         isValid = false;
+                     }
+                 }
              }
              if (input.name === 'declaration_agree') {
                  if (!input.checked) {
@@ -71,6 +76,24 @@
                      showToast('You must accept the declaration to continue.', 'left', 'bottom');
                  } else {
                      input.classList.remove('error');
+                 }
+             }
+             // ✅ Age validation (18–40 years)
+             if (input.name === 'dob') {
+                 if (!dateofBirth(input)) {
+                     isValid = false;
+                 }
+             }
+
+             // ✅ CNIC Issue Date validation (not older than 10 years)
+             if (input.name === 'cnic_issue_date') {
+                 if (!cnicIssueDate(input)) {
+                     isValid = false;
+                 }
+             }
+             if (input.name === 'cnic_front' || input.name === 'cnic_back') {
+                 if (!fileValidation(input)) {
+                     isValid = false;
                  }
              }
          })
@@ -148,7 +171,7 @@
          const cnicRegex = /^(\d{5}-\d{7}-\d{1}|\d{13})$/;
 
          if (!elemeValue.match(cnicRegex)) {
-            input.classList.add('error');
+             input.classList.add('error');
              showToast("Please enter a valid " + elemName, "left", "bottom");
 
              // Optional: Show inline error
@@ -169,7 +192,7 @@
 
          if (!elemeValue.match(phoneRegex)) {
              input.classList.add('error');
-             elemName=getFormatedname(input)
+             elemName = getFormatedname(input)
 
              // Optional: Show inline error
              removeErrorMessage(input);
@@ -183,7 +206,92 @@
          }
      }
 
+     function dateofBirth(input) {
+         const dob = new Date(input.value);
+         const today = new Date();
+         const age = today.getFullYear() - dob.getFullYear();
+         const monthDiff = today.getMonth() - dob.getMonth();
+         const dayDiff = today.getDate() - dob.getDate();
+
+         let finalAge = age;
+         if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) {
+             finalAge--; // Adjust if birthday not reached yet
+         }
+         if (finalAge < 18 || finalAge > 40) {
+             input.classList.add('error');
+             removeErrorMessage(input);
+             createErrorMessage(input, 'Not eligible. Age must be 18–40 years..');
+             return false
+         } else {
+             input.classList.remove('error');
+             removeErrorMessage(input);
+             return true
+         }
+     }
+
+     function cnicIssueDate(input) {
+         const issueDate = new Date(input.value);
+         const today = new Date();
+
+         const diffYears = today.getFullYear() - issueDate.getFullYear();
+         const monthDiff = today.getMonth() - issueDate.getMonth();
+         const dayDiff = today.getDate() - issueDate.getDate();
+
+         let finalYears = diffYears;
+         if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) {
+             finalYears--; // Adjust if issue date anniversary not reached
+         }
+
+         if (finalYears > 10) {
+             isValid = false;
+             input.classList.add('error');
+             removeErrorMessage(input);
+             createErrorMessage(input, 'CNIC expired. Must be issued within last 10 years.');
+             return false;
+         } else {
+             input.classList.remove('error');
+             removeErrorMessage(input);
+             return true
+         }
+     }
+
+     function fileValidation(input) {
+         if (!input.files || input.files.length === 0) {
+             createErrorMessage(input, 'CNIC file is required.');
+             input.classList.add('error');
+             return false;
+         }
+
+         const file = input.files[0];
+         const allowedTypes = ['image/jpeg', 'image/png', 'image/jpg'];
+         const maxSize = 1 * 1024 * 1024; // 1 MB
+
+         // Check file type
+         if (!allowedTypes.includes(file.type)) {
+             createErrorMessage(input, 'Only JPG or PNG files are allowed.');
+             input.classList.add('error');
+             return false;
+         }
+
+         // Check file size
+         if (file.size > maxSize) {
+             createErrorMessage(input, 'File size must not exceed 1 MB.');
+             input.classList.remove('error');
+             return false;
+         }
+
+         // ✅ Valid file
+         removeErrorMessage(input);
+         input.classList.remove('error');
+         return true;
+     }
+
      function createErrorMessage(input, message) {
+
+         if (input.name === 'cnic_front' || input.name === 'cnic_back') {
+             createFileErrorMessage(input, message);
+             return;
+         }
          const inputGroupParent = input.closest('.input-group')?.parentElement;
          if (!inputGroupParent) return;
 
@@ -200,11 +308,43 @@
          errorDiv.style.display = 'block';
      }
 
+     function createFileErrorMessage(input, message) {
+         const cnicBlock = input.closest('.cnic-block');
+         if (!cnicBlock) return;
+
+         // Check if error div already exists
+         let errorDiv = cnicBlock.querySelector('.input-error-div');
+
+         if (!errorDiv) {
+             errorDiv = document.createElement('div');
+             errorDiv.className = 'input-error-div';
+             cnicBlock.appendChild(errorDiv);
+         }
+
+         errorDiv.textContent = message;
+         errorDiv.style.display = 'block';
+     }
+
      function removeErrorMessage(input) {
+         if (input.name === 'cnic_front' || input.name === 'cnic_back') {
+             removeFileErrorMessage(input);
+             return;
+         }
          const inputGroupParent = input.closest('.input-group')?.parentElement;
          if (!inputGroupParent) return;
 
          const errorDiv = inputGroupParent.querySelector('.input-error-div');
+         if (errorDiv) {
+             errorDiv.textContent = '';
+             errorDiv.style.display = 'none';
+         }
+     }
+
+     function removeFileErrorMessage(input) {
+         const cnicBlock = input.closest('.cnic-block');
+         if (!cnicBlock) return;
+
+         const errorDiv = cnicBlock.querySelector('.input-error-div');
          if (errorDiv) {
              errorDiv.textContent = '';
              errorDiv.style.display = 'none';

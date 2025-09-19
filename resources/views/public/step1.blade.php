@@ -44,9 +44,9 @@
                             <div class="input-group">
                                 <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
                                 <div class="form-floating flex-grow-1">
-                                    <input type="date" name="issue_date" value="{{ old('issue_date') }}" id="issue_date"
+                                    <input type="date" name="cnic_issue_date" value="{{ old('cnic_issue_date') }}" id="cnic_issue_date"
                                         class="form-control" placeholder="CNIC Issue Date" />
-                                    <label for="issue_date">CNIC Issue Date / شناختی کارڈ کے اجراء کی تاریخ</label>
+                                    <label for="cnic_issue_date">CNIC Issue Date / شناختی کارڈ کے اجراء کی تاریخ</label>
                                 </div>
                             </div>
                         </div>

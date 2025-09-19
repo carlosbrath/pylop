@@ -14,7 +14,7 @@
                         <div class="card mb-4">
                             <div class="card-body page">
                                 @if ($applicant->status == 'Pending' || $applicant->status == 'NotCompleted')
-                                    <div class="d-flex justify-content-end mb-2 no-print">
+                                    {{-- <div class="d-flex justify-content-end mb-2 no-print">
                                         <a href="{{ route('applicant.edit', $applicant->id) }}" class="btn btn-outline-teal mr-2" data-bs-toggle="tooltip" data-bs-placement="top"
                                             title="Edit Application">
                                              <i data-feather="edit-2"></i> 
@@ -23,7 +23,7 @@
                                             title="Delete Application">
                                                <i data-feather="trash-2"></i>
                                         </button>
-                                    </div>
+                                    </div> --}}
                                 @endif
                                 <div class="appno-container">
                                     <div class="appno-label">Application No:</div>
@@ -59,6 +59,7 @@
                                 <x-info-row label="Gender" :value="$applicant->quota" />
                                 <x-info-row label="District" :value="$applicant->district->name ?? '-'" />
                                 <x-info-row label="Tehsil" :value="$applicant->tehsil->name ?? '-'" />
+                                <x-info-row label="Amount" :value="$applicant->amount ? number_format($applicant->amount, 2) : '-'"  />
 
                                 <h5 class="mt-4">Education</h5>
                                 @foreach ($applicant->educations as $ed)

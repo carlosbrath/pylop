@@ -30,7 +30,7 @@ class PublicController extends Controller
     {
         $title = 'Application Form';
         $cnic = $request->query('cnic');
-        $issueDate = $request->query('issue_date');
+        $issueDate = $request->query('cnic_issue_date');
         $tier = $request->query('tier');
 
         // Validate CNIC presence in DB
@@ -48,7 +48,7 @@ class PublicController extends Controller
 
             if ($issueDateCarbon->lt($tenYearsAgo)) {
                 return redirect()->back()->withErrors([
-                    'issue_date' => 'Your CNIC has expired. You are not eligible for loan applications.',
+                    'cnic_issue_date' => 'Your CNIC has expired. You are not eligible for loan applications.',
                 ]);
             }
         }
@@ -67,14 +67,14 @@ class PublicController extends Controller
         if (!$request->has('name')) {
             $request->validate([
                 'cnic' => 'required|regex:/^\d{5}-\d{7}-\d{1}$/',
-                'issue_date' => 'required|date',
+                'cnic_issue_date' => 'required|date',
                 'tier' => 'required|in:1,2,3',
             ]);
 
             // Redirect to step 2 with parameters in URL
             return redirect()->route('loan.application.form', [
                 'cnic' => $request->cnic,
-                'issue_date' => $request->issue_date,
+                'cnic_issue_date' => $request->cnic_issue_date,
                 'tier' => $request->tier,
             ]);
         }
@@ -99,8 +99,8 @@ class PublicController extends Controller
             'BusinessAddress' => 'required|string|max:500',
             'amount' => 'required|integer|min:1',
             'declaration_agree' => 'accepted',
-            'cnic_front' => 'required|image|mimes:jpeg,png,jpg|max:2048',
-            'cnic_back'  => 'required|image|mimes:jpeg,png,jpg|max:2048',
+            'cnic_front' => 'required|image|mimes:jpeg,png,jpg|max:1048',
+            'cnic_back'  => 'required|image|mimes:jpeg,png,jpg|max:1048',
 
             'educations' => 'required|array|min:1',
             'educations.*.education_level' => 'required|string|max:255',
@@ -112,6 +112,28 @@ class PublicController extends Controller
             'amount.integer' => 'Amount must be a valid number.',
             'amount.min' => 'Amount must be greater than zero.',
         ]);
+        $issueDate = $request->query('cnic_issue_date');
+        if ($issueDate) {
+            $issueDateCarbon = Carbon::parse($issueDate);
+            $tenYearsAgo = Carbon::now()->subYears(10);
+
+            if ($issueDateCarbon->lt($tenYearsAgo)) {
+                return redirect()->back()->withErrors([
+                    'cnic_issue_date' => 'Your CNIC has expired. You are not eligible for loan applications.',
+                ]);
+            }
+        }
+        $dob = $request->query('dob');
+        if ($dob) {
+            $dobCarbon = Carbon::parse($dob);
+            $age = $dobCarbon->age; // Carbon directly gives age
+
+            if ($age < 18 || $age > 40) {
+                return redirect()->back()->withErrors([
+                    'dob' => 'Not eligible. Age must be 18–40 years.',
+                ])->withInput();
+            }
+        }
         if ($request->hasFile('cnic_front')) {
             $cnic_frontName = time() . '.' . $request->cnic_front->extension();
             $request->cnic_front->move(public_path('uploads/cnic'), $cnic_frontName);
@@ -213,7 +235,7 @@ class PublicController extends Controller
 
         if (session('auto_track') && session('application_id')) {
             $applicant = Applicant::with(['feeBranch', 'educations',  'district', 'tehsil', 'latestStatusLog'])->find(session('application_id'));
-            
+
             if (!$applicant) {
                 return redirect()->route('track.application')->withErrors([
                     'application_id' => 'No application found with the provided ID.',
@@ -254,7 +276,7 @@ class PublicController extends Controller
         return view('public.challan', compact('applicant'));
     }
     function blankChall()
-    { 
+    {
         return view('public.blank-challan');
     }
     public function getTehsils($id)

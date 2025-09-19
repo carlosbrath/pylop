@@ -159,7 +159,7 @@
                                             <td></td>
                                         </tr>
                                         <tr class="text-center">
-                                            <td class="text-start">Special Persons</td>
+                                            <td class="text-start" title="Person With Disbilities">PWD</td>
                                             <td></td>
                                             <td></td>
                                             <td></td>

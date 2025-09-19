@@ -226,7 +226,7 @@
                         </div>
                         <div class="info-row">
                             <div class="info-label">Amount:</div>
-                            <div class="info-value">{{ $applicant->amount }}</div>
+                            <div class="info-value">{{ $applicant->amount ? number_format($applicant->amount, 2) : '-' }}</div>
                         </div>
                         <div class="info-row">
                             <div class="info-label">Gender:</div>
@@ -268,7 +268,7 @@
                             <div class="section-title">Challan Details</div>
                             <div class="info-row">
                                 <div class="info-label">Branch Name:</div>
-                                <div class="info-value">{{ $applicant->feeBranch->branch_name ?? '-' }}</div>
+                                <div class="info-value">Bank of Ajk {{ $applicant->feeBranch->branch_name ?? '-' }}</div>
                             </div>
                             <div class="info-row">
                                 <div class="info-label">Branch Code:</div>
@@ -308,10 +308,10 @@
 
                         <div class="no-print mt-3 text-end">
                             @if($applicant->fee_status == 'paid')
-                                <a href="{{ route('application.print', $applicant->id) }}" target="_blank"
+                                <a href="{{ route('application.print', $applicant->id) }}" title="Print Form" target="_blank"
                                     class="btn btn-gradient"><i class="bi bi-printer"></i></a>
                             @else 
-                                     <a href="{{ route('application.challan', $applicant->id) }}" target="_blank"
+                                     <a href="{{ route('application.challan', $applicant->id) }}" title="Print challan" target="_blank"
                                     class="btn btn-gradient"><i class="bi bi-printer"></i></a>
                             @endif
                         </div>
@@ -320,7 +320,10 @@
                         <div class="md-col-10 no-print">
                             <form action="{{ route('upload.challan') }}" method="POST" enctype="multipart/form-data"
                                 class="my-4 p-4 bg-white shadow-sm rounded">
-                                <h3 class="mb-5">Fee informations</h3>
+                                  <span class="text-success d-block mt-1">
+                                                            * Only JPG, PNG files are allowed. Maximum size 1 MB. For reduce file size please visit <a href="https://imageresizer.com/">Image Resizer</a>
+                                                        </span>
+                                <h3 class="mb-5">Challan Information</h3>
                                 @csrf
                                 <input type="hidden" name="applicant_id" value="{{ $applicant->id }}">
                                 <div class="row g-3">

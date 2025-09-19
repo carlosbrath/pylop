@@ -83,7 +83,7 @@
                     </tr>
                     <tr>
                         <td><strong>Loan Amount:</strong>
-                            {{ $applicant->amount }}
+                            {{ $applicant->amount ? number_format($applicant->amount, 2) : '-' }}
                         </td>
                         <td><strong>Phone:</strong> {{ $applicant->phone }}</td>
                     </tr>
