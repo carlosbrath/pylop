@@ -252,15 +252,12 @@ class ApplicantController extends Controller
 
     public function destroy($id)
     {
+        return response()->json(['error' => 'Unauthorized'], 403);
         try {
             $applicant = Applicant::findOrFail($id);
-
             // Delete applicant's education(s)
-           $applicant->educations()->delete();
-
-            // Delete applicant
+            $applicant->educations()->delete();
             $applicant->delete();
-
             return response()->json([
                 'status'  => 'success',
                 'message' => 'Application deleted successfully.',

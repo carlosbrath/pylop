@@ -12,6 +12,14 @@
     <section>
         <img src="{{ asset('/assets/img/public/banner.webp') }}" style="width: 100%">
     </section>
+    <!-- Apply Section -->
+     <section id="about" class="py-2 bg-light d-md-none">
+        <div class="container">
+            <div class="d-flex justify-content-center">
+                <a href="{{ route('loan.application') }}" class="btn btn-success">Apply Now</a>
+            </div>
+        </div>
+     </section>
     <!-- About Section -->
     <section id="about" class="py-5 bg-light">
         <div class="container">
@@ -155,7 +163,7 @@
                 </div>
 
                 <!-- Calculator Column -->
-                <div class="col-lg-4 col-md-6">
+                {{-- <div class="col-lg-4 col-md-6">
                     <div class="link_card border-end h-100 shadow-sm bg-white rounded p-4 text-center">
                         <img src=" {{asset('/assets/img/public/calculator.png')}}" class="mb-3" alt="Calculator" />
                         <a target="_blank" href="#" style="cursor: pointer">
@@ -163,7 +171,7 @@
                             <p class="text-muted">Calculate loan repayment schedule</p>
                         </a>
                     </div>
-                </div>
+                </div> --}}
             </div>
         </div>
     </section>

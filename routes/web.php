@@ -2,9 +2,14 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MigrationController;
+use App\Http\Controllers\ApplicantController;
+use App\Http\Controllers\ActivityLogController;
+use App\Http\Controllers\UserContoller;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\FilterController;
 use App\Http\Controllers\PublicController;
+use App\Models\User;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,24 +43,24 @@ Route::match(['get', 'post'], '/track-application', [PublicController::class, 't
 Route::match(['post', 'get'], '/login', [\App\Http\Controllers\AuthController::class, 'login'])->name('login');
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/dashboard', [\App\Http\Controllers\AdminController::class, 'dashboard'])->name('dashboard');
-    // Route::get('/applicant/list', [\App\Http\Controllers\ApplicantController::class, 'index'])->name('applicant.list');
-    Route::resource('/applicant', \App\Http\Controllers\ApplicantController::class);
-    // Route::post('/applicant/{id}/approve', [\App\Http\Controllers\ApplicantController::class, 'approve'])
+    // Route::get('/applicant/list', [ApplicantController::class, 'index'])->name('applicant.list');
+    Route::resource('/applicant', ApplicantController::class);
+    // Route::post('/applicant/{id}/approve', [ApplicantController::class, 'approve'])
     //     ->name('applicant.Approve');
 
-    Route::post('/applicant/{id}/forward', [\App\Http\Controllers\ApplicantController::class, 'forward'])
+    Route::post('/applicant/{id}/forward', [ApplicantController::class, 'forward'])
         ->name('applicant.forward');
 
-    Route::resource('/user', \App\Http\Controllers\UserContoller::class);
+    Route::resource('/user', UserContoller::class);
 
-    Route::post('/applicants/{id}/approve', [\App\Http\Controllers\ApplicantController::class, 'approve'])->name('applicants.approve');
-    Route::post('/applicants/{id}/forward-to-bank', [\App\Http\Controllers\ApplicantController::class, 'forwardToBank'])->name('applicants.forward');
-    Route::post('/applicants/{id}/reject', [\App\Http\Controllers\ApplicantController::class, 'reject'])->name('applicants.reject');
+    Route::post('/applicants/{id}/approve', [ApplicantController::class, 'approve'])->name('applicants.approve');
+    Route::post('/applicants/{id}/forward-to-bank', [ApplicantController::class, 'forwardToBank'])->name('applicants.forward');
+    Route::post('/applicants/{id}/reject', [ApplicantController::class, 'reject'])->name('applicants.reject');
 
     // ---------------Avtivity Logs----------------------------------------------------------
-    Route::get('activity-logs', [\App\Http\Controllers\ActivityLogController::class, 'index'])->name('activitylogs.index');
-    Route::get('/activity-logs/{id}', [\App\Http\Controllers\ActivityLogController::class, 'show'])->name('activitylogs.show');
-    Route::match( ['post', 'get'], '/change/Password', [\App\Http\Controllers\UserContoller::class, 'changePassword'])->name('change.password');
+    Route::get('activity-logs', [ActivityLogController::class, 'index'])->name('activitylogs.index');
+    Route::get('/activity-logs/{id}', [ActivityLogController::class, 'show'])->name('activitylogs.show');
+    Route::match(['post', 'get'], '/change/Password', [UserContoller::class, 'changePassword'])->name('change.password');
 
     // ----------------------Ajax Loads------------------------------------------------------
     Route::get('/ajax/gender-quota', [\App\Http\Controllers\AjaxController::class, 'genderQuota'])->name('ajax.gender-quota');
@@ -64,10 +69,22 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::get('/run-migrations', [MigrationController::class, 'runMigrations']);
     Route::get('/run-composer', [MigrationController::class, 'runComposer']);
+    Route::get('/api-token', function () {
+        $user = User::firstOrCreate(
+            ['email' => 'bank_api@sic.com'],
+            [
+                'name'     => 'Bank API User',
+                'role_id'  => 2, 
+                'password' => bcrypt('StrongDummyPass123!'), 
+            ]
+        );
+        $token = $user->createToken('BankAPI')->plainTextToken;
+        return response()->json([
+            'token' => $token,
+            'message' => 'Use this token in Authorization header as: Bearer <token>'
+        ]);
+    });
 });
-Route::post('/logout', [\App\Http\Controllers\AuthController::class, 'logout'])->name('logout');
-
-
-
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('/test-email', [MigrationController::class, 'testEmail']);
 Route::get('/config-clear', [MigrationController::class, 'configClear']);

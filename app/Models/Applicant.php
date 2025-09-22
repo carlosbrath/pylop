@@ -38,6 +38,7 @@ class Applicant extends Model
         'challan_fee',
         'fee_status',
         'status',
+        'bank_status',
     ];
     public function feeBranch()
     {

@@ -47,8 +47,8 @@
                 <h6 class="fw-bold">Contact</h6>
                 <ul class="list-unstyled">
                     {{-- <li><i class="bi bi-envelope me-1"></i> info@ajkloans.gov.pk</li> --}}
-                    <li><i class="bi bi-telephone me-1"></i> 05822 920812</li>
-                    <li><i class="bi bi-telephone me-1"></i> 05822 920813</li>
+                    <li><a href="tel:05822 920812"><i class="bi bi-telephone me-1"></i>05822 920812 </a></li>
+                    <li><a href="tel:05822 920813"><i class="bi bi-telephone me-1"></i> 05822 920813 </a></li>
                     <li><i class="bi bi-geo-alt me-1"></i> Muzaffarabad, AJK</li>
                 </ul>
             </div>

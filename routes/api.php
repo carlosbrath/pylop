@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\ApplicantController;
+use App\Http\Controllers\BankApplicationController;
+use App\Http\Controllers\UserContoller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -14,10 +17,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::post('/login', [\App\Http\Controllers\AuthController::class, 'login'])->name('login');
-Route::post('/register', [\App\Http\Controllers\AuthController::class, 'register'])->name('register');
-Route::post('/verify-otp', [\App\Http\Controllers\AuthController::class, 'verifyOtp']);
-Route::post('/resend-otp', [\App\Http\Controllers\AuthController::class, 'resendOtp']);
-Route::post('/addlocation',[\App\Http\Controllers\LocationController::class, 'store'])->name('addlocation');
 
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
@@ -25,16 +24,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::middleware('auth:sanctum')->group(function () {
-    Route::resource('users', \App\Http\Controllers\UserContoller::class);
-    Route::resource('tours', \App\Http\Controllers\TourController::class);
-    Route::post('tours/status/{id}/update', [\App\Http\Controllers\TourController::class, 'statusUpdate']);
-    Route::get('/location/tpo', [\App\Http\Controllers\LocationController::class, 'locationtpo']);
-    Route::get('/settings', [\App\Http\Controllers\AllDataController::class, 'allData'])->name('settings');
-    Route::get('/dashboard', [\App\Http\Controllers\AdminController::class, 'dashboard'])->name('dashboard');
-    Route::resource('/news', \App\Http\Controllers\NewsController::class);
-    Route::apiResource('/tokens', \App\Http\Controllers\NotificationTokenController::class);
-    Route::apiResource('/news', \App\Http\Controllers\NewsController::class);
+    Route::get('bank/applications', [BankApplicationController::class, 'index']);
+    Route::post('bank/applications/status-update', [BankApplicationController::class, 'bulkUpdate']);
+    Route::post('bank/applications/{id}/status-update', [BankApplicationController::class, 'singleUpdate']);
 });
 Route::middleware('auth:sanctum')->post('/logout', [\App\Http\Controllers\AuthController::class, 'logout'])->name('logout');
-Route::resource('test-tours', \App\Http\Controllers\TourController::class);
 Route::post('/logout', [\App\Http\Controllers\AuthController::class, 'logout'])->name('logout');
