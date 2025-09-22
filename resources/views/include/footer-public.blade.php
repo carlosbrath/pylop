@@ -26,7 +26,8 @@
                         <a href="{{ route('home') }}#about" class="text-white text-decoration-none">About</a>
                     </li>
                     <li>
-                        <a href="{{ route('home') }}#eligibility" class="text-white text-decoration-none">Eligibility</a>
+                        <a href="{{ route('home') }}#eligibility"
+                            class="text-white text-decoration-none">Eligibility</a>
                     </li>
                     <li>
                         <a href="{{ route('loan.application') }}" class="text-white text-decoration-none">Apply</a>
@@ -56,7 +57,8 @@
         <hr class="border-light" />
 
         <div class="text-center small">
-            &copy; 2025 <a href="https://itb.ajk.gov.pk/" class="text-info">AJ&K Information Technology Board</a>. Developed with 💚 by
+            &copy; 2025 <a href="https://itb.ajk.gov.pk/" class="text-info">AJ&K Information Technology Board</a>.
+            Developed with 💚 by
             <a href="https://itb.ajk.gov.pk/" class="text-info"><strong>IT Board Development Team</strong></a>.
         </div>
     </div>
@@ -71,33 +73,34 @@
             </div>
             <h5 class="modal-title urdu-text" id="announcementLabel" dir="rtl">📢 اہم اطلاع</h5>
 
-            <div class="modal-body urdu-text text-justify" dir="rtl" style="line-height: 2; font-size: 1rem; ">
+            <div class="modal-body urdu-text text-justify" dir="rtl" style="line-height: 2; font-size: 1rem;">
                 <p>
-                    آزاد کشمیر سمال انڈسٹریز درخواست قرضہ فارم کا ابتدائی سطح پر جائزہ لیکر بینک آف آزاد جموں و کشمیر کو
-                    ارسال کی جائیں گی۔
+                    آزاد کشمیر سمال انڈسٹریز کارپوریشن درخواست قرضہ فارم کا ابتدائی سطح پر جائزہ لیکر بینک آف آزاد جموں
+                    و کشمیر کو ارسال کرے گی۔
                     درخواست دہندگان بینک آف آزاد جموں و کشمیر کی قریب ترین برانچ سے رابطہ کریں۔
+                    قرضہ پہلے آئے پہلے پائے کی بنیاد پر دیا جائے گا۔
                 </p>
                 <p>
-                    آن لائن درخواست کے علاؤہ، قرضہ فارم بینک آف آزاد جموں و کشمیر کی تمام برانچز سے حاصل کیے جا سکتے
-                    ہیں۔
-                    بعد از تکمیل، قرضہ فارم مندرجہ ذیل پتوں پر ارسال کریں۔:
+                    آن لائن درخواست کے علاؤہ قرضہ فارم بینک آف آزاد جموں و کشمیر کی تمام برانچز سے حاصل کیے جا سکتے ہیں۔
+                    بعد از تکمیل قرضہ فارم مندرجہ ذیل پتوں پر ارسال کیے جائیں:
                 </p>
 
                 <ul class="list-unstyled">
                     <li>
-                        <strong>📍 مظفرآباد ڈویژن:</strong>
-                        باالمقابل ڈسٹرکٹ ہیڈکوارٹر اولڈ سیکریٹریٹ، مظفرآباد<br>
-                        📞 <strong>05822-920812</strong> | <strong>05822-920813</strong>
+                        <strong><i class="bi bi-geo-alt-fill text-danger"></i> مظفرآباد ڈویژن:</strong>
+                        ڈپٹی ڈائریکٹر ایڈمن، سمال انڈسٹریز باالمقابل ڈسٹرکٹ ہیڈ کوارٹر کمپلیکس اولڈ سیکریٹریٹ،
+                        مظفرآباد<br>
+                        <i class="bi bi-telephone-fill text-success"></i> <strong>05822-920812</strong>
                     </li>
                     <li class="mt-3">
-                        <strong>📍 پونچھ ڈویژن:</strong>
-                        ڈویژنل آفیسر، کھڑک روڈ نزد ووکیشنل ٹریننگ انسٹی ٹیوٹ AJKTEVTA، راولاکوٹ<br>
-                        📞 <strong>0344-5529532</strong> | <strong>0344-5529541</strong>
+                        <strong><i class="bi bi-geo-alt-fill text-danger"></i> پونچھ ڈویژن:</strong>
+                        ڈویژنل آفیسر، سمال انڈسٹریز نزد ووکیشنل ٹریننگ انسٹی ٹیوٹ AJKTEVTA، راولاکوٹ<br>
+                        <i class="bi bi-telephone-fill text-success"></i> <strong>0344-5529532</strong>
                     </li>
                     <li class="mt-3">
-                        <strong>📍 میرپور ڈویژن:</strong>
-                        D-I انڈسٹریل ایریا، میرپور ڈویژنل آفس<br>
-                        📞 <strong>0311-8656142</strong> | <strong>0343-5050388</strong>
+                        <strong><i class="bi bi-geo-alt-fill text-danger"></i> میرپور ڈویژن:</strong>
+                        ڈویژنل آفیسر، سمال انڈسٹریز D-I اولڈ انڈسٹریل ایریا، میرپور<br>
+                        <i class="bi bi-telephone-fill text-success"></i> <strong>0343-5050388</strong>
                     </li>
                 </ul>
             </div>
