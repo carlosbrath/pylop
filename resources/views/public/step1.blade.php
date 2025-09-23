@@ -13,7 +13,7 @@
                 </div>
 
                 @include('include.eligibility')
-                <div class="p-3 px-5">
+                <div class="p-md-3 px-md-5">
                     <form id="step1" class="row g-3 mb-3 shadow-lg shadow rounded p-3" method="POST"
                         action="{{ route('storeForm') }}" onsubmit="validateForm(event, this, 'step1')">
                         @csrf

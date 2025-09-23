@@ -130,7 +130,7 @@
                                             <div class="border rounded p-3 mb-2">
                                                 <x-info-row label="Old Status" :value="$log->old_status ?? '-'" />
                                                 <x-info-row label="New Status" :value="$log->new_status ?? '-'" />
-                                                <x-info-row label="Changed By" :value="$log->name ?? 'System'" />
+                                                <x-info-row label="Changed By" :value="$log->actor->name ?? 'System'" />
                                                 <x-info-row label="Remarks" :value="$log->remarks ?? '-'" />
                                                 <x-info-row label="Changed At" :value="$log->created_at->format('d M Y h:i A')" />
                                             </div>

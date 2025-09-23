@@ -85,8 +85,8 @@ class ApplicantController extends Controller
         $applicant = Applicant::find($id);
         $remarks = ApplicantStatusLog::where('applicant_id', $applicant->id)
             ->latest()
+            ->with('actor')
             ->get();
-        // pd($remarks);
         return view('applicants.show', compact('applicant', 'title', 'page_title', 'remarks'));
     }
 

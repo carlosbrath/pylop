@@ -13,6 +13,7 @@
      $(document).ready(function() {
          $('input[name="cnic"]').mask('00000-0000000-0');
          $('input[name="phone"]').mask('00000000000');
+         $('#amount').mask('0,000,000', {reverse: true});
          $('.select2').select2({
              allowClear: true,
              width: '100%'
@@ -133,7 +134,7 @@
      function amountValidation(input) {
          const tierSelect = document.querySelector('select[name="tier"]');
          const tier = tierSelect ? tierSelect.value : null;
-         const amount = parseInt(input.value);
+         const amount = parseInt(input.value.replace(/,/g, ''), 10);
 
          const tierLimits = {
              1: {
@@ -149,12 +150,18 @@
                  max: 2000000
              }
          };
+          const displayRanges = {
+            1: { min: 0, max: 500000 },
+            2: { min: 500000, max: 1000000 },
+            3: { min: 1000000, max: 2000000 }
+        };
 
          const limits = tierLimits[tier];
+         const display = displayRanges[tier];
 
          if (!limits || isNaN(amount) || amount < limits.min || amount > limits.max) {
              const message =
-                 `For Tier ${tier}, amount must be between ${limits.min.toLocaleString()} and ${limits.max.toLocaleString()}`;
+                 `For Tier ${tier}, amount must be between ${display.min.toLocaleString()} and ${display.max.toLocaleString()}`;
              createErrorMessage(input, message);
              showToast(message, 'left', 'bottom');
              input.classList.add('error');

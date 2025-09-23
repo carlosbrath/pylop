@@ -4,75 +4,139 @@ namespace App\Http\Controllers;
 
 use App\Models\Applicant;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Validation\ValidationException;
+use Symfony\Component\HttpFoundation\Response;
 
 class BankApplicationController extends Controller
 {
+    private function apiResponse($success, $message, $data = null, $code = 200)
+    {
+        return response()->json([
+            'success' => $success,
+            'message' => $message,
+            'data'    => $data
+        ], $code);
+    }
+
+    private function authorizeBank()
+    {
+        if (auth()->user()->email !== 'bank_api@sic.com') {
+            abort(Response::HTTP_FORBIDDEN, 'Unauthorized');
+        }
+    }
+
     public function index()
     {
-        if (auth()->user()->email !== 'bank_api@sic.com') {
-            return response()->json(['error' => 'Unauthorized'], 403);
+        try {
+            $this->authorizeBank();
+
+            $applications = Applicant::with(['feeBranch', 'educations', 'district', 'tehsil', 'statusLogs', 'latestStatusLog'])
+                ->where('status', 'forwarded')
+                ->get();
+
+            if ($applications->isEmpty()) {
+                return $this->apiResponse(true, 'No forwarded applications found.', [], 200);
+            }
+
+            return $this->apiResponse(true, 'Forwarded applications fetched successfully.', [
+                'count' => $applications->count(),
+                'applications' => $applications
+            ]);
+        } catch (\Throwable $e) {
+            Log::error('Bank API index error: ' . $e->getMessage());
+            return $this->apiResponse(false, 'Server error while fetching applications.', null, 500);
         }
-
-        $applications = Applicant::with(['feeBranch', 'educations',  'district', 'tehsil', 'statusLogs', 'latestStatusLog'])->where('status', 'forwarded')->get();
-
-        return response()->json([
-            'success' => true,
-            'count'   => $applications->count(),
-            'data'    => $applications
-        ]);
     }
+
+    public function application($id)
+    {
+        try {
+            $this->authorizeBank();
+
+            $application = Applicant::with(['feeBranch', 'educations', 'district', 'tehsil', 'statusLogs', 'latestStatusLog'])
+                ->where('id', $id)
+                ->where('status', '!=', 'Pending')
+                ->first();
+
+            if (!$application) {
+                return $this->apiResponse(false, 'Application not found.', null, 404);
+            }
+
+            return $this->apiResponse(true, 'Application fetched successfully.', $application);
+        } catch (\Throwable $e) {
+            Log::error("Bank API single fetch error: {$e->getMessage()}");
+            return $this->apiResponse(false, 'Server error while fetching application.', null, 500);
+        }
+    }
+
     public function singleUpdate(Request $request, $id)
     {
-        // ✅ Restrict to the Bank API user
-        if (auth()->user()->email !== 'bank_api@sic.com') {
-            return response()->json(['error' => 'Unauthorized'], 403);
+        try {
+            $this->authorizeBank();
+
+            $data = $request->validate([
+                'status'  => 'required|string',
+                'remarks' => 'nullable|string',
+            ]);
+
+            $app = Applicant::find($id);
+            if (!$app) {
+                return $this->apiResponse(false, 'Application not found.', null, 404);
+            }
+
+            $app->updateStatus($data['status'], $data['remarks'] ?? null);
+            $app->bank_status = $data['status'];
+
+            if (in_array(strtolower($data['status']), ['approved', 'rejected'])) {
+                $app->status = ucfirst(strtolower($data['status']));
+            }
+
+            $app->save();
+
+            return $this->apiResponse(true, 'Application updated successfully.', $app);
+        } catch (ValidationException $e) {
+            return $this->apiResponse(false, 'Validation failed.', $e->errors(), 422);
+        } catch (\Throwable $e) {
+            Log::error("Bank API single update error: {$e->getMessage()}");
+            return $this->apiResponse(false, 'Server error while updating application.', null, 500);
         }
-
-        $data = $request->validate([
-            'status'  => 'required|string',
-            'remarks' => 'nullable|string',
-        ]);
-
-        $app = Applicant::findOrFail($id);
-
-        // Use your existing status update helper if needed
-        $app->updateStatus($data['status'], $data['remarks'] ?? null);
-
-        $app->bank_status  = $data['status'];
-        if (in_array(strtolower($data['status']), ['approved', 'rejected'])) {
-            $app->status = ucfirst(strtolower($data['status']));
-        }
-
-        $app->save();
-
-        return response()->json([
-            'success' => true,
-            'message' => 'Application updated successfully.',
-            'data'    => $app
-        ]);
     }
+
     public function bulkUpdate(Request $request)
     {
-        $data = $request->validate([
-            'applications' => 'required|array',
-            'applications.*.id' => 'required|integer|exists:applicants,id',
-            'applications.*.status' => 'required|string',
-            'applications.*.remarks' => 'nullable|string',
-        ]);
+        try {
+            $this->authorizeBank();
 
-        foreach ($data['applications'] as $appData) {
-            $app = Applicant::find($appData['id']);
-            $app->updateStatus($appData['status'], $appData['remarks']);
-            $app->bank_status   = $appData['status'];
-            if (in_array(strtolower($appData['status']), ['approved', 'rejected'])) {
-                $app->status = ucfirst(strtolower($appData['status']));
+            $data = $request->validate([
+                'applications' => 'required|array',
+                'applications.*.id' => 'required|integer|exists:applicants,id',
+                'applications.*.status' => 'required|string',
+                'applications.*.remarks' => 'nullable|string',
+            ]);
+
+            foreach ($data['applications'] as $appData) {
+                $app = Applicant::find($appData['id']);
+                if (!$app) {
+                    continue; // skip invalid IDs
+                }
+
+                $app->updateStatus($appData['status'], $appData['remarks']);
+                $app->bank_status = $appData['status'];
+
+                if (in_array(strtolower($appData['status']), ['approved', 'rejected'])) {
+                    $app->status = ucfirst(strtolower($appData['status']));
+                }
+
+                $app->save();
             }
-            $app->save();
-        }
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Applications updated successfully.'
-        ]);
+            return $this->apiResponse(true, 'Applications updated successfully.');
+        } catch (ValidationException $e) {
+            return $this->apiResponse(false, 'Validation failed.', $e->errors(), 422);
+        } catch (\Throwable $e) {
+            Log::error("Bank API bulk update error: {$e->getMessage()}");
+            return $this->apiResponse(false, 'Server error while updating applications.', null, 500);
+        }
     }
 }

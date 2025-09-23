@@ -25,6 +25,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('bank/applications', [BankApplicationController::class, 'index']);
+    Route::get('bank/{id}/application', [BankApplicationController::class, 'application']);
     Route::post('bank/applications/status-update', [BankApplicationController::class, 'bulkUpdate']);
     Route::post('bank/applications/{id}/status-update', [BankApplicationController::class, 'singleUpdate']);
 });

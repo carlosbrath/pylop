@@ -47,7 +47,7 @@
 
                 <div class="col-12">
                     <div class="wizard">
-                        <form id="initialForm" class="row g-3 mt-3 mx-2 px-3 pb-3 " method="POST"
+                        <form id="initialForm" class="row g-3 mt-3 mx-md-2 px-md-3 pb-3 " method="POST"
                             action="{{ route('storeForm') }}" onsubmit="validateForm(event, this, 'step2')"
                             enctype="multipart/form-data">
                             @csrf
@@ -132,7 +132,7 @@
                                                             'type' => 'tel',
                                                             'required' => true,
                                                             'label' => 'Phone Number',
-                                                            'urdu' => 'فون نمبر',
+                                                            'urdu' => '03xxفون نمبر',
                                                             'placeholder' => '03XXXXXXXXX',
                                                             'field_type' => 'input',
                                                         ],
@@ -154,7 +154,7 @@
                                                         [
                                                             'id' => 'amount',
                                                             'icon' => 'cash-coin',
-                                                            'type' => 'number',
+                                                            'type' => 'text',
                                                             'required' => true,
                                                             'label' => 'Loan Amount',
                                                             'urdu' => 'قرض کی رقم',
@@ -448,7 +448,7 @@
 
                                                     <div class="border rounded p-3 bg-white" id="cnic section">
                                                         <span class="text-success d-block mt-1">
-                                                            * Only JPG, PNG files are allowed. Maximum size 1 MB. For reduce file size visit <a href="https://imageresizer.com/">Image Resizer</a>
+                                                            * Only JPG, PNG files are allowed. Maximum size 1 MB. For reduce file size visit <a href="https://imageresizer.com/" target="_blank">Image Resizer</a>
                                                         </span>
                                                         <div class="row g-3">
                                                             <!-- CNIC Front -->

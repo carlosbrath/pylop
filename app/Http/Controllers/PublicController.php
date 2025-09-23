@@ -80,6 +80,7 @@ class PublicController extends Controller
         }
 
         // Step 2: Store in database
+        $request->merge(['amount' => str_replace(',', '', $request->amount)]);
         $request->validate([
             'cnic' => 'required|regex:/^\d{5}-\d{7}-\d{1}$/|unique:applicants,cnic',
             'cnic_issue_date' => 'required|date',
