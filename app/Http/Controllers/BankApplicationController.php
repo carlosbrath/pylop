@@ -32,6 +32,7 @@ class BankApplicationController extends Controller
             $this->authorizeBank();
 
             $applications = Applicant::with(['feeBranch', 'educations', 'district', 'tehsil', 'statusLogs', 'latestStatusLog'])
+                ->whereNull('bank_status')
                 ->where('status', 'forwarded')
                 ->get();
 
