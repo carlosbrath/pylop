@@ -48,6 +48,9 @@ class Applicant extends Model
     {
         return $this->hasMany(ApplicantEducation::class, 'applicant_id');
     }
+    function education() {
+          return $this->hasOne(ApplicantEducation::class, 'applicant_id')->orderBy('id', 'asc');
+    }
     public function district()
     {
         return $this->belongsTo(Location::class, 'district_id')

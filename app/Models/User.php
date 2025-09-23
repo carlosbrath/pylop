@@ -55,12 +55,4 @@ class User extends Authenticatable
     public function role(){
         return $this->belongsTo(Role::class);
     }
-    public function latestLocation()
-    {
-        return $this->hasOne(Location::class)->latest();
-    }
-    public function entryPointOffice()
-    {
-        return $this->belongsTo(EntryPointOffice::class, 'epo_id');
-    }
 }

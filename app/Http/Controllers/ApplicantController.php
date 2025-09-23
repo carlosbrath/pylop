@@ -19,32 +19,127 @@ class ApplicantController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    // public function index(Request $request)
+    // {
+    //     if ($request->ajax()) {
+    //         $applicants = Applicant::with(['district', 'education'])->latest();
+
+    //         return DataTables::of($applicants)
+    //             ->addIndexColumn()
+    //             ->addColumn('tier_label', function ($row) {
+    //                 if ($row->tier == 1) {
+    //                     return 'Tier 1 (Up to 5 Lakh)';
+    //                 } elseif ($row->tier == 2) {
+    //                     return 'Tier 2 (5 to 10 Lakh)';
+    //                 } else {
+    //                     return 'Tier 3 (10 to 20 Lakh)';
+    //                 }
+    //             })
+    //             ->addColumn('status_label', function ($row) {
+    //                 return applicant_status_badge($row); // your helper
+    //             })
+    //             ->addColumn('action', function ($row) {
+    //                 return view('applicants.actions', compact('row'))->render();
+    //             })
+    //             ->rawColumns(['status_label', 'action']) // prevent escaping HTML
+    //             ->make(true);
+    //     }
+
+    //     $title = 'Applications';
+    //     $page_title = 'Applications';
+    //     return view('applicants.list', compact('title', 'page_title'));
+    // }
+
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $applicants = Applicant::latest();
 
-            return DataTables::of($applicants)
+            // Base query with relationships
+            $query = Applicant::with(['district', 'education'])->latest();
+
+            /*
+        |----------------------------------------------------------------------
+        | Column specific search (from DataTables "columns[x][search][value]")
+        |----------------------------------------------------------------------
+        */
+            if ($request->has('columns')) {
+                foreach ($request->columns as $column) {
+                    if (!empty($column['search']['value'])) {
+                        $searchValue = $column['search']['value'];
+                        switch ($column['data']) {
+                            case 'name':
+                                $query->where('name', 'like', "%{$searchValue}%");
+                                break;
+                            case 'fatherName':
+                                $query->where('fatherName', 'like', "%{$searchValue}%");
+                                break;
+                            case 'cnic':
+                                $query->where('cnic', 'like', "%{$searchValue}%");
+                                break;
+                            case 'district.name':
+                                $query->whereHas('district', function ($q) use ($searchValue) {
+                                    $q->where('name', 'like', "%{$searchValue}%");
+                                });
+                                break;
+                            case 'education.education_level':
+                                $query->whereHas('education', function ($q) use ($searchValue) {
+                                    $q->where('education_level', 'like', "%{$searchValue}%");
+                                });
+                                break;
+                            case 'application_no':
+                                $query->where('application_no', 'like', "%{$searchValue}%");
+                                break;
+                                // add other columns as needed
+                        }
+                    }
+                }
+            }
+
+            /*
+        |----------------------------------------------------------------------
+        | Global search (DataTables "search[value]")
+        |----------------------------------------------------------------------
+        */
+            if (!empty($request->search['value'])) {
+                $globalSearch = $request->search['value'];
+                $query->where(function ($q) use ($globalSearch) {
+                    $q->where('name', 'like', "%{$globalSearch}%")
+                        ->orWhere('fatherName', 'like', "%{$globalSearch}%")
+                        ->orWhere('cnic', 'like', "%{$globalSearch}%")
+                        ->orWhere('application_no', 'like', "%{$globalSearch}%")
+                        ->orWhere('fee_status', 'like', "%{$globalSearch}%")
+                        ->orWhereHas('district', function ($q2) use ($globalSearch) {
+                            $q2->where('name', 'like', "%{$globalSearch}%");
+                        })
+                        ->orWhereHas('education', function ($q2) use ($globalSearch) {
+                            $q2->where('education_level', 'like', "%{$globalSearch}%");
+                        });
+                });
+            }
+
+            /*
+        |----------------------------------------------------------------------
+        | Return DataTables JSON
+        |----------------------------------------------------------------------
+        */
+            return DataTables::of($query)
                 ->addIndexColumn()
                 ->addColumn('tier_label', function ($row) {
-                    if ($row->tier == 1) {
-                        return 'Tier 1 (Up to 5 Lakh)';
-                    } elseif ($row->tier == 2) {
-                        return 'Tier 2 (5 to 10 Lakh)';
-                    } else {
-                        return 'Tier 3 (10 to 20 Lakh)';
-                    }
+                    return match ($row->tier) {
+                        1 => 'Tier 1 (Up to 5 Lakh)',
+                        2 => 'Tier 2 (5 to 10 Lakh)',
+                        default => 'Tier 3 (10 to 20 Lakh)',
+                    };
                 })
-                ->addColumn('status_label', function ($row) {
-                    return applicant_status_badge($row); // your helper
-                })
-                ->addColumn('action', function ($row) {
-                    return view('applicants.actions', compact('row'))->render();
-                })
-                ->rawColumns(['status_label', 'action']) // prevent escaping HTML
+                ->addColumn('status_label', fn($row) => applicant_status_badge($row))
+                ->addColumn('district', fn($row) => $row->district->name ?? '-')
+                ->addColumn('education', fn($row) => $row->education->education_level ?? '-')
+                ->addColumn('action', fn($row) => view('applicants.actions', compact('row'))->render())
+                ->rawColumns(['status_label', 'action'])
                 ->make(true);
         }
 
+        // Non-AJAX request → return blade
         $title = 'Applications';
         $page_title = 'Applications';
         return view('applicants.list', compact('title', 'page_title'));
