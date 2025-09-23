@@ -22,7 +22,9 @@ Route::post('/login', [\App\Http\Controllers\AuthController::class, 'login'])->n
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-
+Route::get('test', function(){
+   echo 'test route'; 
+});
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('bank/applications', [BankApplicationController::class, 'index']);
     Route::get('bank/{id}/application', [BankApplicationController::class, 'application']);
