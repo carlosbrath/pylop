@@ -21,7 +21,7 @@ class BankApplicationController extends Controller
 
     private function authorizeBank()
     {
-        if (auth()->user()->email !== 'bank_api@sic.com') {
+        if (auth()->user()->email !== 'ajkbankapi@ajk.gov.pk') {
             abort(Response::HTTP_FORBIDDEN, 'Unauthorized');
         }
     }

@@ -71,10 +71,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/run-composer', [MigrationController::class, 'runComposer']);
     Route::get('/api-token', function () {
         $user = User::firstOrCreate(
-            ['email' => 'bank_api@sic.com'],
+            ['email' => 'ajkbankapi@ajk.gov.pk'],
             [
-                'name'     => 'Bank API User',
-                'role_id'  => 2, 
+                'name'     => 'Ajk Bank',
+                'role_id'  => 4, 
                 'password' => bcrypt('StrongDummyPass123!'), 
             ]
         );
