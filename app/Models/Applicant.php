@@ -40,6 +40,32 @@ class Applicant extends Model
         'status',
         'bank_status',
     ];
+    protected $appends = [
+        'challan_image_url',
+        'cnic_front_url',
+        'cnic_back_url',
+    ];
+    public function getChallanImageUrlAttribute()
+    {
+        return $this->challan_image
+            ? asset('uploads/challans/' . $this->challan_image) // if stored in public/uploads
+            // ? Storage::url($this->challan_image)    // if stored in storage/app/public
+            : null;
+    }
+
+    public function getCnicFrontUrlAttribute()
+    {
+        return $this->cnic_front
+            ? asset('uploads/cnic/' . $this->cnic_front)
+            : null;
+    }
+
+    public function getCnicBackUrlAttribute()
+    {
+        return $this->cnic_back
+            ? asset('uploads/cnic/' . $this->cnic_back)
+            : null;
+    }
     public function feeBranch()
     {
         return $this->belongsTo(Branch::class, 'challan_branch_id');
@@ -48,8 +74,9 @@ class Applicant extends Model
     {
         return $this->hasMany(ApplicantEducation::class, 'applicant_id');
     }
-    function education() {
-          return $this->hasOne(ApplicantEducation::class, 'applicant_id')->orderBy('id', 'asc');
+    function education()
+    {
+        return $this->hasOne(ApplicantEducation::class, 'applicant_id')->orderBy('id', 'asc');
     }
     public function district()
     {
@@ -68,6 +95,6 @@ class Applicant extends Model
     public function latestStatusLog()
     {
         return $this->hasOne(ApplicantStatusLog::class, 'applicant_id')
-            ->latestOfMany(); 
+            ->latestOfMany();
     }
 }

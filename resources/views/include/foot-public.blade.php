@@ -13,7 +13,9 @@
      $(document).ready(function() {
          $('input[name="cnic"]').mask('00000-0000000-0');
          $('input[name="phone"]').mask('00000000000');
-         $('#amount').mask('0,000,000', {reverse: true});
+         $('#amount').mask('0,000,000', {
+             reverse: true
+         });
          $('.select2').select2({
              allowClear: true,
              width: '100%'
@@ -150,11 +152,20 @@
                  max: 2000000
              }
          };
-          const displayRanges = {
-            1: { min: 0, max: 500000 },
-            2: { min: 500000, max: 1000000 },
-            3: { min: 1000000, max: 2000000 }
-        };
+         const displayRanges = {
+             1: {
+                 min: 0,
+                 max: 500000
+             },
+             2: {
+                 min: 500000,
+                 max: 1000000
+             },
+             3: {
+                 min: 1000000,
+                 max: 2000000
+             }
+         };
 
          const limits = tierLimits[tier];
          const display = displayRanges[tier];
