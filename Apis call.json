@@ -1,0 +1,334 @@
+https://sic.ajk.gov.pk/pmylp/api/bank/applications
+
+Response
+{
+    "success": true,
+    "message": "Forwarded applications fetched successfully.",
+    "data": {
+        "count": 1,
+        "applications": [
+            {
+                "id": 13,
+                "name": "Asher Salas",
+                "fatherName": "Davis Hobbs",
+                "cnic": "54454-5454545-4",
+                "application_no": "2509240013",
+                "cnic_issue_date": "2024-12-20",
+                "dob": "2000-10-18",
+                "phone": "03430247540",
+                "businessName": "Dolan Mcdonald",
+                "businessType": "New",
+                "quota": "Men",
+                "businessAddress": "Sint itaque ad corpo",
+                "permanentAddress": "Quod ut exercitation",
+                "business_category_id": 1,
+                "business_sub_category_id": 3,
+                "tier": 1,
+                "amount": 500000,
+                "district_id": 17,
+                "tehsil_id": 18,
+                "applicant_choosed_branch": 3,
+                "branch_id": null,
+                "challan_branch_id": 10,
+                "challan_fee": 500,
+                "challan_image": "1758692675.png",
+                "cnic_front": "1758692520.png",
+                "cnic_back": "1758692520.png",
+                "fee_status": "paid",
+                "status": "Forwarded",
+                "bank_status": null,
+                "created_at": "2025-09-24T05:42:00.000000Z",
+                "updated_at": "2025-09-24T05:48:46.000000Z",
+                "fee_branch": {
+                    "id": 10,
+                    "bank_name": "BOAJK",
+                    "branch_name": "Bagh Branch",
+                    "branch_code": "0010",
+                    "district": "Bagh",
+                    "address": "Main Bazar Bagh AJK",
+                    "tel": "05823-920103",
+                    "email": "manager0010@Bankajk.com",
+                    "fax": "05823-920104",
+                    "created_at": "2025-07-09T06:44:00.000000Z",
+                    "updated_at": "2025-07-09T06:44:00.000000Z"
+                },
+                "educations": [
+                    {
+                        "id": 11,
+                        "applicant_id": 13,
+                        "education_level": "Diploma",
+                        "degree_title": "A sit non officia i",
+                        "institute": "Consectetur harum a",
+                        "passing_year": null,
+                        "grade_or_percentage": null,
+                        "created_at": "2025-09-24T05:42:01.000000Z",
+                        "updated_at": "2025-09-24T05:42:01.000000Z"
+                    }
+                ],
+                "district": {
+                    "id": 17,
+                    "parent_id": 12,
+                    "type": "district",
+                    "name": "Haveli",
+                    "name_ur": "حویلی",
+                    "created_at": "2025-07-23T06:04:10.000000Z",
+                    "updated_at": "2025-07-23T06:04:10.000000Z"
+                },
+                "tehsil": {
+                    "id": 18,
+                    "parent_id": 17,
+                    "type": "tehsil",
+                    "name": "Haveli",
+                    "name_ur": "حویلی",
+                    "created_at": "2025-07-23T06:04:10.000000Z",
+                    "updated_at": "2025-07-23T06:04:10.000000Z"
+                },
+                "status_logs": [
+                    {
+                        "id": 51,
+                        "applicant_id": 13,
+                        "old_status": "Pending",
+                        "new_status": "Forwarded",
+                        "changed_by_type": "User",
+                        "changed_by_id": 2,
+                        "remarks": "Forword to bank",
+                        "created_at": "2025-09-24T05:48:46.000000Z",
+                        "updated_at": "2025-09-24T05:48:46.000000Z"
+                    }
+                ],
+                "latest_status_log": {
+                    "id": 51,
+                    "applicant_id": 13,
+                    "old_status": "Pending",
+                    "new_status": "Forwarded",
+                    "changed_by_type": "User",
+                    "changed_by_id": 2,
+                    "remarks": "Forword to bank",
+                    "created_at": "2025-09-24T05:48:46.000000Z",
+                    "updated_at": "2025-09-24T05:48:46.000000Z"
+                }
+            }
+        ]
+    }
+}
+
+
+Bulk Update
+https://sic.ajk.gov.pk/pmylp/api/bank/applications/status-update
+Request
+{
+  "applications": [
+    {
+      "id": 13,
+      "status": "In progress",
+      "remarks": "Banks Working on this applications"
+    }
+    
+  ]
+}
+response 
+{
+    "success": true,
+    "message": "Applications updated successfully.",
+    "data": [
+        {
+            "id": 13,
+            "name": "Asher Salas",
+            "fatherName": "Davis Hobbs",
+            "cnic": "54454-5454545-4",
+            "application_no": "2509240013",
+            "cnic_issue_date": "2024-12-20",
+            "dob": "2000-10-18",
+            "phone": "03430247540",
+            "businessName": "Dolan Mcdonald",
+            "businessType": "New",
+            "quota": "Men",
+            "businessAddress": "Sint itaque ad corpo",
+            "permanentAddress": "Quod ut exercitation",
+            "business_category_id": 1,
+            "business_sub_category_id": 3,
+            "tier": 1,
+            "amount": 500000,
+            "district_id": 17,
+            "tehsil_id": 18,
+            "applicant_choosed_branch": 3,
+            "branch_id": null,
+            "challan_branch_id": 10,
+            "challan_fee": 500,
+            "challan_image": "1758692675.png",
+            "cnic_front": "1758692520.png",
+            "cnic_back": "1758692520.png",
+            "fee_status": "paid",
+            "status": "Approved",
+            "bank_status": "Approved",
+            "created_at": "2025-09-24T05:42:00.000000Z",
+            "updated_at": "2025-09-24T07:08:52.000000Z"
+        }
+    ]
+}
+
+
+Single Application Fetch 
+https://sic.ajk.gov.pk/pmylp/api/bank/13/application
+Response
+{
+    "success": true,
+    "message": "Application fetched successfully.",
+    "data": {
+        "id": 13,
+        "name": "Asher Salas",
+        "fatherName": "Davis Hobbs",
+        "cnic": "54454-5454545-4",
+        "application_no": "2509240013",
+        "cnic_issue_date": "2024-12-20",
+        "dob": "2000-10-18",
+        "phone": "03430247540",
+        "businessName": "Dolan Mcdonald",
+        "businessType": "New",
+        "quota": "Men",
+        "businessAddress": "Sint itaque ad corpo",
+        "permanentAddress": "Quod ut exercitation",
+        "business_category_id": 1,
+        "business_sub_category_id": 3,
+        "tier": 1,
+        "amount": 500000,
+        "district_id": 17,
+        "tehsil_id": 18,
+        "applicant_choosed_branch": 3,
+        "branch_id": null,
+        "challan_branch_id": 10,
+        "challan_fee": 500,
+        "challan_image": "1758692675.png",
+        "cnic_front": "1758692520.png",
+        "cnic_back": "1758692520.png",
+        "fee_status": "paid",
+        "status": "Forwarded",
+        "bank_status": "In progress",
+        "created_at": "2025-09-24T05:42:00.000000Z",
+        "updated_at": "2025-09-24T05:55:51.000000Z",
+        "fee_branch": {
+            "id": 10,
+            "bank_name": "BOAJK",
+            "branch_name": "Bagh Branch",
+            "branch_code": "0010",
+            "district": "Bagh",
+            "address": "Main Bazar Bagh AJK",
+            "tel": "05823-920103",
+            "email": "manager0010@Bankajk.com",
+            "fax": "05823-920104",
+            "created_at": "2025-07-09T06:44:00.000000Z",
+            "updated_at": "2025-07-09T06:44:00.000000Z"
+        },
+        "educations": [
+            {
+                "id": 11,
+                "applicant_id": 13,
+                "education_level": "Diploma",
+                "degree_title": "A sit non officia i",
+                "institute": "Consectetur harum a",
+                "passing_year": null,
+                "grade_or_percentage": null,
+                "created_at": "2025-09-24T05:42:01.000000Z",
+                "updated_at": "2025-09-24T05:42:01.000000Z"
+            }
+        ],
+        "district": {
+            "id": 17,
+            "parent_id": 12,
+            "type": "district",
+            "name": "Haveli",
+            "name_ur": "حویلی",
+            "created_at": "2025-07-23T06:04:10.000000Z",
+            "updated_at": "2025-07-23T06:04:10.000000Z"
+        },
+        "tehsil": {
+            "id": 18,
+            "parent_id": 17,
+            "type": "tehsil",
+            "name": "Haveli",
+            "name_ur": "حویلی",
+            "created_at": "2025-07-23T06:04:10.000000Z",
+            "updated_at": "2025-07-23T06:04:10.000000Z"
+        },
+        "status_logs": [
+            {
+                "id": 51,
+                "applicant_id": 13,
+                "old_status": "Pending",
+                "new_status": "Forwarded",
+                "changed_by_type": "User",
+                "changed_by_id": 2,
+                "remarks": "Forword to bank",
+                "created_at": "2025-09-24T05:48:46.000000Z",
+                "updated_at": "2025-09-24T05:48:46.000000Z"
+            },
+            {
+                "id": 52,
+                "applicant_id": 13,
+                "old_status": "Forwarded",
+                "new_status": "In progress",
+                "changed_by_type": "User",
+                "changed_by_id": 6,
+                "remarks": "Banks Working on this applications",
+                "created_at": "2025-09-24T05:55:51.000000Z",
+                "updated_at": "2025-09-24T05:55:51.000000Z"
+            }
+        ],
+        "latest_status_log": {
+            "id": 52,
+            "applicant_id": 13,
+            "old_status": "Forwarded",
+            "new_status": "In progress",
+            "changed_by_type": "User",
+            "changed_by_id": 6,
+            "remarks": "Banks Working on this applications",
+            "created_at": "2025-09-24T05:55:51.000000Z",
+            "updated_at": "2025-09-24T05:55:51.000000Z"
+        }
+    }
+}
+
+
+Single Application Status update
+https://sic.ajk.gov.pk/pmylp/api/bank/applications/5/status-update
+Request
+--form 'status="Working"' 
+--form 'remarks="Bank Working on your application"'
+Response
+{
+    "success": true,
+    "message": "Application updated successfully.",
+    "data": {
+        "id": 5,
+        "name": "Pascale Best",
+        "fatherName": "Herman Colon",
+        "cnic": "45454-5454545-4",
+        "application_no": null,
+        "cnic_issue_date": "2025-04-29",
+        "dob": "1998-11-19",
+        "phone": "03430247540",
+        "businessName": "Velma Serrano",
+        "businessType": "New",
+        "quota": "Men",
+        "businessAddress": "Commodo nihil tempor",
+        "permanentAddress": "Non ullamco quis asp",
+        "business_category_id": 1,
+        "business_sub_category_id": 2,
+        "tier": 2,
+        "amount": 800000,
+        "district_id": 32,
+        "tehsil_id": 33,
+        "applicant_choosed_branch": null,
+        "branch_id": null,
+        "challan_branch_id": 10,
+        "challan_fee": 10000,
+        "challan_image": "1755600826.jpg",
+        "cnic_front": "1754125573.jpg",
+        "cnic_back": "1754125573.jpg",
+        "fee_status": "paid",
+        "status": "Rejected",
+        "bank_status": "Working",
+        "created_at": "2025-08-02T09:06:13.000000Z",
+        "updated_at": "2025-09-24T06:01:08.000000Z"
+    }
+}

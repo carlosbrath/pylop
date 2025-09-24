@@ -115,6 +115,7 @@ class BankApplicationController extends Controller
                 'applications.*.status' => 'required|string',
                 'applications.*.remarks' => 'nullable|string',
             ]);
+            $updatedAppl = [];
 
             foreach ($data['applications'] as $appData) {
                 $app = Applicant::find($appData['id']);
@@ -130,9 +131,11 @@ class BankApplicationController extends Controller
                 }
 
                 $app->save();
+
+                 $updatedAppl[] = $app;
             }
 
-            return $this->apiResponse(true, 'Applications updated successfully.');
+            return $this->apiResponse(true, 'Applications updated successfully.', $updatedAppl);
         } catch (ValidationException $e) {
             return $this->apiResponse(false, 'Validation failed.', $e->errors(), 422);
         } catch (\Throwable $e) {

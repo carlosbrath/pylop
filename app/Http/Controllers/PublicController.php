@@ -292,7 +292,11 @@ class PublicController extends Controller
     }
     public function getBranches($id)
     {
-        $branch = Branch::get();
+        $districtName = Location::where('type', 'district')
+            ->where('id', $id)
+            ->pluck('name')
+            ->first();
+        $branch = Branch::where('district', $districtName)->get();
         return response()->json($branch);
     }
 }
