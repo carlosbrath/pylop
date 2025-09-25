@@ -92,7 +92,7 @@ class UserContoller extends Controller
                     200
                 );
             }
-        return redirect()->route('user.show', $user->id)->with('success', 'User created successfully.');
+            return redirect()->route('user.show', $user->id)->with('success', 'User created successfully.');
         } catch (ValidationException $e) {
             if ($request->expectsJson()) {
                 return response()->json([
@@ -183,78 +183,70 @@ class UserContoller extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
     public function update(Request $request, $id)
     {
-        $user = User::find($id);
-        $user->update($request->all());
-        // dd($request->all());
-        if ($request->expectsJson()) {
-            return response()->json(
-                ['user' => $user],
-                200
-            );
+        $user = User::findOrFail($id);
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email'    => ['required', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
+            'role_id' => 'required|integer|exists:roles,id',
+            'password' => ['nullable', 'confirmed', 'min:8'],
+        ]);
+        $updateData = [
+            'name'    => $validated['name'],
+            'email'   => $validated['email'],
+            'role_id' => $validated['role_id'],
+        ];
+        if (!empty($validated['password'])) {
+            $updateData['password'] = Hash::make($validated['password']);
         }
-        return redirect()->route('user.show', $user->id);
+        $user->update($updateData);
+        if ($request->expectsJson()) {
+            return response()->json(['user' => $user], 200);
+        }
+        return redirect()->route('user.show', $user->id)->with('success', 'User updated successfully!');
     }
     public function changePassword(Request $request)
     {
-        $id = auth()->user()->id;
+        $id = auth()->id();
+
         if ($request->isMethod('get')) {
             return view('users.change-password');
         }
         if ($request->isMethod('post')) {
-            try {
-                $validator = Validator::make($request->all(), [
-                    'password' => 'required|string|min:8|confirmed',
-                ]);
-                if ($validator->fails()) {
-                    if ($request->expectsJson()) {
-                        return response()->json([
-                            'error' => 'Validation failed',
-                            'errors' => $validator->errors()
-                        ], 422);
-                    } else {
-                        return redirect()->back()
-                            ->withErrors($validator->errors())
-                            ->withInput();
-                    }
-                }
-                $user = User::find($id);
-                if (!$user) {
-                    return redirect()->back()->with('error', 'User not found.');
-                }
-                $user->password = Hash::make($request->password);
-                $user->save();
-                return redirect()->route('user.show', $user->id)->with('success', 'Password updated successfully.');
-            } catch (QueryException $e) {
+            // ✅ Validate input
+            $validator = Validator::make($request->all(), [
+                'password' => 'required|string|min:8|confirmed',
+            ]);
+
+            if ($validator->fails()) {
                 if ($request->expectsJson()) {
-                    return response()->json(
-                        [
-                            'error' => 'Database error',
-                            'errors' => $e->getMessage()
-                        ],
-                        500
-                    );
-                } else {
-                    return redirect()->back()
-                        ->withErrors($e->errors())
-                        ->withInput();
+                    return response()->json([
+                        'error'  => 'Validation failed',
+                        'errors' => $validator->errors()
+                    ], 422);
                 }
-            } catch (Exception $e) {
-                if ($request->expectsJson()) {
-                    return response()->json(
-                        [
-                            'error' => 'An unexpected error occurred',
-                            'errors' => $e->getMessage()
-                        ],
-                        500
-                    );
-                } else {
-                    return redirect()->back()
-                        ->withErrors($e->errors())
-                        ->withInput();
-                }
+                return redirect()->back()
+                    ->withErrors($validator)
+                    ->withInput();
             }
+
+            // ✅ Update password
+            $user = User::findOrFail($id);
+            $user->update([
+                'password' => Hash::make($request->password)
+            ]);
+            if ($request->expectsJson()) {
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Password updated successfully.'
+                ]);
+            }
+
+            return redirect()
+                ->route('user.show', $user->id)
+                ->with('success', 'Password updated successfully.');
         }
     }
 
@@ -265,22 +257,21 @@ class UserContoller extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
-{
-    try {
-        $user = User::findOrFail($id);
-        $user->delete();
+    {
+        try {
+            $user = User::findOrFail($id);
+            $user->delete();
 
-        return response()->json([
-            'status'   => 'success',
-            'message'  => 'User deleted successfully.',
-            'redirect' => route('user.index') // 👈 redirect to users.index
-        ], 200);
-
-    } catch (\Exception $e) {
-        return response()->json([
-            'status'  => 'error',
-            'message' => 'Failed to delete user: ' . $e->getMessage()
-        ], 500);
+            return response()->json([
+                'status'   => 'success',
+                'message'  => 'User deleted successfully.',
+                'redirect' => route('user.index') // 👈 redirect to users.index
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status'  => 'error',
+                'message' => 'Failed to delete user: ' . $e->getMessage()
+            ], 500);
+        }
     }
-}
 }

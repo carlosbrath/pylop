@@ -44,6 +44,8 @@ class Applicant extends Model
         'challan_image_url',
         'cnic_front_url',
         'cnic_back_url',
+        'applicant_choosed_branch_code',
+        'challan_branch_code',
     ];
     public function getChallanImageUrlAttribute()
     {
@@ -66,6 +68,23 @@ class Applicant extends Model
             ? asset('uploads/cnic/' . $this->cnic_back)
             : null;
     }
+    public function getApplicantChoosedBranchCodeAttribute()
+    {
+        return $this->choosedBranch ? $this->choosedBranch->branch_code : null;
+    }
+    public function getChallanBranchCodeAttribute()
+    {
+        return $this->challanBranch ? $this->challanBranch->branch_code : null;
+    }
+    public function choosedBranch()
+    {
+        return $this->belongsTo(Branch::class, 'applicant_choosed_branch');
+    }
+    public function challanBranch()
+    {
+        return $this->belongsTo(Branch::class, 'challan_branch_id');
+    }
+
     public function feeBranch()
     {
         return $this->belongsTo(Branch::class, 'challan_branch_id');

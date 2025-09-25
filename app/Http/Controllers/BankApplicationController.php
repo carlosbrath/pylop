@@ -85,6 +85,9 @@ class BankApplicationController extends Controller
             if (!$app) {
                 return $this->apiResponse(false, 'Application not found.', null, 404);
             }
+            if (in_array(strtolower($app->status), ['pending', 'rejected'])) {
+                return $this->apiResponse(false, 'This application cannot be updated because this application currently not forworded to bank.', null, 403);
+            }
 
             $app->updateStatus($data['status'], $data['remarks'] ?? null);
             $app->bank_status = $data['status'];
@@ -108,7 +111,6 @@ class BankApplicationController extends Controller
     {
         try {
             $this->authorizeBank();
-
             $data = $request->validate([
                 'applications' => 'required|array',
                 'applications.*.id' => 'required|integer|exists:applicants,id',
@@ -119,22 +121,17 @@ class BankApplicationController extends Controller
 
             foreach ($data['applications'] as $appData) {
                 $app = Applicant::find($appData['id']);
-                if (!$app) {
-                    continue; // skip invalid IDs
+                if (!$app || in_array(strtolower($app->status), ['pending', 'rejected'])) {
+                    continue;
                 }
-
                 $app->updateStatus($appData['status'], $appData['remarks']);
                 $app->bank_status = $appData['status'];
-
                 if (in_array(strtolower($appData['status']), ['approved', 'rejected'])) {
                     $app->status = ucfirst(strtolower($appData['status']));
                 }
-
                 $app->save();
-
-                 $updatedAppl[] = $app;
+                $updatedAppl[] = $app;
             }
-
             return $this->apiResponse(true, 'Applications updated successfully.', $updatedAppl);
         } catch (ValidationException $e) {
             return $this->apiResponse(false, 'Validation failed.', $e->errors(), 422);
