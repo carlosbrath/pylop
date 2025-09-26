@@ -31,7 +31,7 @@ class BankApplicationController extends Controller
         try {
             $this->authorizeBank();
 
-            $applications = Applicant::with(['feeBranch', 'educations', 'district', 'tehsil', 'statusLogs', 'latestStatusLog'])
+            $applications = Applicant::with(['feeBranch', 'educations', 'district', 'tehsil', 'statusLogs', 'latestStatusLog', 'businessCategory', 'businessSubCategory'])
                 ->whereNull('bank_status')
                 ->where('status', 'forwarded')
                 ->get();
@@ -55,7 +55,7 @@ class BankApplicationController extends Controller
         try {
             $this->authorizeBank();
 
-            $application = Applicant::with(['feeBranch', 'educations', 'district', 'tehsil', 'statusLogs', 'latestStatusLog'])
+            $application = Applicant::with(['feeBranch', 'educations', 'district', 'tehsil', 'statusLogs', 'latestStatusLog', 'businessCategory', 'businessSubCategory'])
                 ->where('id', $id)
                 ->where('status', '!=', 'Pending')
                 ->first();

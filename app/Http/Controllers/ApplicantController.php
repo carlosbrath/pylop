@@ -7,6 +7,7 @@ use App\Models\ApplicantEducation;
 use App\Models\ApplicantStatusLog;
 use App\Models\BusinessCategory;
 use App\Models\Location;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
@@ -19,37 +20,6 @@ class ApplicantController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    // public function index(Request $request)
-    // {
-    //     if ($request->ajax()) {
-    //         $applicants = Applicant::with(['district', 'education'])->latest();
-
-    //         return DataTables::of($applicants)
-    //             ->addIndexColumn()
-    //             ->addColumn('tier_label', function ($row) {
-    //                 if ($row->tier == 1) {
-    //                     return 'Tier 1 (Up to 5 Lakh)';
-    //                 } elseif ($row->tier == 2) {
-    //                     return 'Tier 2 (5 to 10 Lakh)';
-    //                 } else {
-    //                     return 'Tier 3 (10 to 20 Lakh)';
-    //                 }
-    //             })
-    //             ->addColumn('status_label', function ($row) {
-    //                 return applicant_status_badge($row); // your helper
-    //             })
-    //             ->addColumn('action', function ($row) {
-    //                 return view('applicants.actions', compact('row'))->render();
-    //             })
-    //             ->rawColumns(['status_label', 'action']) // prevent escaping HTML
-    //             ->make(true);
-    //     }
-
-    //     $title = 'Applications';
-    //     $page_title = 'Applications';
-    //     return view('applicants.list', compact('title', 'page_title'));
-    // }
-
     public function index(Request $request)
     {
         if ($request->ajax()) {
@@ -152,7 +122,10 @@ class ApplicantController extends Controller
      */
     public function create()
     {
-        //
+        $districts   = Location::where('type', 'District')->get();
+        $categories  = BusinessCategory::all();
+
+        return view('applicants.create', compact('districts', 'categories'));
     }
 
     /**
@@ -163,7 +136,84 @@ class ApplicantController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        ps($request->all());
+        $request->merge(['amount' => str_replace(',', '', $request->amount)]);
+
+        $validated = $request->validate([
+            'cnic'  => ['required', 'regex:/^\d{5}-\d{7}-\d{1}$/', 'unique:applicants,cnic'],
+            'cnic_issue_date' => 'required|date',
+            'tier' => 'required|in:1,2,3',
+            'name' => 'required|string|max:255',
+            'fatherName' => 'required|string|max:255',
+            'dob' => 'required|date',
+            'phone' => 'required|regex:/^03\d{9}$/',
+            'businessName' => 'required|string|max:255',
+            'businessType' => 'required|in:New,Running',
+            'district_id' => 'required|exists:locations,id',
+            'tehsil_id' => 'required|exists:locations,id',
+            'quota' => 'required|in:Men,Women,Disabled,Transgender',
+            'business_category_id' => 'required|exists:business_categories,id',
+            'business_sub_category_id' => 'required|exists:business_categories,id',
+            'permanentAddress' => 'required|string|max:500',
+            'businessAddress' => 'required|string|max:500',
+            'amount' => 'required|integer|min:1',
+            'applicant_choosed_branch' => 'nullable|integer|exists:branches,id',
+            'cnic_front' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'cnic_back'  => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'educations' => 'nullable|array',
+            'educations.*.education_level' => 'required_with:educations|string|max:255',
+            'educations.*.degree_title'    => 'nullable|string|max:255',
+            'educations.*.institute'       => 'nullable|string|max:255',
+        ]);
+
+        // ✅ Age & CNIC Issue Date Checks (same as public form)
+        $issueDateCarbon = Carbon::parse($validated['cnic_issue_date']);
+        if ($issueDateCarbon->lt(Carbon::now()->subYears(10))) {
+            return back()->withErrors(['cnic_issue_date' => 'CNIC is expired (older than 10 years).'])->withInput();
+        }
+
+        $dobCarbon = Carbon::parse($validated['dob']);
+        $age = $dobCarbon->age;
+        if ($age < 18 || $age > 40) {
+            return back()->withErrors(['dob' => 'Age must be between 18 and 40 years.'])->withInput();
+        }
+
+        // ✅ File uploads
+        if ($request->hasFile('cnic_front')) {
+            $front = time() . '_front.' . $request->cnic_front->extension();
+            $request->cnic_front->move(public_path('uploads/cnic'), $front);
+            $validated['cnic_front'] = $front;
+        }
+        if ($request->hasFile('cnic_back')) {
+            $back = time() . '_back.' . $request->cnic_back->extension();
+            $request->cnic_back->move(public_path('uploads/cnic'), $back);
+            $validated['cnic_back'] = $back;
+        }
+
+        // ✅ Create Applicant
+        $validated['status'] = 'Pending';
+        $applicant = Applicant::create($validated);
+
+        // ✅ Education Records
+        if (!empty($request->educations)) {
+            foreach ($request->educations as $education) {
+                ApplicantEducation::create([
+                    'applicant_id' => $applicant->id,
+                    'education_level' => $education['education_level'],
+                    'degree_title' => $education['degree_title'] ?? null,
+                    'institute' => $education['institute'] ?? null,
+                    'passing_year' => $education['passing_year'] ?? null,
+                    'grade_or_percentage' => $education['grade_or_percentage'] ?? null,
+                ]);
+            }
+        }
+
+        // ✅ Generate Application Number
+        $applicant->application_no = generateApplicationNo($applicant->id);
+        $applicant->save();
+
+        return redirect()->route('applicant.show', $applicant->id)
+            ->with('success', 'Manual Application added successfully.');
     }
 
     /**

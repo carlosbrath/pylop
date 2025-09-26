@@ -38,6 +38,7 @@
                 <div class="collapse" id="collapseEntrypoint" data-bs-parent="#accordionSidenav">
                     <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
                         <a class="nav-link" href="{{route('applicant.index')}}">List</a>
+                        <a class="nav-link" href="{{route('applicant.create')}}">Add Application</a>
                     </nav>
                 </div>
                

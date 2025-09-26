@@ -107,6 +107,15 @@ class Applicant extends Model
         return $this->belongsTo(Location::class, 'tehsil_id')
             ->where('type', 'tehsil');
     }
+    public function businessCategory()
+    {
+        return $this->belongsTo(BusinessCategory::class, 'business_category_id');
+    }
+
+    public function businessSubCategory()
+    {
+        return $this->belongsTo(BusinessCategory::class, 'business_sub_category_id');
+    }
     public function statusLogs()
     {
         return $this->hasMany(ApplicantStatusLog::class, 'applicant_id');

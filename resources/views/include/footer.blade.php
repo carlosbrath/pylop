@@ -40,6 +40,9 @@
      $(document).ready(function() {
          $('input[name="cnic"]').mask('00000-0000000-0');
          $('input[name="phone"]').mask('00000000000');
+         $('#amount').mask('0,000,000', {
+             reverse: true
+         });
          $('.select2').select2({
              allowClear: true,
              width: '100%'
@@ -122,7 +125,8 @@
          var selects = form.querySelectorAll('select');
          var isValid = true;
          selects.forEach(function(select) {
-             if ((select.value === '' || select.value === null) && select.classList.contains('required')) {
+            
+            if ((!select.value || select.value === '') && select.classList.contains('required')) {
                  select.classList.add('error');
                  isValid = false;
                  field_name = formatFieldName(select.name)
@@ -134,28 +138,247 @@
              }
          })
          inputs.forEach(function(input) {
-             if ((!input.value || input.value.trim() === '') && input.classList.contains('required')) {
-                     input.classList.add('error');
-                     isValid = false;
-                     field_name = formatFieldName(input.name)
-                     removeErrorComponent(input);
-                     createErrorComponent(input, '' + field_name + ' required.', '');
-                 
+            
+           
+             if ((input.value === '' || !input.value) && input.classList.contains('required')) {
+                 console.log('Type: '+input.type+' Name:' +input.name+': '+((!input.value || input.value === '')&& input.classList.contains('required')))
+                 input.classList.add('error');
+
+                 isValid = false;
+                 field_name = formatFieldName(input.name)
+                 removeErrorComponent(input);
+                 createErrorComponent(input, '' + field_name + ' required.', '');
+
              } else {
-                 if (input.name == 'email') {
-                     if (!emailValidations(input, input.name, input.value.trim(), '1')) {
+                 console.log(input.value)
+                 input.classList.remove('error');
+                 removeErrorComponent(input);
+                 if (input.name == 'cnic') {
+                     if (!cnicValidation(input, input.name, input.value)) {
+                         isValid = false
+                     }
+                 }
+                 if (input.name == 'phone') {
+                     if (!phoneValidation(input, input.name, input.value)) {
+                         isValid = false
+                     }
+                 }
+                 if (input.name === 'amount') {
+                     if (!amountValidation(input)) {
                          isValid = false;
                      }
-                 } else {
-                     input.classList.remove('error');
-                     removeErrorComponent(input);
+                 }
+                 if (input.name === 'amount') {
+                     if (!amountValidation(input)) {
+                         isValid = false;
+                     }
+                 }
+             }
+             if (input.name === 'dob') {
+                 if (!dateofBirth(input)) {
+                     isValid = false;
+                 }
+             }
+
+             // ✅ CNIC Issue Date validation (not older than 10 years)
+             if (input.name === 'cnic_issue_date') {
+                 if (!cnicIssueDate(input)) {
+                     isValid = false;
+                 }
+             }
+             if (input.name === 'cnic_front' || input.name === 'cnic_back') {
+                 if (!fileValidation(input)) {
+                     isValid = false;
                  }
              }
          });
+         if (!isValid) {
+             const firstInvalid = form.querySelector('.error');
+             if (firstInvalid) {
+                 firstInvalid.scrollIntoView({
+                     behavior: 'smooth',
+                     block: 'center'
+                 });
+                 firstInvalid.focus();
+             }
+         }
          if (isValid) {
              event.target.submit();
          }
      }
+
+     function amountValidation(input) {
+         const tierSelect = document.querySelector('select[name="tier"]');
+         const tier = tierSelect ? tierSelect.value : null;
+         const amount = parseInt(input.value.replace(/,/g, ''), 10);
+
+         const tierLimits = {
+             1: {
+                 min: 0,
+                 max: 500000
+             },
+             2: {
+                 min: 500001,
+                 max: 1000000
+             },
+             3: {
+                 min: 1000001,
+                 max: 2000000
+             }
+         };
+         const displayRanges = {
+             1: {
+                 min: 0,
+                 max: 500000
+             },
+             2: {
+                 min: 500000,
+                 max: 1000000
+             },
+             3: {
+                 min: 1000000,
+                 max: 2000000
+             }
+         };
+
+         const limits = tierLimits[tier];
+         const display = displayRanges[tier];
+
+         if (!limits || isNaN(amount) || amount < limits.min || amount > limits.max) {
+             const message =
+                 `For Tier ${tier}, amount must be between ${display.min.toLocaleString()} and ${display.max.toLocaleString()}`;
+             createErrorComponent(input, message);
+             showToast(message, 'left', 'bottom');
+             input.classList.add('error');
+             return false;
+         }
+
+         input.classList.remove('error');
+         removeErrorComponent(input);
+         return true;
+     }
+
+     function cnicValidation(input, elemName, elemeValue) {
+         // Allow both dashed and non-dashed formats
+         const cnicRegex = /^(\d{5}-\d{7}-\d{1}|\d{13})$/;
+
+         if (!elemeValue.match(cnicRegex)) {
+             input.classList.add('error');
+             showToast("Please enter a valid " + elemName, "left", "bottom");
+
+             // Optional: Show inline error
+             removeErrorComponent(input);
+             createErrorComponent(input, "Please enter a valid " + elemName);
+
+             return false;
+         } else {
+             input.classList.remove('error');
+             removeErrorComponent(input);
+             return true;
+         }
+     }
+
+     function phoneValidation(input, elemName, elemeValue) {
+         // Allow both dashed and non-dashed formats
+         const phoneRegex = /^(03\d{9})$/;
+
+         if (!elemeValue.match(phoneRegex)) {
+             input.classList.add('error');
+             elemName = getFormatedname(input)
+
+             // Optional: Show inline error
+             removeErrorComponent(input);
+             createErrorComponent(input, "Please enter a valid " + elemName + " 03XXXXXXXXX");
+
+             return false;
+         } else {
+             input.classList.remove('error');
+             removeErrorComponent(input);
+             return true;
+         }
+     }
+
+     function dateofBirth(input) {
+         const dob = new Date(input.value);
+         const today = new Date();
+         const age = today.getFullYear() - dob.getFullYear();
+         const monthDiff = today.getMonth() - dob.getMonth();
+         const dayDiff = today.getDate() - dob.getDate();
+
+         let finalAge = age;
+         if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) {
+             finalAge--; // Adjust if birthday not reached yet
+         }
+         if (finalAge < 18 || finalAge > 40) {
+             input.classList.add('error');
+             removeErrorComponent(input);
+             createErrorComponent(input, 'Not eligible. Age must be 18–40 years..');
+             return false
+         } else {
+             input.classList.remove('error');
+             removeErrorComponent(input);
+             return true
+         }
+     }
+
+     function cnicIssueDate(input) {
+         const issueDate = new Date(input.value);
+         const today = new Date();
+
+         const diffYears = today.getFullYear() - issueDate.getFullYear();
+         const monthDiff = today.getMonth() - issueDate.getMonth();
+         const dayDiff = today.getDate() - issueDate.getDate();
+
+         let finalYears = diffYears;
+         if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) {
+             finalYears--; // Adjust if issue date anniversary not reached
+         }
+
+         if (finalYears > 10) {
+             isValid = false;
+             input.classList.add('error');
+             removeErrorComponent(input);
+             createErrorComponent(input, 'CNIC expired. Must be issued within last 10 years.');
+             return false;
+         } else {
+             input.classList.remove('error');
+             removeErrorComponent(input);
+             return true
+         }
+     }
+
+     function fileValidation(input) {
+         if (!input.files || input.files.length === 0) {
+             createErrorComponent(input, 'CNIC file is required.');
+             input.classList.add('error');
+             return false;
+         }
+
+         const file = input.files[0];
+         const allowedTypes = ['image/jpeg', 'image/png', 'image/jpg'];
+         const maxSize = 1 * 1024 * 1024; // 1 MB
+
+         // Check file type
+         if (!allowedTypes.includes(file.type)) {
+             createErrorComponent(input, 'Only JPG or PNG files are allowed.');
+             input.classList.add('error');
+             return false;
+         }
+
+         // Check file size
+         if (file.size > maxSize) {
+             createErrorComponent(input, 'File size must not exceed 1 MB.');
+             input.classList.remove('error');
+             return false;
+         }
+
+         // ✅ Valid file
+         removeErrorComponent(input);
+         input.classList.remove('error');
+         return true;
+     }
+
+
 
      function confirmDelete(url, id) {
          Swal.fire({
