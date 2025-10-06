@@ -8,7 +8,8 @@
         <div class="container-xl px-4 mt-4">
             <hr class="mt-0 mb-4" />
 
-            <form method="POST" action="{{ route('applicant.store') }}" onsubmit="validateForm(event, this, 1)" enctype="multipart/form-data">
+            <form method="POST" action="{{ route('applicant.store') }}" onsubmit="validateForm(event, this, 1)"
+                enctype="multipart/form-data">
                 @csrf
 
                 @if ($errors->any())
@@ -30,8 +31,8 @@
 
                                 <div class="mb-3">
                                     <label class="form-label">Applicant Name</label>
-                                    <input class="form-control required" type="text" name="name" value="{{ old('name') }}"
-                                       >
+                                    <input class="form-control required" type="text" name="name"
+                                        value="{{ old('name') }}">
                                 </div>
 
                                 <div class="mb-3">
@@ -42,8 +43,8 @@
 
                                 <div class="mb-3">
                                     <label class="form-label">CNIC</label>
-                                    <input class="form-control required" type="text" name="cnic" value="{{ old('cnic') }}"
-                                        placeholder="12345-1234567-1">
+                                    <input class="form-control required" type="text" name="cnic"
+                                        value="{{ old('cnic') }}" placeholder="12345-1234567-1">
                                 </div>
 
                                 <div class="mb-3">
@@ -54,14 +55,14 @@
 
                                 <div class="mb-3">
                                     <label class="form-label">Date of Birth</label>
-                                    <input class="form-control required" type="date" name="dob" value="{{ old('dob') }}"
-                                       >
+                                    <input class="form-control required" type="date" name="dob"
+                                        value="{{ old('dob') }}">
                                 </div>
 
                                 <div class="mb-3">
                                     <label class="form-label">Phone</label>
-                                    <input class="form-control required" type="text" name="phone" value="{{ old('phone') }}"
-                                        placeholder="03XXXXXXXXX">
+                                    <input class="form-control required" type="text" name="phone"
+                                        value="{{ old('phone') }}" placeholder="03XXXXXXXXX">
                                 </div>
 
                                 <div class="mb-3">
@@ -79,8 +80,8 @@
 
                                 <div class="mb-3">
                                     <label class="form-label">Loan Amount</label>
-                                    <input class="form-control required" type="text" name="amount" value="{{ old('amount') }}"
-                                       >
+                                    <input class="form-control required" type="text" name="amount" id="amount"
+                                        value="{{ old('amount') }}">
                                 </div>
 
                                 <div class="mb-3">
@@ -116,8 +117,7 @@
 
                                 <div class="mb-3">
                                     <label for="business_category_id" class="small mb-1">Business Category</label>
-                                    <select class="form-select" name="business_category_id" id="business_category_id"
-                                       >
+                                    <select class="form-select" name="business_category_id" id="business_category_id">
                                         <option value="">Select Category</option>
                                         @foreach ($categories as $cat)
                                             <option value="{{ $cat->id }}"
@@ -157,6 +157,14 @@
                                         {{-- Will populate via AJAX --}}
                                     </select>
                                 </div>
+                                <div class="mb-3">
+                                    <label for="applicant_choosed_branch" class="small mb-1">Selected Branch</label>
+                                    <select class="form-select" name="applicant_choosed_branch"
+                                        id="applicant_choosed_branch">
+                                        <option value="">Branch</option>
+                                        {{-- Will populate via AJAX --}}
+                                    </select>
+                                </div>
 
                                 <div class="mb-3">
                                     <label class="form-label">Business Address</label>
@@ -167,6 +175,7 @@
                                     <label class="form-label">Permanent Address</label>
                                     <textarea class="form-control required" name="permanentAddress" rows="3">{{ old('permanentAddress') }}</textarea>
                                 </div>
+
                                 <div class="col-md-12 mt-4">
                                     <div class="card-header mb-3 d-flex justify-content-between">
                                         <label class="form-label text-dark">Educational Background</label>
@@ -185,7 +194,7 @@
                                                         <label class="small mb-1">Education Level<span
                                                                 class="text-danger">*</span></label>
                                                         <select name="educations[0][education_level]"
-                                                            class="form-select required admin-education-level">
+                                                            class="form-select required  admin-education-level">
                                                             <option value="">Select</option>
                                                             <option value="Illiterate">Illiterate / ناخواندہ</option>
                                                             <option value="Primary">Primary / پرائمری</option>
@@ -213,7 +222,7 @@
                                                         <label class="small mb-1">Degree/Diploma Title
                                                             عنوان</label>
                                                         <input type="text" name="educations[0][degree_title]"
-                                                            class="form-control required"
+                                                            class="form-control "
                                                             placeholder="Enter degree or diploma title">
                                                     </div>
                                                 </div>
@@ -223,7 +232,8 @@
                                                     <div class="mb-3">
                                                         <label class="small mb-1">Institute / ادارہ</label>
                                                         <input type="text" name="educations[0][institute]"
-                                                            class="form-control required" placeholder="Enter institute name">
+                                                            class="form-control "
+                                                            placeholder="Enter institute name">
                                                     </div>
                                                 </div>
 
@@ -238,32 +248,78 @@
                                         </div>
 
                                         <div class="text-end admin-degree-fields">
-                                            <button type="button" class="btn btn-success" id="addMoreAdminEducation"><i data-feather="plus-square"></i></button>
+                                            <button type="button" class="btn btn-success" id="addMoreAdminEducation"><i
+                                                    data-feather="plus-square"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 mt-4">
+                                    <div class="card-header mb-3 d-flex justify-content-between">
+                                        <label class="form-label text-dark">Challan Information</label>
+                                    </div>
+                                    <div class="border rounded p-3 bg-white" id="adminEducationSection">
+                                        <div>
+                                            <div class="row g-3 mb-3 admin-education-entry">
+                                                <div class="col-md-6">
+                                                    <div class="mb-3">
+                                                        <label class="small mb-1">Branch Name<span
+                                                                class="text-danger">*</span></label>
+                                                        <select name="branch_id"
+                                                            class="form-select required custom-select2">
+                                                            <option value="" disabled selected hidden>Select Branch
+                                                            </option>
+                                                            @foreach ($branches as $branch)
+                                                                <option value="{{ $branch->id }}">
+                                                                    {{ $branch->branch_code . ' ' . $branch->branch_name }}
+                                                                </option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="mb-3">
+                                                        <label class="small mb-1">Challan Fee</label>
+                                                        <input type="text" name="challan_fee" id="challan_fee"
+                                                            class="form-control required"
+                                                            placeholder="Enter Challan Fee Amount">
+                                                    </div>
+                                                </div>
+
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
 
 
                                 <div class="text-end">
-                                    <button class="btn btn-primary" type="submit"><i data-feather="check-circle"></i> Submit</button>
+                                    <button class="btn btn-primary" type="submit"><i data-feather="check-circle"></i>
+                                        Submit</button>
                                 </div>
                             </div>
                         </div>
                     </div>
-
-
-                    {{-- Right Column --}}
                     <div class="col-lg-4">
                         <div class="card mb-4">
+
                             <div class="card-header">Upload Documents</div>
+                            <span class="text-primary d-block mb-4 small">
+                                * Only JPG, PNG files are allowed. Maximum size 1 MB.
+                            </span>
                             <div class="card-body text-center">
                                 <div class="mb-3">
-                                    <label class="form-label">CNIC Front (Optional)</label>
-                                    <input type="file" name="cnic_front" class="form-control required mt-2" accept="image/*">
+                                    <label class="form-label">CNIC Front</label>
+                                    <input type="file" name="cnic_front" class="form-control required mt-2"
+                                        accept="image/*">
                                 </div>
                                 <div class="mb-3">
-                                    <label class="form-label">CNIC Back (Optional)</label>
-                                    <input type="file" name="cnic_back" class="form-control required mt-2" accept="image/*">
+                                    <label class="form-label">CNIC Back </label>
+                                    <input type="file" name="cnic_back" class="form-control required  mt-2"
+                                        accept="image/*">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Upload Challan Image </label>
+                                    <input type="file" name="challan_image" class="form-control required mt-2"
+                                        accept="image/*">
                                 </div>
                             </div>
                         </div>
@@ -280,10 +336,11 @@
                 const tehsilSelect = document.getElementById('tehsil_id');
                 const categorySelect = document.getElementById('business_category_id');
                 const subcategorySelect = document.getElementById('business_sub_category_id');
+                const chosedBranch = document.getElementById('applicant_choosed_branch');
 
                 districtSelect.addEventListener('change', function() {
                     fetchonChangeSelect(districtSelect, tehsilSelect, 'get.tehsils');
-                    fetchonChangeSelect(districtSelect, null, 'get.branches'); // if branch needed
+                    fetchonChangeSelect(districtSelect, chosedBranch, 'get.branches'); // if branch needed
                 });
 
                 categorySelect.addEventListener('change', function() {

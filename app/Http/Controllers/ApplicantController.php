@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Applicant;
 use App\Models\ApplicantEducation;
 use App\Models\ApplicantStatusLog;
+use App\Models\Branch;
 use App\Models\BusinessCategory;
 use App\Models\Location;
 use Carbon\Carbon;
@@ -123,9 +124,10 @@ class ApplicantController extends Controller
     public function create()
     {
         $districts   = Location::where('type', 'District')->get();
-        $categories  = BusinessCategory::all();
+        $categories  = BusinessCategory::where('parent_id', 0)->with('children')->get();
+        $branches  = Branch::get();
 
-        return view('applicants.create', compact('districts', 'categories'));
+        return view('applicants.create', compact('districts', 'categories', 'branches'));
     }
 
     /**
@@ -136,8 +138,9 @@ class ApplicantController extends Controller
      */
     public function store(Request $request)
     {
-        ps($request->all());
+       
         $request->merge(['amount' => str_replace(',', '', $request->amount)]);
+        $request->merge(['challan_fee' => str_replace(',', '', $request->challan_fee)]);
 
         $validated = $request->validate([
             'cnic'  => ['required', 'regex:/^\d{5}-\d{7}-\d{1}$/', 'unique:applicants,cnic'],
@@ -154,6 +157,7 @@ class ApplicantController extends Controller
             'quota' => 'required|in:Men,Women,Disabled,Transgender',
             'business_category_id' => 'required|exists:business_categories,id',
             'business_sub_category_id' => 'required|exists:business_categories,id',
+            'applicant_choosed_branch' => 'required',
             'permanentAddress' => 'required|string|max:500',
             'businessAddress' => 'required|string|max:500',
             'amount' => 'required|integer|min:1',
@@ -164,9 +168,13 @@ class ApplicantController extends Controller
             'educations.*.education_level' => 'required_with:educations|string|max:255',
             'educations.*.degree_title'    => 'nullable|string|max:255',
             'educations.*.institute'       => 'nullable|string|max:255',
+            'branch_id' => 'required',
+            'challan_fee' => 'required|integer|min:1',
+            'challan_image' => 'nullable|mimes:jpeg,png,jpg|image|max:2048',
         ]);
 
         // ✅ Age & CNIC Issue Date Checks (same as public form)
+        //  ps($request->all());
         $issueDateCarbon = Carbon::parse($validated['cnic_issue_date']);
         if ($issueDateCarbon->lt(Carbon::now()->subYears(10))) {
             return back()->withErrors(['cnic_issue_date' => 'CNIC is expired (older than 10 years).'])->withInput();
@@ -211,6 +219,19 @@ class ApplicantController extends Controller
         // ✅ Generate Application Number
         $applicant->application_no = generateApplicationNo($applicant->id);
         $applicant->save();
+        $applicant->updateStatus('Created', 'Manual Application added in system ');
+        $fileName='';
+         if ($request->hasFile('challan_image')) {
+            $fileName = time() . '.' . $request->challan_image->extension();
+            $request->challan_image->move(public_path('uploads/challans'), $fileName);
+        }
+
+        $applicant->update([
+            'challan_branch_id' => $request->branch_id,
+            'challan_fee' => $request->challan_fee,
+            'challan_image' => $fileName,
+            'fee_status' => 'paid',
+        ]);
 
         return redirect()->route('applicant.show', $applicant->id)
             ->with('success', 'Manual Application added successfully.');
@@ -247,7 +268,7 @@ class ApplicantController extends Controller
         $applicant = Applicant::find($id);
         $districts = Location::where('type', 'District')->get();
         $tehsils = Location::where('type', 'Tehsil')->where('parent_id', $applicant->district_id)->get();
-        $categories = BusinessCategory::all();
+        $categories = BusinessCategory::where('parent_id', 0)->with('children')->get();
         $subcategories = BusinessCategory::where('parent_id', $applicant->business_category_id)->get();
 
         return view('applicants.edit', compact('applicant', 'districts', 'tehsils', 'categories', 'subcategories'));

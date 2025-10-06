@@ -141,7 +141,7 @@
             
            
              if ((input.value === '' || !input.value) && input.classList.contains('required')) {
-                 console.log('Type: '+input.type+' Name:' +input.name+': '+((!input.value || input.value === '')&& input.classList.contains('required')))
+                //  console.log('Type: '+input.type+' Name:' +input.name+': '+((!input.value || input.value === '')&& input.classList.contains('required')))
                  input.classList.add('error');
 
                  isValid = false;
@@ -247,6 +247,7 @@
          if (!limits || isNaN(amount) || amount < limits.min || amount > limits.max) {
              const message =
                  `For Tier ${tier}, amount must be between ${display.min.toLocaleString()} and ${display.max.toLocaleString()}`;
+             removeErrorComponent(input);
              createErrorComponent(input, message);
              showToast(message, 'left', 'bottom');
              input.classList.add('error');
@@ -348,10 +349,11 @@
      }
 
      function fileValidation(input) {
+         removeErrorComponent(input);
          if (!input.files || input.files.length === 0) {
-             createErrorComponent(input, 'CNIC file is required.');
-             input.classList.add('error');
-             return false;
+            //  createErrorComponent(input, 'CNIC file is required.');
+            //  input.classList.add('error');
+             return true;
          }
 
          const file = input.files[0];
@@ -360,6 +362,7 @@
 
          // Check file type
          if (!allowedTypes.includes(file.type)) {
+            
              createErrorComponent(input, 'Only JPG or PNG files are allowed.');
              input.classList.add('error');
              return false;

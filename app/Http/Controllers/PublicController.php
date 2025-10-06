@@ -202,6 +202,7 @@ class PublicController extends Controller
             'challan_fee' => 'required|integer|min:1',
             'challan_image' => 'required|image|max:2048',
         ]);
+        $request->merge(['challan_fee' => str_replace(',', '', $request->challan_fee)]);
         $applicant = Applicant::find($request->applicant_id);
         if ($request->hasFile('challan_image')) {
             $fileName = time() . '.' . $request->challan_image->extension();
