@@ -13,6 +13,33 @@ use Illuminate\Support\Facades\DB;
 
 class PublicController extends Controller
 {
+    public function __construct()
+    {
+        // 🔒 Toggle inauguration lock
+        $isInauguration = true;
+
+        if ($isInauguration) {
+            $this->middleware(function ($request, $next) {
+
+                // Get the current route name
+                $currentRoute = $request->route()->getName();
+
+                // List of route names to block
+                $blockedRoutes = [
+                    'loan.application',
+                    'loan.application.form',
+                ];
+
+                // If the current route is in the blocked list, show inauguration page
+                if (in_array($currentRoute, $blockedRoutes)) {
+                    return response()->view('public.inauguration');
+                }
+
+                // Otherwise, continue normally
+                return $next($request);
+            });
+        }
+    }
     function home()
     {
         $title = 'Home';
@@ -64,6 +91,7 @@ class PublicController extends Controller
     {
         // ps($request->all());
         // Step 1: Just redirect to step2 with validated values
+        abort(403, 'Applications are not open yet. Please wait for the official inauguration.');
         if (!$request->has('name')) {
             $request->validate([
                 'cnic' => 'required|regex:/^\d{5}-\d{7}-\d{1}$/',
@@ -196,6 +224,7 @@ class PublicController extends Controller
     public function uploadChallan(Request $request)
     {
         // dd($request->all());
+
         $request->validate([
             'applicant_id' => 'required|exists:applicants,id',
             'branch_id' => 'required',
