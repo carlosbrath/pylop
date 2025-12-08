@@ -13,7 +13,7 @@
             <li>📊 <strong>Loan Disbursement:</strong> Loans will be disbursed keeping inview population and gender.</li>
             <li>🏪 <strong>Business Nature:</strong> 75% for new businesses and 25% for startup.
             </li>
-            <li>📝 <strong>Form Fee:</strong> For offline applications, the form fee must be deposited in the
+            <li>📝 <strong>Form Fee:</strong> The form fee must be deposited in the
                 name of Managing Director, AJK Small Industries Corporation, Account No. 040-14027001 (Bank of
                 AJK). Attach bank receipt, CNIC copy and Certificate / Deploma / Degree (if any) with the form.
                 For online applications same must be
@@ -33,7 +33,7 @@
                 ہوگا۔</li>
             <li>📊 <strong>قرضہ کی اجرائیگی:</strong>
                 قرضہ کی اجرائیگی آبادی اور  Gender کے تناسب کو مدنظر رکھتے ہوۓ کی جاۓ گی۔</li>
-            <li>🏪 <strong>کاروباری نوعیت:</strong> نیا کاروبار (75 فیصد ) اور سٹارٹ اپ بزنس (25) فیصد )</li>
+            <li>🏪 <strong>کاروباری نوعیت:</strong> نیا کاروبار (75 فیصد ) اور سٹارٹ اپ بزنس (25) فیصد </li>
             <li>📝 <strong>قیمت فارم:</strong> قیمت فارم آزاد کشمیر سمال انڈسٹریز کارپوریشن بنام منیجنگ ڈائر
                 یکٹر آزاد کشمیر سمال انڈسٹریز کارپوریشن، اکاؤنٹ نمبر 14027001-040 بینک آف آزاد جموں وکشمیر میں
                 جمع کرواتے ہوئے آف لائن درخواست کی صورت میں بینک رسید، شناختی کارڈ کی فوٹو کاپی اور سرٹیفیکیٹ/

@@ -4,14 +4,14 @@
             <li class="fw-bold">📌 Eligibility Criteria:</li>
             <li>🔸 Loan will be granted to youth of Azad jammu & Kashmir having business
                 juridiction in AJK.</li>
-            <li>🔸 Must hold a valid computerized CNIC (not expired).</li>
+            <li>🔸 Must hold a valid CNIC (not expired).</li>
             <li>🔸 Applicant’s age must be between 18 to 40 years.</li>
             <li>🔸 Preference will be given to youth with business skills, certificate diplomas or degrees.
             </li>
             <li>🔸 Men, Women, Special Persons and Transgenders are eligible to apply.</li>
             <li>🔸 Government/semi-government employees and defaulters of any financial institution are not
                 eligible.</li>
-            <li>🔸 Incomplete applications or those not meeting the criteria will not be considered.</li>
+            <li>🔸 Incomplete applications or those not fulfill the criteria will not be considered.</li>
         </ul>
     </div>
     <div class="col-md-2 text-center">
