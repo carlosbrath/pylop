@@ -344,7 +344,7 @@
     @push('scripts')
         <script>
             window.onload = function() {
-                var myModal = new bootstrap.Modal(document.getElementById('announcementModal'));
+                var myModal = new bootstrap.Modal(document.getElementById('imageModal'));
                 myModal.show();
             };
         </script>
