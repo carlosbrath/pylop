@@ -117,7 +117,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body p-0">
-                <img src="{{ asset('assets/img/public/front.webp') }}" alt="Image" class="img-fluid w-100">
+                <img src="{{ asset('assets/img/public/Front.webp') }}" alt="Image" class="img-fluid w-100">
             </div>
         </div>
     </div>
