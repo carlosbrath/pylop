@@ -26,8 +26,8 @@ class PublicController extends Controller
 
                 // List of route names to block
                 $blockedRoutes = [
-                    'loan.application',
-                    'loan.application.form',
+                    // 'loan.application',
+                    // 'loan.application.form',
                 ];
 
                 // If the current route is in the blocked list, show inauguration page
