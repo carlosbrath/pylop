@@ -257,7 +257,7 @@
                         </div>
                         <div class="info-row">
                             <div class="info-label">Application Status:</div>
-                            <div class="info-value">{{ $applicant->status }} </div>
+                            <div class="info-value">{!! applicant_status_badge($applicant) !!} </div>
                         </div>
                         <div class="info-row">
                             <div class="info-label">Remarks:</div>
