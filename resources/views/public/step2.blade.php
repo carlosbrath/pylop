@@ -534,7 +534,7 @@
 
                                                 <div class="text-end mt-4">
                                                     <button type="submit" class="btn btn-success">
-                                                        <i class="bi bi-save2 me-1"></i> Submit
+                                                        <i class="bi bi-save2 me-1"></i> Next
                                                     </button>
                                                 </div>
 
