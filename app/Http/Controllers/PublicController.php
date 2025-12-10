@@ -164,11 +164,11 @@ class PublicController extends Controller
             }
         }
         if ($request->hasFile('cnic_front')) {
-            $cnic_frontName = time() . '.' . $request->cnic_front->extension();
+            $cnic_frontName = uniqid('cnic_front_', true) . '.' . $request->cnic_front->extension();
             $request->cnic_front->move(public_path('uploads/cnic'), $cnic_frontName);
         }
         if ($request->hasFile('cnic_back')) {
-            $cnic_backName = time() . '.' . $request->cnic_back->extension();
+            $cnic_backName = uniqid('cnic_back_', true) . '.' . $request->cnic_back->extension();
             $request->cnic_back->move(public_path('uploads/cnic'), $cnic_backName);
         }
         $applicant = Applicant::create([

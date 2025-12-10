@@ -138,7 +138,7 @@ class ApplicantController extends Controller
      */
     public function store(Request $request)
     {
-       
+
         $request->merge(['amount' => str_replace(',', '', $request->amount)]);
         $request->merge(['challan_fee' => str_replace(',', '', $request->challan_fee)]);
 
@@ -188,12 +188,12 @@ class ApplicantController extends Controller
 
         // ✅ File uploads
         if ($request->hasFile('cnic_front')) {
-            $front = time() . '_front.' . $request->cnic_front->extension();
+            $front = uniqid('cnic_front_', true) . '.' . $request->cnic_front->extension();
             $request->cnic_front->move(public_path('uploads/cnic'), $front);
-            $validated['cnic_front'] = $front;
+            $validated['cnic_back'] = $front;
         }
         if ($request->hasFile('cnic_back')) {
-            $back = time() . '_back.' . $request->cnic_back->extension();
+            $back = uniqid('cnic_back_', true) . '.' . $request->cnic_back->extension();
             $request->cnic_back->move(public_path('uploads/cnic'), $back);
             $validated['cnic_back'] = $back;
         }
@@ -220,8 +220,8 @@ class ApplicantController extends Controller
         $applicant->application_no = generateApplicationNo($applicant->id);
         $applicant->save();
         $applicant->updateStatus('Created', 'Manual Application added in system ');
-        $fileName='';
-         if ($request->hasFile('challan_image')) {
+        $fileName = '';
+        if ($request->hasFile('challan_image')) {
             $fileName = time() . '.' . $request->challan_image->extension();
             $request->challan_image->move(public_path('uploads/challans'), $fileName);
         }
