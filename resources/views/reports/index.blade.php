@@ -41,14 +41,13 @@
                                 </select>
                             </div>
 
-                            <!-- Business Category Filter -->
+                            <!-- Tier Filter -->
                             <div class="col-md-4 col-lg-2">
-                                <label class="small mb-1" for="business_category_id">Business Category</label>
-                                <select class="form-select form-select-sm select2" id="business_category_id"
-                                    name="business_category_id">
-                                    <option value="">All Categories</option>
-                                    @foreach ($categories as $category)
-                                        <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                <label class="small mb-1" for="tier">Tier</label>
+                                <select class="form-select form-select-sm select2" id="tier" name="tier">
+                                    <option value="">All Tiers</option>
+                                    @foreach ($tiers as $tierValue => $tierLabel)
+                                        <option value="{{ $tierValue }}">{{ $tierLabel }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -139,7 +138,7 @@
                     data: function(d) {
                         d.district_id = $('#district_id').val();
                         d.gender = $('#gender').val();
-                        d.business_category_id = $('#business_category_id').val();
+                        d.tier = $('#tier').val();
                         d.fee_status = $('#fee_status').val();
                         d.status = $('#status').val();
                     }

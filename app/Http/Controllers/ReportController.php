@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Applicant;
-use App\Models\BusinessCategory;
 use App\Models\Location;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
@@ -26,8 +25,8 @@ class ReportController extends Controller
                 $query->where('quota', $request->gender);
             }
 
-            if ($request->filled('business_category_id')) {
-                $query->where('business_category_id', $request->business_category_id);
+            if ($request->filled('tier')) {
+                $query->where('tier', $request->tier);
             }
 
             if ($request->filled('fee_status')) {
@@ -83,7 +82,11 @@ class ReportController extends Controller
 
         // Get filter data for dropdowns
         $districts = Location::where('type', 'District')->get();
-        $categories = BusinessCategory::where('parent_id', 0)->get();
+        $tiers = [
+            1 => 'Tier 1 (Up to 5 Lakh)',
+            2 => 'Tier 2 (5 to 10 Lakh)',
+            3 => 'Tier 3 (10 to 20 Lakh)'
+        ];
         $genders = ['Men', 'Women', 'Disabled', 'Transgender'];
         $feeStatuses = ['paid', 'unpaid'];
         $applicationStatuses = ['Pending', 'Approved', 'Forwarded', 'Rejected'];
@@ -95,7 +98,7 @@ class ReportController extends Controller
             'page_title',
             'title',
             'districts',
-            'categories',
+            'tiers',
             'genders',
             'feeStatuses',
             'applicationStatuses'
