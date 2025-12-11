@@ -65,15 +65,20 @@
                     </nav>
                 </div>
                 
-                <!-- Sidenav Heading (Custom)-->
-
-                {{-- <div class="sidenav-menu-heading">Reports</div>
-                <!-- Sidenav Accordion (Utilities)-->
-                <a class="nav-link" href="">
-                    <div class="nav-link-icon"><i data-feather="book"></i></div>
+                <!-- Sidenav Heading (Reporting)-->
+                <div class="sidenav-menu-heading">Reporting</div>
+                <!-- Sidenav Accordion (Reports)-->
+                <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseReports" aria-expanded="false" aria-controls="collapseReports">
+                    <div class="nav-link-icon"><i data-feather="bar-chart-2"></i></div>
                     Reports
-                </a> --}}
-                
+                    <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                </a>
+                <div class="collapse" id="collapseReports" data-bs-parent="#accordionSidenav">
+                    <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
+                        <a class="nav-link" href="{{route('reports.index')}}">Applications Report</a>
+                    </nav>
+                </div>
+
             </div>
         </div>
         <!-- Sidenav Footer-->

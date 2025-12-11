@@ -17,7 +17,7 @@ body {
 a {
     text-decoration: none;
     cursor: pointer !important;
-    color:#67e0ff;
+    color: #67e0ff;
 }
 .urdu-text {
     font-family: "Noto Nastaliq Urdu", serif;
@@ -173,7 +173,7 @@ a {
 
 .form-floating.has-file label {
     opacity: 1;
-     transform: scale(0.85) translateY(-1.5rem) translateX(0.15rem);
+    transform: scale(0.85) translateY(-1.5rem) translateX(0.15rem);
     background-color: #0000;
 }
 
@@ -188,6 +188,49 @@ textarea.error {
     color: #f00;
     margin-right: 8px;
     text-align: right;
+}
+.print-actions {
+    padding: 15px;
+    border: 1px solid #e5e5e5;
+    border-radius: 8px;
+    background: #fafafa;
+}
+
+.action-info-box {
+    margin-bottom: 12px;
+    padding: 12px;
+    background: #f0f6ff;
+    border-left: 4px solid #0d6efd;
+    border-radius: 5px;
+}
+
+.info-text {
+    margin: 0;
+    font-size: 14px;
+    color: #244a6c;
+}
+
+.btn-print-primary {
+    background: #0d6efd;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-weight: 500;
+    text-decoration: none;
+}
+
+.btn-print-warning {
+    background: #ff9f43;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-weight: 500;
+    text-decoration: none;
+}
+
+.btn-print-primary:hover,
+.btn-print-warning:hover {
+    opacity: 0.85;
 }
 
 @media print {

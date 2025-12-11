@@ -306,15 +306,44 @@
                             </li>
                         </ul>
 
-                        <div class="no-print mt-3 text-end">
-                            @if($applicant->fee_status == 'paid')
-                                <a href="{{ route('application.print', $applicant->id) }}" title="Print Form" target="_blank"
-                                    class="btn btn-gradient"><i class="bi bi-printer"></i></a>
-                            @else 
-                                     <a href="{{ route('application.challan', $applicant->id) }}" title="Print challan" target="_blank"
-                                    class="btn btn-gradient"><i class="bi bi-printer"></i></a>
-                            @endif
-                        </div>
+                      <div class="print-actions no-print mt-4">
+
+    <div class="action-info-box">
+        @if($applicant->fee_status == 'paid')
+            <p class="info-text">
+                Your fee has been verified. You can now print your completed application form using the button below.
+            </p>
+        @else
+            <p class="info-text">
+                Please print your challan, submit the fee, and then upload the paid challan to continue your application.
+            </p>
+        @endif
+    </div>
+
+    <div class="action-buttons text-end">
+        @if($applicant->fee_status == 'paid')
+            <a href="{{ route('application.print', $applicant->id) }}"
+               target="_blank"
+               class="btn btn-print-primary"
+               title="Print Application Form">
+
+                <i class="bi bi-printer me-1"></i>
+                Print Application Form
+            </a>
+        @else
+            <a href="{{ route('application.challan', $applicant->id) }}"
+               target="_blank"
+               class="btn btn-print-warning"
+               title="Print Challan">
+
+                <i class="bi bi-receipt me-1"></i>
+                Print Challan
+            </a>
+        @endif
+    </div>
+
+</div>
+
                     </div>
                     @if ($applicant->fee_status != 'paid')
                         <div class="md-col-10 no-print">

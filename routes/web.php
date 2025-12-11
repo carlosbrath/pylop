@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MigrationController;
 use App\Http\Controllers\ApplicantController;
 use App\Http\Controllers\ActivityLogController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\UserContoller;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
@@ -61,6 +62,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('activity-logs', [ActivityLogController::class, 'index'])->name('activitylogs.index');
     Route::get('/activity-logs/{id}', [ActivityLogController::class, 'show'])->name('activitylogs.show');
     Route::match(['post', 'get'], '/change/Password', [UserContoller::class, 'changePassword'])->name('change.password');
+
+    // ---------------Reports----------------------------------------------------------
+    Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
 
     // ----------------------Ajax Loads------------------------------------------------------
     Route::get('/ajax/gender-quota', [\App\Http\Controllers\AjaxController::class, 'genderQuota'])->name('ajax.gender-quota');
