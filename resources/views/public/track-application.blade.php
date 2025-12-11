@@ -226,7 +226,8 @@
                         </div>
                         <div class="info-row">
                             <div class="info-label">Amount:</div>
-                            <div class="info-value">{{ $applicant->amount ? number_format($applicant->amount, 2) : '-' }}</div>
+                            <div class="info-value">{{ $applicant->amount ? number_format($applicant->amount, 2) : '-' }}
+                            </div>
                         </div>
                         <div class="info-row">
                             <div class="info-label">Gender:</div>
@@ -261,7 +262,7 @@
                         </div>
                         <div class="info-row">
                             <div class="info-label">Remarks:</div>
-                            <div class="info-value"> {{$applicant->latestStatusLog->remarks??''}} </div>
+                            <div class="info-value"> {{ $applicant->latestStatusLog->remarks ?? '' }} </div>
                         </div>
 
                         @if ($applicant->fee_status === 'paid')
@@ -286,9 +287,10 @@
 
                         <div class="section-title no-print">Important Instructions</div>
                         <ul class="no-print">
-                        
+
                             <li>
-                               <strong> Print</strong>  Challan form and <strong> Submit your challan</strong> at the nearest <strong>Bank of AJK branch</strong>.<br>
+                                <strong> Print</strong> Challan form and <strong> Submit your challan</strong> at the
+                                nearest <strong>Bank of AJK branch</strong>.<br>
                                 After submission, <strong>upload a scanned copy or clear image</strong> of the challan
                                 below.
                             </li>
@@ -306,52 +308,51 @@
                             </li>
                         </ul>
 
-                      <div class="print-actions no-print mt-4">
+                        <div class="print-actions no-print mt-4">
 
-    <div class="action-info-box">
-        @if($applicant->fee_status == 'paid')
-            <p class="info-text">
-                Your fee has been verified. You can now print your completed application form using the button below.
-            </p>
-        @else
-            <p class="info-text">
-                Please print your challan, submit the fee, and then upload the paid challan to continue your application.
-            </p>
-        @endif
-    </div>
+                            <div class="action-info-box">
+                                @if ($applicant->fee_status == 'paid')
+                                    <p class="info-text">
+                                        Your fee has been verified. You can now print your completed application form using
+                                        the button below.
+                                    </p>
+                                @else
+                                    <p class="info-text">
+                                        Please print your challan, submit the fee, and then upload the paid challan to
+                                        continue your application.
+                                    </p>
+                                @endif
+                            </div>
 
-    <div class="action-buttons text-end">
-        @if($applicant->fee_status == 'paid')
-            <a href="{{ route('application.print', $applicant->id) }}"
-               target="_blank"
-               class="btn btn-print-primary"
-               title="Print Application Form">
+                            <div class="action-buttons text-end">
+                                @if ($applicant->fee_status == 'paid')
+                                    <a href="{{ route('application.print', $applicant->id) }}" target="_blank"
+                                        class="btn btn-print-primary" title="Print Application Form">
 
-                <i class="bi bi-printer me-1"></i>
-                Print Application Form
-            </a>
-        @else
-            <a href="{{ route('application.challan', $applicant->id) }}"
-               target="_blank"
-               class="btn btn-print-warning"
-               title="Print Challan">
+                                        <i class="bi bi-printer me-1"></i>
+                                        Print Application Form
+                                    </a>
+                                @else
+                                    <a href="{{ route('application.challan', $applicant->id) }}" target="_blank"
+                                        class="btn btn-print-warning" title="Print Challan">
 
-                <i class="bi bi-receipt me-1"></i>
-                Print Challan
-            </a>
-        @endif
-    </div>
+                                        <i class="bi bi-receipt me-1"></i>
+                                        Print Challan
+                                    </a>
+                                @endif
+                            </div>
 
-</div>
+                        </div>
 
                     </div>
                     @if ($applicant->fee_status != 'paid')
                         <div class="md-col-10 no-print">
                             <form action="{{ route('upload.challan') }}" method="POST" enctype="multipart/form-data"
                                 class="my-4 p-4 bg-white shadow-sm rounded">
-                                  <span class="text-success d-block mt-1">
-                                                            * Only JPG, PNG files are allowed. Maximum size 1 MB. For reduce file size please visit <a href="https://imageresizer.com/">Image Resizer</a>
-                                                        </span>
+                                <span class="text-success d-block mt-1">
+                                    * Only JPG, PNG files are allowed. Maximum size 1 MB. For reduce file size please visit
+                                    <a href="https://imageresizer.com/">Image Resizer</a>
+                                </span>
                                 <h3 class="mb-5">Challan Information</h3>
                                 @csrf
                                 <input type="hidden" name="applicant_id" value="{{ $applicant->id }}">

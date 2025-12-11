@@ -513,6 +513,67 @@
                  }
              });
      }
+
+     /**
+      * Show page loader with custom message
+      * @param {string} message - The message to display (optional)
+      * @param {number} minDuration - Minimum duration in milliseconds (default: 2000)
+      */
+     function showLoader(message = 'Loading...', minDuration = 2000) {
+         const loader = document.getElementById('page-loader');
+         if (loader) {
+             const loaderText = loader.querySelector('.loader-text');
+             if (loaderText) {
+                 loaderText.textContent = message;
+             }
+             loader.style.display = 'flex';
+
+             // Store the start time
+             loader.dataset.startTime = Date.now();
+             loader.dataset.minDuration = minDuration;
+         }
+     }
+
+     /**
+      * Hide page loader after minimum duration
+      */
+     function hideLoader() {
+         const loader = document.getElementById('page-loader');
+         if (loader) {
+             const startTime = parseInt(loader.dataset.startTime || 0);
+             const minDuration = parseInt(loader.dataset.minDuration || 2000);
+             const elapsed = Date.now() - startTime;
+             const remaining = minDuration - elapsed;
+
+             if (remaining > 0) {
+                 // Wait for the remaining time before hiding
+                 setTimeout(() => {
+                     loader.style.display = 'none';
+                 }, remaining);
+             } else {
+                 // Minimum duration already passed, hide immediately
+                 loader.style.display = 'none';
+             }
+         }
+     }
+
+     /**
+      * Show loader with automatic callback execution
+      * @param {Function} callback - Function to execute
+      * @param {string} message - Loader message
+      * @param {number} minDuration - Minimum display duration (default: 2000ms)
+      */
+     function showLoaderWithCallback(callback, message = 'Loading...', minDuration = 2000) {
+         showLoader(message, minDuration);
+
+         // Execute callback and hide loader when done
+         if (typeof callback === 'function') {
+             // If callback returns a promise, wait for it
+             Promise.resolve(callback()).finally(() => {
+                 hideLoader();
+             });
+         }
+     }
  </script>
  {{-- <script defer src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015"
      integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ=="

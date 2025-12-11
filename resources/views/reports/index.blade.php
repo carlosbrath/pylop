@@ -5,6 +5,10 @@
 @section('content')
     <main>
         @include('include.page_header')
+
+        <!-- Page Loader Component -->
+        @include('components.loader', ['message' => 'Processing filters...'])
+
         <div class="container-xl px-4 mt-4">
             <!-- Filters Card -->
             <div class="card mb-4">
@@ -247,7 +251,7 @@
                 ],
                 scrollX: true,
                 scrollCollapse: true,
-                pageLength: 25,
+                pageLength: 10,
                 order: [
                     [1, 'desc']
                 ], // Order by Application No descending
@@ -255,14 +259,20 @@
 
             // Apply Filters
             $('#apply-filters').on('click', function() {
-                table.ajax.reload();
+                showLoader('Applying filters...', 2000);
+                table.ajax.reload(function() {
+                    hideLoader();
+                });
             });
 
             // Reset Filters
             $('#reset-filters').on('click', function() {
+                showLoader('Resetting filters...', 2000);
                 $('#filter-form')[0].reset();
                 $('.select2').val(null).trigger('change'); // Reset Select2
-                table.ajax.reload();
+                table.ajax.reload(function() {
+                    hideLoader();
+                });
             });
 
             // Allow Enter key to trigger filter
