@@ -200,7 +200,7 @@ class PublicController extends Controller
             'permanentAddress' => $request->PermanentAddress,
             'businessAddress' => $request->BusinessAddress,
             'amount' => $request->amount,
-            'status' => 'Pending',
+            'status' => 'NotCompleted',
         ]);
         // Store education records
         foreach ($request->educations as $education) {
@@ -241,6 +241,14 @@ class PublicController extends Controller
         ]);
         $request->merge(['challan_fee' => str_replace(',', '', $request->challan_fee)]);
         $applicant = Applicant::find($request->applicant_id);
+        $expectedFee = challanFee($applicant->tier);
+        if ((int) $request->challan_fee !== (int) $expectedFee) {
+            return back()
+                ->withErrors([
+                    'challan_fee' => "Invalid challan amount. Required challan fee for your selected tier is Rs. {$expectedFee}."
+                ])
+                ->withInput();
+        }
         if ($request->hasFile('challan_image')) {
             $fileName = time() . '.' . $request->challan_image->extension();
             $request->challan_image->move(public_path('uploads/challans'), $fileName);
@@ -298,6 +306,40 @@ class PublicController extends Controller
         }
         return view('public.track-application', compact('applicant', 'branches'));
     }
+    public function submitApplication(Request $request)
+    {
+        $request->validate([
+            'applicant_id' => 'required|exists:applicants,id',
+            'declaration' => 'required|accepted',
+        ]);
+
+        // Find the applicant
+        $applicant = Applicant::findOrFail($request->applicant_id);
+        // Check if the application status is "Not Completed"
+        if ($applicant->status !== 'NotCompleted') {
+            return redirect()->back()->withErrors([
+                'status' => 'Application cannot be submitted. Current status: ' . $applicant->status
+            ]);
+        }
+
+        // Update status to "Pending"
+        $applicant->update([
+            'status' => 'Pending',
+            'submitted_at' => now(), // optional: track submission time
+        ]);
+
+        // Return back with success message
+        return redirect()->back()->with([
+            'success' => 'Application has been successfully submitted and is now under review.',
+            'auto_track' => true,
+            'track_data' => [
+                'cnic' => $applicant->cnic,
+                'issue_date' => $applicant->cnic_issue_date,
+                'dob' => $applicant->dob,
+            ],
+            'application_id' => $applicant->id,
+        ]);
+    }
     function printDoc($id)
     {
 
@@ -334,7 +376,7 @@ class PublicController extends Controller
             ->where('id', $id)
             ->pluck('name')
             ->first();
-        $branch = Branch::where('district', $districtName)->get();
+        $branch = Branch::get();
         return response()->json($branch);
     }
 }

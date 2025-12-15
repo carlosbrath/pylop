@@ -19,8 +19,16 @@
                 <div class="card-body">
                     <form id="filter-form">
                         <div class="row gx-3 mb-3">
+                            <!-- Date Range Filter -->
+                            <div class="col-md-4 col-lg-3">
+                                <label class="small mb-1" for="litepickerReportRange">Date Range</label>
+                                <input type="text" class="form-control form-control-sm" id="litepickerReportRange"
+                                    name="daterange" placeholder="Select date range" readonly>
+                                <input type="hidden" id="date_from" name="date_from">
+                                <input type="hidden" id="date_to" name="date_to">
+                            </div>
                             <!-- District Filter -->
-                            <div class="col-md-4 col-lg-2">
+                            <div class="col-md-4 col-lg-3">
                                 <label class="small mb-1" for="district_id">District</label>
                                 <select class="form-select form-select-sm select2" id="district_id" name="district_id">
                                     <option value="">All Districts</option>
@@ -31,7 +39,7 @@
                             </div>
 
                             <!-- Gender Filter -->
-                            <div class="col-md-4 col-lg-2">
+                            <div class="col-md-4 col-lg-3">
                                 <label class="small mb-1" for="gender">Gender/Quota</label>
                                 <select class="form-select form-select-sm select2" id="gender" name="gender">
                                     <option value="">All</option>
@@ -42,7 +50,7 @@
                             </div>
 
                             <!-- Tier Filter -->
-                            <div class="col-md-4 col-lg-2">
+                            <div class="col-md-4 col-lg-3">
                                 <label class="small mb-1" for="tier">Tier</label>
                                 <select class="form-select form-select-sm select2" id="tier" name="tier">
                                     <option value="">All Tiers</option>
@@ -53,7 +61,7 @@
                             </div>
 
                             <!-- Fee Status Filter -->
-                            <div class="col-md-4 col-lg-2">
+                            <div class="col-md-4 col-lg-3">
                                 <label class="small mb-1" for="fee_status">Fee Status</label>
                                 <select class="form-select form-select-sm select2" id="fee_status" name="fee_status">
                                     <option value="">All</option>
@@ -67,12 +75,14 @@
                             <div class="col-md-4 col-lg-2">
                                 <label class="small mb-1" for="status">Application Status</label>
                                 <select class="form-select form-select-sm select2" id="status" name="status">
-                                    <option value="">All</option>
+                                    <option value="">Default (Exclude NotCompleted)</option>
                                     @foreach ($applicationStatuses as $appStatus)
                                         <option value="{{ $appStatus }}">{{ $appStatus }}</option>
                                     @endforeach
                                 </select>
                             </div>
+
+
 
                             <!-- Buttons -->
                             <div class="col-md-4 col-lg-2">
@@ -97,7 +107,8 @@
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table id="reports-table" class="table table-bordered table-striped table-hover" style="width: 100%;">
+                        <table id="reports-table" class="table table-bordered table-striped table-hover"
+                            style="width: 100%;">
                             <thead class="table-light">
                                 <tr>
                                     <th>Sr.No</th>
@@ -114,6 +125,7 @@
                                     <th>Tier</th>
                                     <th>Fee Status</th>
                                     <th>Status</th>
+                                    <th>Created Date</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
@@ -129,6 +141,73 @@
 @push('scripts')
     <script>
         $(document).ready(function() {
+            // Initialize Litepicker Date Range with preset ranges
+            let pickerReport;
+            const litepickerReportRangeEle = document.getElementById('litepickerReportRange');
+            if (litepickerReportRangeEle) {
+                pickerReport = new Litepicker({
+                    element: litepickerReportRangeEle,
+                    singleMode: false,
+                    numberOfMonths: 2,
+                    numberOfColumns: 2,
+                    format: 'MMM DD, YYYY',
+                    plugins: ['ranges'],
+                    ranges: {
+                        position: 'left',
+                        customRanges: {
+                            'Today': [new Date(), new Date()],
+                            'Yesterday': [
+                                new Date(new Date().setDate(new Date().getDate() - 1)),
+                                new Date(new Date().setDate(new Date().getDate() - 1))
+                            ],
+                            'Last 7 Days': [
+                                new Date(new Date().setDate(new Date().getDate() - 6)),
+                                new Date()
+                            ],
+                            'Last 30 Days': [
+                                new Date(new Date().setDate(new Date().getDate() - 29)),
+                                new Date()
+                            ],
+                            'This Month': [
+                                new Date(new Date().getFullYear(), new Date().getMonth(), 1),
+                                new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0)
+                            ],
+                            'Last Month': [
+                                new Date(new Date().getFullYear(), new Date().getMonth() - 1, 1),
+                                new Date(new Date().getFullYear(), new Date().getMonth(), 0)
+                            ],
+                            'This Year': [
+                                new Date(new Date().getFullYear(), 0, 1),
+                                new Date(new Date().getFullYear(), 11, 31)
+                            ],
+                            'Last Year': [
+                                new Date(new Date().getFullYear() - 1, 0, 1),
+                                new Date(new Date().getFullYear() - 1, 11, 31)
+                            ]
+                        }
+                    },
+                    setup: (picker) => {
+                        picker.on('selected', (date1, date2) => {
+                            let dateFrom = date1.format('YYYY-MM-DD');
+                            let dateTo = date2.format('YYYY-MM-DD');
+                            $('#date_from').val(dateFrom);
+                            $('#date_to').val(dateTo);
+                        });
+                        picker.on('clear', () => {
+                            $('#date_from').val('');
+                            $('#date_to').val('');
+                        });
+                    },
+                    resetButton: true,
+                    autoApply: false,
+                    buttonText: {
+                        apply: 'Apply',
+                        cancel: 'Clear',
+                        reset: 'Reset'
+                    }
+                });
+            }
+
             // Initialize DataTable
             let table = $('#reports-table').DataTable({
                 processing: true,
@@ -141,6 +220,8 @@
                         d.tier = $('#tier').val();
                         d.fee_status = $('#fee_status').val();
                         d.status = $('#status').val();
+                        d.date_from = $('#date_from').val();
+                        d.date_to = $('#date_to').val();
                     }
                 },
                 columns: [{
@@ -203,6 +284,10 @@
                         name: 'status',
                         orderable: false,
                         searchable: false
+                    },
+                    {
+                        data: 'created_date',
+                        name: 'created_at'
                     },
                     {
                         data: 'action',
@@ -269,6 +354,13 @@
                 showLoader('Resetting filters...', 2000);
                 $('#filter-form')[0].reset();
                 $('.select2').val(null).trigger('change'); // Reset Select2
+                $('#litepickerReportRange').val(''); // Clear Litepicker display
+                $('#date_from').val(''); // Clear hidden date_from
+                $('#date_to').val(''); // Clear hidden date_to
+                // Clear Litepicker instance
+                if (pickerReport) {
+                    pickerReport.clearSelection();
+                }
                 table.ajax.reload(function() {
                     hideLoader();
                 });

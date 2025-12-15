@@ -33,8 +33,26 @@ class ReportController extends Controller
                 $query->where('fee_status', $request->fee_status);
             }
 
+            // Date filter (created_at)
+            if ($request->filled('date_from')) {
+                $query->whereDate('created_at', '>=', $request->date_from);
+            }
+
+            if ($request->filled('date_to')) {
+                $query->whereDate('created_at', '<=', $request->date_to);
+            }
+
+            // Status filter: Exclude NotCompleted by default unless explicitly requested
             if ($request->filled('status')) {
-                $query->where('status', $request->status);
+                if ($request->status === 'All') {
+                    // Show all applications including NotCompleted (no filter applied)
+                } else {
+                    // Show specific status
+                    $query->where('status', $request->status);
+                }
+            } else {
+                // Default: Exclude NotCompleted applications
+                $query->where('status', '!=', 'NotCompleted');
             }
 
             // Global search
@@ -70,6 +88,7 @@ class ReportController extends Controller
                         default => 'Tier 3',
                     };
                 })
+                ->addColumn('created_date', fn($row) => $row->created_at ? $row->created_at->format('d-M-Y') : '-')
                 ->addColumn('status_badge', fn($row) => applicant_status_badge($row))
                 ->addColumn('fee_status_badge', function ($row) {
                     $class = $row->fee_status === 'paid' ? 'success' : 'danger';
@@ -89,7 +108,7 @@ class ReportController extends Controller
         ];
         $genders = ['Men', 'Women', 'Disabled', 'Transgender'];
         $feeStatuses = ['paid', 'unpaid'];
-        $applicationStatuses = ['Pending', 'Approved', 'Forwarded', 'Rejected'];
+        $applicationStatuses = ['All', 'Pending', 'Approved', 'Forwarded', 'Rejected', 'NotCompleted'];
 
         $page_title = 'Applications Report';
         $title = 'Reports';

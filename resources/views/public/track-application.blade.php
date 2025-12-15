@@ -299,7 +299,7 @@
                         </div>
                         <div class="info-row">
                             <div class="info-label">Application Status:</div>
-                            <div class="info-value">{!! applicant_status_badge($applicant) !!} </div>
+                            <div class="info-value">{!! applicant_status_badge($applicant) !!} {!! applicant_status_message($applicant) !!} </div>
                         </div>
                         <div class="info-row">
                             <div class="info-label">Remarks:</div>
@@ -350,38 +350,64 @@
                         </ul>
 
                         <div class="print-actions no-print mt-4">
+                            @if ($applicant->fee_status === 'paid' && $applicant->status === 'NotCompleted')
+                                <div class="my-4 p-4 bg-light shadow-sm rounded no-print ">
+                                    <h5 class="fw-bold mb-3">Final Submission</h5>
+                                    <form action="{{ route('submitApplication') }}" method="POST">
+                                        @csrf
+                                        <input type="hidden" name="applicant_id" value="{{ $applicant->id }}">
+                                        <div class="form-check mb-3">
+                                            <input class="form-check-input" type="checkbox" value="1"
+                                                id="declaration" name="declaration" required>
+                                            <label class="form-check-label" for="declaration">
+                                                I confirm that all the information provided above is correct, and I
+                                                understand that I cannot edit or update it after submission.
+                                            </label>
+                                        </div>
+                                        <div class="text-end">
+                                            <button type="submit" class="btn btn-success">
+                                                <i class="bi bi-check2-circle me-1"></i> Submit Application
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            @else
+                                <div class="action-info-box">
+                                    @if ($applicant->fee_status == 'paid')
+                                        <p class="info-text">
+                                            Your fee has been verified. You can now print your completed application form
+                                            using
+                                            the button below.
+                                        </p>
+                                    @else
+                                        <p class="info-text">
+                                            Please print your challan, submit the fee, and then upload the paid challan to
+                                            continue your application.
+                                        </p>
+                                    @endif
+                                </div>
 
-                            <div class="action-info-box">
-                                @if ($applicant->fee_status == 'paid')
-                                    <p class="info-text">
-                                        Your fee has been verified. You can now print your completed application form using
-                                        the button below.
-                                    </p>
-                                @else
-                                    <p class="info-text">
-                                        Please print your challan, submit the fee, and then upload the paid challan to
-                                        continue your application.
-                                    </p>
-                                @endif
-                            </div>
+                                <div class="action-buttons text-end">
 
-                            <div class="action-buttons text-end">
-                                @if ($applicant->fee_status == 'paid')
-                                    <a href="{{ route('application.print', $applicant->id) }}" target="_blank"
-                                        class="btn btn-print-primary" title="Print Application Form">
+                                    @if ($applicant->fee_status == 'paid')
+                                        <a href="{{ route('application.print', $applicant->id) }}" target="_blank"
+                                            class="btn btn-print-primary" title="Print Application Form">
 
-                                        <i class="bi bi-printer me-1"></i>
-                                        Print Application Form
-                                    </a>
-                                @else
-                                    <a href="{{ route('application.challan', $applicant->id) }}" target="_blank"
-                                        class="btn btn-print-warning" title="Print Challan">
+                                            <i class="bi bi-printer me-1"></i>
+                                            Print Application Form
+                                        </a>
+                                    @else
+                                        <a href="{{ route('application.challan', $applicant->id) }}" target="_blank"
+                                            class="btn btn-print-warning" title="Print Challan">
 
-                                        <i class="bi bi-receipt me-1"></i>
-                                        Print Challan
-                                    </a>
-                                @endif
-                            </div>
+                                            <i class="bi bi-receipt me-1"></i>
+                                            Print Challan
+                                        </a>
+                                    @endif
+
+                                </div>
+                            @endif
+
 
                         </div>
 
@@ -402,8 +428,8 @@
                                         <div class="input-group position-relative">
                                             <span class="input-group-text"><i class="bi bi-bank"></i></span>
                                             <div class="form-floating flex-grow-1">
-                                                <select id="branch_id" name="branch_id"
-                                                    class="form-select custom-select2" required>
+                                                <select id="branch_id" name="branch_id" class="form-select  select2"
+                                                    required>
                                                     <option value="" disabled selected hidden>Select Branch</option>
                                                     @foreach ($branches as $branch)
                                                         <option value="{{ $branch->id }}">
@@ -451,7 +477,7 @@
 
                                     <div class="col-12 text-end mt-3">
                                         <button type="submit" class="btn btn-success">
-                                            <i class="bi bi-upload"></i> Submit Challan
+                                            <i class="bi bi-upload"></i> Upload Challan
                                         </button>
                                     </div>
                                 </div>

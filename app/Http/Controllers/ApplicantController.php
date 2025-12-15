@@ -26,7 +26,7 @@ class ApplicantController extends Controller
         if ($request->ajax()) {
 
             // Base query with relationships
-            $query = Applicant::with(['district', 'education'])->latest();
+            $query = Applicant::with(['district', 'education'])->where('status', '!=', 'NotCompleted')->latest();
 
             /*
         |----------------------------------------------------------------------
@@ -418,7 +418,7 @@ class ApplicantController extends Controller
 
     public function destroy($id)
     {
-        return response()->json(['error' => 'Unauthorized'], 403);
+        // return response()->json(['error' => 'Unauthorized'], 403);
         try {
             $applicant = Applicant::findOrFail($id);
             // Delete applicant's education(s)

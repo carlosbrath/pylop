@@ -277,7 +277,7 @@
                                                                         {!! isset($field['required']) && $field['required'] ? '<span class="text-danger">*</span>' : '' !!}</label>
                                                                 @elseif ($field['field_type'] === 'select')
                                                                     <select
-                                                                        class="form-select {{ isset($field['required']) && $field['required'] ? 'required' : '' }}"
+                                                                        class="form-select {{ isset($field['required']) && $field['required'] ? 'required' : '' }} {{ $field['id'] == 'applicant_choosed_branch' ? 'select2' : '' }}"
                                                                         id="{{ $field['id'] }}"
                                                                         name="{{ $field['id'] }}"
                                                                         {{ isset($field['readonly']) && $field['readonly'] ? 'readonly' : '' }}

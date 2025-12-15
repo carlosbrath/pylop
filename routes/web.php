@@ -31,6 +31,7 @@ Route::get('/application/{id}/print', [PublicController::class, 'printDoc'])->na
 Route::get('/application/{id}/challan', [PublicController::class, 'printChallan'])->name('application.challan');
 Route::get('/blank/challan', [PublicController::class, 'blankChall'])->name('blank.challan');
 Route::post('/storeForm', [PublicController::class, 'storeForm'])->name('storeForm');
+Route::post('/submitApplication', [PublicController::class, 'submitApplication'])->name('submitApplication');
 
 Route::get('/get-tehsils/{district_id}', [PublicController::class, 'getTehsils'])->name('get.tehsils');
 Route::get('/get-subcategories/{category_id}', [PublicController::class, 'getSubcategories'])->name('get.subcategories');

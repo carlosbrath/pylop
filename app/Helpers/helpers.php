@@ -42,9 +42,70 @@ function applicant_status_badge($applicant)
         case 'Approved':
             return '<span class="badge bg-success">Approved</span>';
         default:
-            return '<span class="badge bg-secondary">' . e($applicant->status) . '</span>';
+            return '<span class="badge bg-danger">' . e($applicant->status) . '</span>';
     }
 }
+function applicant_status_message($applicant)
+{
+    switch ($applicant->status) {
+
+        case 'NotCompleted':
+            return '
+                <div class="mt-1">
+                    <strong>
+                        Please review your application information, upload the challan,
+                        and submit your application to proceed further.
+                    </strong>
+                </div>
+            ';
+
+        case 'Pending':
+            return '
+                <div class="mt-1">
+                    <strong>
+                        Your application has been received and is currently under process.
+                        After verification, it will be forwarded to Bank of AJK for further
+                        processing.
+                    </strong>
+                </div>
+            ';
+
+        case 'Forwarded':
+            return '
+                <div class="mt-1">
+                    <strong>
+                        Your application has been forwarded to Bank of AJK.
+                        You may visit the concerned Bank of AJK branch for further
+                        information or any additional requirements.
+                    </strong>
+                </div>
+            ';
+
+        case 'Rejected':
+            return '
+                <div class="mt-1 text-danger">
+                    <strong>
+                        Your application has been rejected.
+                        Please review the remarks for further details.
+                    </strong>
+                </div>
+            ';
+
+        case 'Approved':
+            return '
+                <div class="mt-1 text-success">
+                    <strong>
+                        Your application has been approved.
+                        Bank of AJK will contact you for the next steps.
+                    </strong>
+                </div>
+            ';
+
+        default:
+            return '';
+    }
+}
+
 if (!function_exists('verifyRecaptcha')) {
 
     function verifyRecaptcha($recaptchaResponse)

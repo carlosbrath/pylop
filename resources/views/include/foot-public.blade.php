@@ -18,7 +18,6 @@
              reverse: true
          });
          $('.select2').select2({
-             allowClear: true,
              width: '100%'
          });
      });
@@ -395,6 +394,12 @@
                      data.forEach(sub => {
                          updateSelect.innerHTML +=
                              `<option value="${sub.id}">${sub.branch_code} ${sub.branch_name}</option>`;
+                     });
+                     // Reinitialize Select2 for branches after AJAX load
+                     $(updateSelect).select2({
+                         allowClear: true,
+                         width: '100%',
+                         placeholder: 'Select Branches'
                      });
                  }
              });

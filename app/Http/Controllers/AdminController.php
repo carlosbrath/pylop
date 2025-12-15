@@ -31,7 +31,7 @@ class AdminController extends Controller
     private function getDashboardData($request)
     {
         $user = auth()->user();
-        $applicants = Applicant::query();
+        $applicants = Applicant::query()->where('status', '!=', 'NotCompleted');
         if ($request->filled('date_from') && $request->filled('date_to')) {
             $applicants->whereBetween('created_at', [
                 $request->date_from . " 00:00:00",
