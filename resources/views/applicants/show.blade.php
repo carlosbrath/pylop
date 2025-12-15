@@ -14,16 +14,16 @@
                         <div class="card mb-4">
                             <div class="card-body page">
                                 @if ($applicant->status == 'Pending' || $applicant->status == 'NotCompleted')
-                                    {{-- <div class="d-flex justify-content-end mb-2 no-print">
-                                        <a href="{{ route('applicant.edit', $applicant->id) }}" class="btn btn-outline-teal mr-2" data-bs-toggle="tooltip" data-bs-placement="top"
+                                    <div class="d-flex justify-content-end mb-2 no-print">
+                                        {{-- <a href="{{ route('applicant.edit', $applicant->id) }}" class="btn btn-outline-teal mr-2" data-bs-toggle="tooltip" data-bs-placement="top"
                                             title="Edit Application">
                                              <i data-feather="edit-2"></i> 
-                                        </a>
+                                        </a> --}}
                                         <button data-href="{{ route('applicant.destroy', $applicant->id) }}" class="btn btn-outline-danger delete-btn"  data-bs-toggle="tooltip" data-bs-placement="top"
                                             title="Delete Application">
                                                <i data-feather="trash-2"></i>
                                         </button>
-                                    </div> --}}
+                                    </div>
                                 @endif
                                 <div class="appno-container">
                                     <div class="appno-label">Application No:</div>

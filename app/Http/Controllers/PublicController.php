@@ -92,6 +92,14 @@ class PublicController extends Controller
         // ps($request->all());
         // Step 1: Just redirect to step2 with validated values
         // abort(403, 'Applications are not open yet. Please wait for the official inauguration.');
+        //  Recaptcha on Form
+        // $captcha = verifyRecaptcha($request->input('g-recaptcha-response'));
+
+        // if (!$captcha['status']) {
+        //     return back()->withErrors(['captcha' => $captcha['message']])->withInput();
+        // }
+
+
         if (!$request->has('name')) {
             $request->validate([
                 'cnic' => 'required|regex:/^\d{5}-\d{7}-\d{1}$/',

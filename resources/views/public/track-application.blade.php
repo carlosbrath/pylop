@@ -151,6 +151,47 @@
 
                 @if (isset($applicant))
                     <div class="page">
+                        @if ($applicant->fee_status !== 'paid')
+                            <div class="alert alert-warning mb-4 no-print" role="alert">
+                                <div class="row">
+                                    <!-- English (Left) -->
+                                    <div class="col-md-6 border-end">
+                                        <h5 class="fw-bold">
+                                            Application Saved but Not Considered as Submitted
+                                        </h5>
+                                        <p class="mb-2">
+                                            Your application has been saved successfully; however, it is
+                                            <strong>not considered submitted</strong> until the application fee
+                                            challan is paid and the paid challan receipt is uploaded.
+                                        </p>
+                                        <ul class="mb-0">
+                                            <li>Print the generated challan.</li>
+                                            <li>Submit the fee at the nearest <strong>Bank of AJK branch</strong>.</li>
+                                            <li>Upload the paid challan receipt on this portal.</li>
+                                        </ul>
+                                    </div>
+
+                                    <!-- Urdu (Right) -->
+                                    <div class="col-md-6 text-end" dir="rtl">
+                                        <h5 class="fw-bold">
+                                            درخواست محفوظ کر لی گئی ہے، لیکن جمع شدہ تصور نہیں کی جاتی
+                                        </h5>
+                                        <p class="mb-2">
+                                            آپ کی درخواست محفوظ کر لی گئی ہے، تاہم یہ اس وقت تک
+                                            <strong>جمع شدہ تصور نہیں کی جائے گی</strong>
+                                            جب تک درخواست فیس کا چالان جمع کروا کر اس کی رسید اپ لوڈ نہیں کی جاتی۔
+                                        </p>
+                                        <ul class="mb-0 pe-3">
+                                            <li>تیار کردہ چالان پرنٹ کریں۔</li>
+                                            <li>قریب ترین <strong>بینک آف آزاد جموں و کشمیر</strong> کی شاخ میں فیس جمع
+                                                کروائیں۔</li>
+                                            <li>جمع شدہ چالان کی رسید اس پورٹل پر اپ لوڈ کریں۔</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+
                         <div class="appno-container">
                             <div class="appno-label">Application No:</div>
                             <div class="appno-value">{{ $applicant->application_no }}</div>

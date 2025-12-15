@@ -499,7 +499,7 @@
                                                 </div>
 
 
-
+                                                 {{-- <div class="g-recaptcha" data-sitekey="{{ env('RECAPTCHA_SITE_KEY') }}"></div> --}}
                                                 <div class="col-md-12 mt-4">
                                                     <div class="border rounded p-3 bg-light">
                                                         <h5 class="text-center mb-3">Declaration / حلف نامہ</h5>
