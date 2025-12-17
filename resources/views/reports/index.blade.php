@@ -75,7 +75,7 @@
                             <div class="col-md-4 col-lg-2">
                                 <label class="small mb-1" for="status">Application Status</label>
                                 <select class="form-select form-select-sm select2" id="status" name="status">
-                                    <option value="">Default (Exclude NotCompleted)</option>
+                                    <option value="">All</option>
                                     @foreach ($applicationStatuses as $appStatus)
                                         <option value="{{ $appStatus }}">{{ $appStatus }}</option>
                                     @endforeach

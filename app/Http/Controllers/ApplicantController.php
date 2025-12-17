@@ -26,7 +26,7 @@ class ApplicantController extends Controller
         if ($request->ajax()) {
 
             // Base query with relationships
-            $query = Applicant::with(['district', 'education'])->where('status', '!=', 'NotCompleted')->latest();
+            $query = Applicant::with(['district', 'education'])->latest();
 
             /*
         |----------------------------------------------------------------------

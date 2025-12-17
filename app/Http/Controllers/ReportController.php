@@ -50,10 +50,7 @@ class ReportController extends Controller
                     // Show specific status
                     $query->where('status', $request->status);
                 }
-            } else {
-                // Default: Exclude NotCompleted applications
-                $query->where('status', '!=', 'NotCompleted');
-            }
+            } 
 
             // Global search
             if (!empty($request->search['value'])) {
@@ -108,7 +105,7 @@ class ReportController extends Controller
         ];
         $genders = ['Men', 'Women', 'Disabled', 'Transgender'];
         $feeStatuses = ['paid', 'unpaid'];
-        $applicationStatuses = ['All', 'Pending', 'Approved', 'Forwarded', 'Rejected', 'NotCompleted'];
+        $applicationStatuses = [ 'Pending', 'Approved', 'Forwarded', 'Rejected', 'NotCompleted'];
 
         $page_title = 'Applications Report';
         $title = 'Reports';
