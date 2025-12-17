@@ -141,6 +141,35 @@
 @push('scripts')
     <script>
         $(document).ready(function() {
+            // Read URL parameters and pre-populate filters
+            function getUrlParameter(name) {
+                const urlParams = new URLSearchParams(window.location.search);
+                return urlParams.get(name);
+            }
+
+            // Pre-populate filters from URL parameters
+            const urlStatus = getUrlParameter('status');
+            const urlFeeStatus = getUrlParameter('fee_status');
+            const urlDistrict = getUrlParameter('district_id');
+            const urlGender = getUrlParameter('gender');
+            const urlTier = getUrlParameter('tier');
+
+            if (urlStatus) {
+                $('#status').val(urlStatus).trigger('change');
+            }
+            if (urlFeeStatus) {
+                $('#fee_status').val(urlFeeStatus).trigger('change');
+            }
+            if (urlDistrict) {
+                $('#district_id').val(urlDistrict).trigger('change');
+            }
+            if (urlGender) {
+                $('#gender').val(urlGender).trigger('change');
+            }
+            if (urlTier) {
+                $('#tier').val(urlTier).trigger('change');
+            }
+
             // Initialize Litepicker Date Range with preset ranges
             let pickerReport;
             const litepickerReportRangeEle = document.getElementById('litepickerReportRange');
@@ -373,6 +402,18 @@
                     $('#apply-filters').click();
                 }
             });
+
+            // Auto-apply filters if URL parameters exist
+            const hasUrlParams = urlStatus || urlFeeStatus || urlDistrict || urlGender || urlTier;
+            if (hasUrlParams) {
+                // Small delay to ensure select2 is fully initialized
+                setTimeout(function() {
+                    showLoader('Loading filtered data...', 1500);
+                    table.ajax.reload(function() {
+                        hideLoader();
+                    });
+                }, 100);
+            }
         });
     </script>
 @endpush

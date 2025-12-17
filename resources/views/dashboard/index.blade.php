@@ -2,6 +2,9 @@
 @section('title', $title ?? 'Dashboard')
 @section('content')
     <main>
+        <!-- Page Loader Component -->
+        @include('components.loader', ['message' => 'Loading dashboard...'])
+
         <header class="page-header page-header-dark bg-gradient-primary-to-secondary pb-10">
             <div class="container-xl px-4">
                 <div class="page-header-content pt-4">
@@ -55,8 +58,8 @@
                             </div>
                         </div>
                         <div class="card-footer d-flex align-items-center justify-content-between small">
-                            {{-- <a class="text-white stretched-link" href="">View</a> --}}
-                            {{-- <div class="text-white"><i class="fas fa-angle-right"></i></div> --}}
+                            <a class="text-white stretched-link" href="{{ route('reports.index', ['status' => 'Pending']) }}">View Report</a>
+                            <div class="text-white"><i class="fas fa-angle-right"></i></div>
                         </div>
                     </div>
                 </div>
@@ -73,8 +76,8 @@
                             </div>
                         </div>
                         <div class="card-footer d-flex align-items-center justify-content-between small">
-                            {{-- <a class="text-white stretched-link" href="">View</a> --}}
-                            {{-- <div class="text-white"><i class="fas fa-angle-right"></i></div> --}}
+                            <a class="text-white stretched-link" href="{{ route('reports.index', ['status' => 'Forwarded']) }}">View Report</a>
+                            <div class="text-white"><i class="fas fa-angle-right"></i></div>
                         </div>
                     </div>
                 </div>
@@ -90,8 +93,8 @@
                             </div>
                         </div>
                         <div class="card-footer d-flex align-items-center justify-content-between small">
-                            {{-- <a class="text-white stretched-link" href="">View</a> --}}
-                            {{-- <div class="text-white"><i class="fas fa-angle-right"></i></div> --}}
+                            <a class="text-white stretched-link" href="{{ route('reports.index', ['status' => 'Approved']) }}">View Report</a>
+                            <div class="text-white"><i class="fas fa-angle-right"></i></div>
                         </div>
                     </div>
                 </div>
@@ -107,8 +110,61 @@
                             </div>
                         </div>
                         <div class="card-footer d-flex align-items-center justify-content-between small">
-                            {{-- <a class="text-white stretched-link" href="">View</a> --}}
-                            {{-- <div class="text-white"><i class="fas fa-angle-right"></i></div> --}}
+                            <a class="text-white stretched-link" href="{{ route('reports.index', ['status' => 'Rejected']) }}">View Report</a>
+                            <div class="text-white"><i class="fas fa-angle-right"></i></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6 col-xl-4 mb-4">
+                    <div class="card bg-secondary text-white h-100">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="me-3">
+                                    <div class="text-white-75 small">Not Completed</div>
+                                    <div class="text-lg fw-bold">{{ $notCompleted }}</div>
+                                </div>
+                                <i class="feather-xl text-white-50" data-feather="file-minus"></i>
+                            </div>
+                        </div>
+                        <div class="card-footer d-flex align-items-center justify-content-between small">
+                            <a class="text-white stretched-link" href="{{ route('reports.index', ['status' => 'NotCompleted']) }}">View Report</a>
+                            <div class="text-white"><i class="fas fa-angle-right"></i></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-xl-4 mb-4">
+                    <div class="card bg-danger text-white h-100">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="me-3">
+                                    <div class="text-white-75 small">Unpaid Applications</div>
+                                    <div class="text-lg fw-bold">{{ $unpaid }}</div>
+                                </div>
+                                <i class="feather-xl text-white-50" data-feather="dollar-sign"></i>
+                            </div>
+                        </div>
+                        <div class="card-footer d-flex align-items-center justify-content-between small">
+                            <a class="text-white stretched-link" href="{{ route('reports.index', ['fee_status' => 'unpaid']) }}">View Report</a>
+                            <div class="text-white"><i class="fas fa-angle-right"></i></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-xl-4 mb-4">
+                    <div class="card bg-success text-white h-100">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="me-3">
+                                    <div class="text-white-75 small">Paid Applications</div>
+                                    <div class="text-lg fw-bold">{{ $paid }}</div>
+                                </div>
+                                <i class="feather-xl text-white-50" data-feather="check-circle"></i>
+                            </div>
+                        </div>
+                        <div class="card-footer d-flex align-items-center justify-content-between small">
+                            <a class="text-white stretched-link" href="{{ route('reports.index', ['fee_status' => 'paid']) }}">View Report</a>
+                            <div class="text-white"><i class="fas fa-angle-right"></i></div>
                         </div>
                     </div>
                 </div>
@@ -287,13 +343,26 @@
     @push('scripts')
         <script>
             $(document).ready(function() {
+                // Show loader on page load for 2-3 seconds
+                showLoader('Loading dashboard data...', 2500);
+
+                setTimeout(function() {
+                    hideLoader();
+                }, 2500);
+
                 loadCardData("{{ route('ajax.gender-quota') }}", "gender", "gender-quota-table");
                 $("#reload-gender-btn").on("click", function() {
-                    loadCardData("{{ route('ajax.gender-quota') }}", "gender", "gender-quota-table");
+                    showLoader('Reloading gender quota...', 1500);
+                    loadCardData("{{ route('ajax.gender-quota') }}", "gender", "gender-quota-table", function() {
+                        hideLoader();
+                    });
                 })
                 loadCardData("{{ route('ajax.tier-quota') }}", "tier", "tier-quota-table");
                 $("#tier-gender-btn").on("click", function() {
-                    loadCardData("{{ route('ajax.tier-quota') }}", "tier", "tier-quota-table");
+                    showLoader('Reloading tier quota...', 1500);
+                    loadCardData("{{ route('ajax.tier-quota') }}", "tier", "tier-quota-table", function() {
+                        hideLoader();
+                    });
                 })
 
             })

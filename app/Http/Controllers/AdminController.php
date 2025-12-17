@@ -21,7 +21,6 @@ class AdminController extends Controller
 {
     public function dashboard(Request $request)
     {
-        // ps($request->all());
         $data = $this->getDashboardData($request);
         if ($request->expectsJson()) {
             return response()->json($data, 200);
@@ -43,6 +42,26 @@ class AdminController extends Controller
         $approved = (clone $applicants)->where('status', 'Approved');
         $forwarded = (clone $applicants)->where('status', 'Forwarded');
         $rejected = (clone $applicants)->where('status', 'Rejected');
+
+        // Additional counts
+        $notCompleted = Applicant::where('status', 'NotCompleted');
+        $unpaid = Applicant::where('status', '!=', 'NotCompleted')->where('fee_status', '!=', 'paid');
+        $paid = Applicant::where('status', '!=', 'NotCompleted')->where('fee_status', 'paid');
+
+        if ($request->filled('date_from') && $request->filled('date_to')) {
+            $notCompleted->whereBetween('created_at', [
+                $request->date_from . " 00:00:00",
+                $request->date_to . " 23:59:59"
+            ]);
+            $unpaid->whereBetween('created_at', [
+                $request->date_from . " 00:00:00",
+                $request->date_to . " 23:59:59"
+            ]);
+            $paid->whereBetween('created_at', [
+                $request->date_from . " 00:00:00",
+                $request->date_to . " 23:59:59"
+            ]);
+        }
 
         // Daily applications (last 7 days)
             $daily = Applicant::select(
@@ -70,6 +89,9 @@ class AdminController extends Controller
             'approved' => $approved->count(),
             'forwarded' => $forwarded->count(),
             'rejected' => $rejected->count(),
+            'notCompleted' => $notCompleted->count(),
+            'unpaid' => $unpaid->count(),
+            'paid' => $paid->count(),
             'daily' => $daily,
             'monthly' => $monthly,
         ];
