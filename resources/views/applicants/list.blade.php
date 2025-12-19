@@ -37,10 +37,11 @@
 
 @push('scripts')
     <script>
-        $('#applicants-table').DataTable({
+        let table = $('#applicants-table').DataTable({
             processing: true,
             serverSide: true,
             ajax: '{{ route('applicant.index') }}',
+            searchDelay: 800,
             columns: [{
                     data: 'DT_RowIndex',
                     name: 'DT_RowIndex',
@@ -94,6 +95,14 @@
             buttons: ['pageLength', 'copy', 'csv', 'excel', 'pdf', 'print'],
             responsive: true,
             pageLength: 10
+        });
+        $('#applicants-table_filter input').off();
+
+        // Trigger search only on Enter
+        $('#applicants-table_filter input').on('keyup', function(e) {
+            if (e.keyCode === 13) {
+                table.search(this.value).draw();
+            }
         });
     </script>
 @endpush

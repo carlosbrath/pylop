@@ -370,6 +370,15 @@
                 ], // Order by Application No descending
             });
 
+            $('#reports-table_filter input').off();
+
+            // Trigger search only on Enter
+            $('#reports-table_filter input').on('keyup', function(e) {
+                if (e.keyCode === 13) {
+                    table.search(this.value).draw();
+                }
+            });
+
             // Apply Filters
             $('#apply-filters').on('click', function() {
                 showLoader('Applying filters...', 2000);
