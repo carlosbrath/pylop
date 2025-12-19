@@ -416,6 +416,25 @@ class ApplicantController extends Controller
         return back()->with('success', 'Applications Rejected.');
     }
 
+    public function setUnpaid($id)
+    {
+        $applicant = Applicant::findOrFail($id);
+
+        // Only allow setting to unpaid if status is Pending
+        if ($applicant->status !== 'Pending') {
+            return back()->with('error', 'Only pending applications can be set to unpaid.');
+        }
+
+        // Update fee status to unpaid
+        $applicant->fee_status = 'unpaid';
+        $applicant->save();
+
+        // Log the status change
+        $applicant->updateStatus('Pending', 'Fee status changed from paid to unpaid by admin');
+
+        return back()->with('success', 'Application fee status set to Unpaid successfully.');
+    }
+
     public function destroy($id)
     {
         // return response()->json(['error' => 'Unauthorized'], 403);

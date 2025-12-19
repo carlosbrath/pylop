@@ -14,14 +14,15 @@
                         <div class="card mb-4">
                             <div class="card-body page">
                                 @if ($applicant->status == 'Pending' || $applicant->status == 'NotCompleted')
-                                    <div class="d-flex justify-content-end mb-2 no-print">
-                                        {{-- <a href="{{ route('applicant.edit', $applicant->id) }}" class="btn btn-outline-teal mr-2" data-bs-toggle="tooltip" data-bs-placement="top"
+                                    <div class="d-flex gap-3 justify-content-end mb-2 no-print">
+                                        <a href="{{ route('applicant.edit', $applicant->id) }}" class="btn btn-outline-teal mr-2" data-bs-toggle="tooltip" data-bs-placement="top"
                                             title="Edit Application">
                                              <i data-feather="edit-2"></i> 
-                                        </a> --}}
-                                        <button data-href="{{ route('applicant.destroy', $applicant->id) }}" class="btn btn-outline-danger delete-btn"  data-bs-toggle="tooltip" data-bs-placement="top"
-                                            title="Delete Application">
-                                               <i data-feather="trash-2"></i>
+                                        </a>
+                                        <button data-href="{{ route('applicant.destroy', $applicant->id) }}"
+                                            class="btn btn-outline-danger delete-btn" data-bs-toggle="tooltip"
+                                            data-bs-placement="top" title="Delete Application">
+                                            <i data-feather="trash-2"></i>
                                         </button>
                                     </div>
                                 @endif
@@ -59,7 +60,7 @@
                                 <x-info-row label="Gender" :value="$applicant->quota" />
                                 <x-info-row label="District" :value="$applicant->district->name ?? '-'" />
                                 <x-info-row label="Tehsil" :value="$applicant->tehsil->name ?? '-'" />
-                                <x-info-row label="Amount" :value="$applicant->amount ? number_format($applicant->amount, 2) : '-'"  />
+                                <x-info-row label="Amount" :value="$applicant->amount ? number_format($applicant->amount, 2) : '-'" />
 
                                 <h5 class="mt-4">Education</h5>
                                 @foreach ($applicant->educations as $ed)
@@ -165,6 +166,21 @@
                                 @endif
 
                                 <h6>Challan Image</h6>
+                                @if (($applicant->status === 'Pending' || $applicant->status === 'NotCompleted') && $applicant->fee_status === 'paid')
+                                    <div class="text-end mt-3 mt-4 no-print">
+                                        <form id="unpaidForm{{ $applicant->id }}"
+                                            action="{{ route('applicants.setUnpaid', $applicant->id) }}" method="POST"
+                                            style="display: inline;">
+                                            @csrf
+
+                                            <button type="button" class="btn btn-warning btn-sm"
+                                                onclick="confirmUnpaid('{{ $applicant->id }}')" data-bs-toggle="tooltip"
+                                                data-bs-placement="top" title="Set as Unpaid">
+                                                <i class="fa fa-exclamation-triangle"></i> Set as Unpaid
+                                            </button>
+                                        </form>
+                                    </div>
+                                @endif
                                 @if ($applicant->challan_image)
 
                                     @if ($applicant->challan_image && file_exists(public_path('uploads/challans/' . $applicant->challan_image)))

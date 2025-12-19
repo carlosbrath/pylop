@@ -123,8 +123,8 @@
          var selects = form.querySelectorAll('select');
          var isValid = true;
          selects.forEach(function(select) {
-            
-            if ((!select.value || select.value === '') && select.classList.contains('required')) {
+
+             if ((!select.value || select.value === '') && select.classList.contains('required')) {
                  select.classList.add('error');
                  isValid = false;
                  field_name = formatFieldName(select.name)
@@ -136,10 +136,10 @@
              }
          })
          inputs.forEach(function(input) {
-            
-           
+
+
              if ((input.value === '' || !input.value) && input.classList.contains('required')) {
-                //  console.log('Type: '+input.type+' Name:' +input.name+': '+((!input.value || input.value === '')&& input.classList.contains('required')))
+                 //  console.log('Type: '+input.type+' Name:' +input.name+': '+((!input.value || input.value === '')&& input.classList.contains('required')))
                  input.classList.add('error');
 
                  isValid = false;
@@ -349,8 +349,8 @@
      function fileValidation(input) {
          removeErrorComponent(input);
          if (!input.files || input.files.length === 0) {
-            //  createErrorComponent(input, 'CNIC file is required.');
-            //  input.classList.add('error');
+             //  createErrorComponent(input, 'CNIC file is required.');
+             //  input.classList.add('error');
              return true;
          }
 
@@ -360,7 +360,7 @@
 
          // Check file type
          if (!allowedTypes.includes(file.type)) {
-            
+
              createErrorComponent(input, 'Only JPG or PNG files are allowed.');
              input.classList.add('error');
              return false;
@@ -393,6 +393,22 @@
          }).then((result) => {
              if (result.isConfirmed) {
                  deleteItem(`${url}`);
+             }
+         });
+     }
+
+     function confirmUnpaid(id) {
+         Swal.fire({
+             title: 'Are you sure?',
+             text: "Do you want to mark this application as Unpaid?",
+             icon: 'warning',
+             showCancelButton: true,
+             confirmButtonColor: '#d33',
+             cancelButtonColor: '#3085d6',
+             confirmButtonText: 'Yes, set as Unpaid!'
+         }).then((result) => {
+             if (result.isConfirmed) {
+                 document.getElementById('unpaidForm' + id).submit();
              }
          });
      }
