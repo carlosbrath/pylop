@@ -67,14 +67,17 @@
                 {
                     data: 'tier_label',
                     name: 'tier'
+                    searchable: false
                 },
                 {
                     data: 'district',
                     name: 'district.name'
+
                 }, // ✅ search by district name
                 {
                     data: 'education',
                     name: 'education.education_level'
+                    searchable: false
                 }, // ✅ search by education
                 {
                     data: 'fee_status',
