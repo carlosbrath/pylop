@@ -66,7 +66,7 @@
                 },
                 {
                     data: 'tier_label',
-                    name: 'tier'
+                    name: 'tier',
                     searchable: false
                 },
                 {
@@ -76,7 +76,7 @@
                 }, // ✅ search by district name
                 {
                     data: 'education',
-                    name: 'education.education_level'
+                    name: 'education.education_level',
                     searchable: false
                 }, // ✅ search by education
                 {
