@@ -375,7 +375,7 @@
                                 <div class="action-info-box">
                                     @if ($applicant->fee_status == 'paid')
                                         <p class="info-text">
-                                            Your fee has been verified. You can now print your completed application form
+                                             You can now print your completed application form
                                             using
                                             the button below.
                                         </p>
@@ -420,11 +420,14 @@
                                     * Only JPG, PNG files are allowed. Maximum size 1 MB. For reduce file size please visit
                                     <a href="https://imageresizer.com/">Image Resizer</a>
                                 </span>
-                                <h3 class="mb-5">Challan Information</h3>
+                                <div class="card-header bg-success mb-5 p-2 text-white d-flex justify-content-between">
+
+                                    <h3 >Challan Information</h3>
+                                </div>
                                 @csrf
                                 <input type="hidden" name="applicant_id" value="{{ $applicant->id }}">
                                 <div class="row g-3">
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="input-group position-relative">
                                             <span class="input-group-text"><i class="bi bi-bank"></i></span>
                                             <div class="form-floating flex-grow-1">
@@ -441,6 +444,17 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="col-md-3">
+                                        <div class="input-group">
+                                            <span class="input-group-text"><i
+                                                    class="bi bi-calendar-event"></i></span>
+                                            <div class="form-floating  has-file flex-grow-1">
+                                                <input type="date" class="form-control" id="challan_date"
+                                                    name="challan_date" required>
+                                                <label for="challan_date">Fee Submissions Date</label>
+                                            </div>
+                                        </div>
+                                    </div>
 
                                     {{-- <div class="col-md-6">
                                         <div class="input-group">
@@ -452,7 +466,7 @@
                                             </div>
                                         </div>
                                     </div> --}}
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="input-group">
                                             <span class="input-group-text"><i class="bi bi-123"></i></span>
                                             <div class="form-floating flex-grow-1">
@@ -463,7 +477,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="input-group">
                                             <span class="input-group-text"><i
                                                     class="bi bi-file-earmark-arrow-up"></i></span>

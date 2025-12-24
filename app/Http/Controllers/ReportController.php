@@ -14,7 +14,7 @@ class ReportController extends Controller
         if ($request->ajax()) {
             // Base query with relationships
             $query = Applicant::with(['district', 'tehsil', 'education', 'businessCategory', 'businessSubCategory'])
-                ->latest();
+                ->oldest();
 
             // Apply filters
             if ($request->filled('district_id')) {

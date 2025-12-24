@@ -236,6 +236,7 @@ class PublicController extends Controller
         $request->validate([
             'applicant_id' => 'required|exists:applicants,id',
             'branch_id' => 'required',
+            'challan_date' => 'required|date',
             'challan_fee' => 'required|integer|min:1',
             'challan_image' => 'required|image|max:2048',
         ]);
@@ -256,6 +257,7 @@ class PublicController extends Controller
 
         $applicant->update([
             'challan_branch_id' => $request->branch_id,
+            'challan_date' => $request->challan_date,
             'challan_fee' => $request->challan_fee,
             'challan_image' => $fileName,
             'fee_status' => 'paid',

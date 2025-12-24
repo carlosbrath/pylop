@@ -435,6 +435,34 @@ class ApplicantController extends Controller
         return back()->with('success', 'Application fee status set to Unpaid successfully.');
     }
 
+    public function updateChallanDate(Request $request, $id)
+    {
+        try {
+            $request->validate([
+                'challan_date' => 'required|date',
+            ]);
+
+            $applicant = Applicant::findOrFail($id);
+
+            $applicant->challan_date = $request->challan_date;
+            $applicant->save();
+
+            // Log the change
+            $applicant->updateStatus($applicant->status, 'Challan date updated to ' . \Carbon\Carbon::parse($request->challan_date)->format('d-M-Y'));
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Challan date updated successfully.',
+                'challan_date' => $request->challan_date
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to update challan date: ' . $e->getMessage()
+            ], 500);
+        }
+    }
+
     public function destroy($id)
     {
         // return response()->json(['error' => 'Unauthorized'], 403);

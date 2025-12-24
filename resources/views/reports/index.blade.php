@@ -113,6 +113,7 @@
                                 <tr>
                                     <th>Sr.No</th>
                                     <th>App No</th>
+                                    <th>Created Date</th>
                                     <th>Name</th>
                                     <th>Father Name</th>
                                     <th>CNIC</th>
@@ -125,7 +126,6 @@
                                     <th>Tier</th>
                                     <th>Fee Status</th>
                                     <th>Status</th>
-                                    <th>Created Date</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
@@ -264,6 +264,10 @@
                         name: 'application_no'
                     },
                     {
+                        data: 'created_date',
+                        name: 'created_at'
+                    },
+                    {
                         data: 'name',
                         name: 'name'
                     },
@@ -313,10 +317,6 @@
                         name: 'status',
                         orderable: false,
                         searchable: false
-                    },
-                    {
-                        data: 'created_date',
-                        name: 'created_at'
                     },
                     {
                         data: 'action',

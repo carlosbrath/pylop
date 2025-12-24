@@ -57,7 +57,7 @@
                     },
                     {
                         data: 'user',
-                        name: 'user'
+                        name: 'user',
                     },
                     {
                         data: 'model',

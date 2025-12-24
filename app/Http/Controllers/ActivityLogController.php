@@ -13,7 +13,7 @@ class ActivityLogController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $logs = ActivityLog::with('user')->latest();
+            $logs = ActivityLog::with('user');
 
             return DataTables::of($logs)
                 ->addIndexColumn()
@@ -35,6 +35,16 @@ class ActivityLogController extends Controller
                 })
                 ->addColumn('user', function ($log) {
                     return $log->user->name ?? 'N/A';
+                })
+                ->orderColumn('user', function ($query, $order) {
+                    $query->join('users', 'activity_logs.user_id', '=', 'users.id')
+                        ->orderBy('users.name', $order);
+                })
+                ->orderColumn('model', function ($query, $order) {
+                    $query->orderBy('activity_logs.model', $order);
+                })
+                ->orderColumn('model_id', function ($query, $order) {
+                    $query->orderBy('activity_logs.model_id', $order);
                 })
                 ->rawColumns(['operation'])
                 ->make(true);

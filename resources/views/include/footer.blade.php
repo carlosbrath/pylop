@@ -528,11 +528,6 @@
              });
      }
 
-     /**
-      * Show page loader with custom message
-      * @param {string} message - The message to display (optional)
-      * @param {number} minDuration - Minimum duration in milliseconds (default: 2000)
-      */
      function showLoader(message = 'Loading...', minDuration = 2000) {
          const loader = document.getElementById('page-loader');
          if (loader) {
@@ -548,9 +543,6 @@
          }
      }
 
-     /**
-      * Hide page loader after minimum duration
-      */
      function hideLoader() {
          const loader = document.getElementById('page-loader');
          if (loader) {
@@ -571,12 +563,7 @@
          }
      }
 
-     /**
-      * Show loader with automatic callback execution
-      * @param {Function} callback - Function to execute
-      * @param {string} message - Loader message
-      * @param {number} minDuration - Minimum display duration (default: 2000ms)
-      */
+
      function showLoaderWithCallback(callback, message = 'Loading...', minDuration = 2000) {
          showLoader(message, minDuration);
 
@@ -588,8 +575,64 @@
              });
          }
      }
+
+     window.showHideItems = function(showArray, hideArray) {
+         //  showHideItems('['.elm1', '#elm2']', ''['.elm3', '#elm4']'')
+         // Show elements in showArray
+         showArray.forEach(element => {
+             const el = document.querySelector(element);
+             if (el) {
+                 el.classList.remove('d-none');
+             }
+         });
+
+         // Hide elements in hideArray
+         hideArray.forEach(element => {
+             const el = document.querySelector(element);
+             if (el) {
+                 el.classList.add('d-none');
+             }
+         });
+     }
+
+     window.updateChallanDate = function(event, form, id) {
+         event.preventDefault();
+         let isValid = true;
+         let newDate = form.querySelector('#challan-date-input');
+
+         if ((newDate.value === '' || !newDate.value)) {
+             newDate.classList.add('error');
+
+             isValid = false;
+         }
+         if (isValid) {
+             $.ajax({
+                 url: form.action, // or your route helper output
+                 type: 'POST',
+                 data: {
+                     _token: $('meta[name="csrf-token"]').attr('content'),
+                     challan_date: newDate.value,
+                 },
+                 success: function(response) {
+                     if (response.success) {
+                         Swal.fire(
+                             'Updated',
+                             'Challan Date Updated Successfully.',
+                             'success'
+                         ).then(() => {
+                             location.reload();
+                         });
+                     }
+                 },
+                 error: function(xhr) {
+                     Swal.fire(
+                         'Error!',
+                         'There was a problem updating the challan date.',
+                         'error'
+                     );
+                     console.error(xhr);
+                 }
+             });
+         }
+     }
  </script>
- {{-- <script defer src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015"
-     integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ=="
-     data-cf-beacon='{"rayId":"8ae5ec1cafafc914","version":"2024.7.0","serverTiming":{"name":{"cfL4":true}},"token":"6e2c2575ac8f44ed824cef7899ba8463","b":1}'
-     crossorigin="anonymous"></script> --}}

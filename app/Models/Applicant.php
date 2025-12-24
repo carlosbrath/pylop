@@ -36,6 +36,7 @@ class Applicant extends Model
         'challan_branch_id',
         'challan_image',
         'challan_fee',
+        'challan_date',
         'fee_status',
         'status',
         'bank_status',

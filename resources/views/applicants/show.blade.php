@@ -15,9 +15,10 @@
                             <div class="card-body page">
                                 @if ($applicant->status == 'Pending' || $applicant->status == 'NotCompleted')
                                     <div class="d-flex gap-3 justify-content-end mb-2 no-print">
-                                        <a href="{{ route('applicant.edit', $applicant->id) }}" class="btn btn-outline-teal mr-2" data-bs-toggle="tooltip" data-bs-placement="top"
+                                        <a href="{{ route('applicant.edit', $applicant->id) }}"
+                                            class="btn btn-outline-teal mr-2" data-bs-toggle="tooltip" data-bs-placement="top"
                                             title="Edit Application">
-                                             <i data-feather="edit-2"></i> 
+                                            <i data-feather="edit-2"></i>
                                         </a>
                                         <button data-href="{{ route('applicant.destroy', $applicant->id) }}"
                                             class="btn btn-outline-danger delete-btn" data-bs-toggle="tooltip"
@@ -149,7 +150,7 @@
                         <div class="card mb-4">
                             <div class="card-header">Uploaded Documents</div>
                             <div class="card-body text-center">
-                                <h6>CNIC Front</h6>
+                                <h6 class="text-start">CNIC Front</h6>
                                 @if ($applicant->cnic_front)
                                     <img src="{{ asset('uploads/cnic/' . $applicant->cnic_front) }}"
                                         class="img-fluid mb-3 border" style="height: 200px;">
@@ -157,7 +158,7 @@
                                     <p>Not Uploaded</p>
                                 @endif
 
-                                <h6>CNIC Back</h6>
+                                <h6 class="text-start">CNIC Back</h6>
                                 @if ($applicant->cnic_back)
                                     <img src="{{ asset('uploads/cnic/' . $applicant->cnic_back) }}"
                                         class="img-fluid mb-3 border" style="height: 200px;">
@@ -165,22 +166,48 @@
                                     <p>Not Uploaded</p>
                                 @endif
 
-                                <h6>Challan Image</h6>
-                                @if (($applicant->status === 'Pending' || $applicant->status === 'NotCompleted') && $applicant->fee_status === 'paid')
-                                    <div class="text-end mt-3 mt-4 no-print">
-                                        <form id="unpaidForm{{ $applicant->id }}"
-                                            action="{{ route('applicants.setUnpaid', $applicant->id) }}" method="POST"
-                                            style="display: inline;">
-                                            @csrf
+                                @if ($applicant->fee_status === 'paid')
+                                    <div class="mb-3">
+                                        <div id="challan-date-display">
+                                            <x-info-row label="Challan Date:" :value="\Carbon\Carbon::parse($applicant->challan_date)->format('d-M-Y')" />
+                                            @if (($applicant->status === 'Pending' || $applicant->status === 'NotCompleted') && $applicant->fee_status === 'paid')
+                                                <button type="button" class="btn btn-sm btn-outline-primary ms-2 mt-2"
+                                                    onclick="showHideItems(['#challan-date-edit'], ['#challan-date-display'])">
+                                                    <i class="fa fa-edit"></i> Edit
+                                                </button>
 
-                                            <button type="button" class="btn btn-warning btn-sm"
-                                                onclick="confirmUnpaid('{{ $applicant->id }}')" data-bs-toggle="tooltip"
-                                                data-bs-placement="top" title="Set as Unpaid">
-                                                <i class="fa fa-exclamation-triangle"></i> Set as Unpaid
-                                            </button>
-                                        </form>
+                                                <form id="unpaidForm{{ $applicant->id }}"
+                                                    action="{{ route('applicants.setUnpaid', $applicant->id) }}"
+                                                    method="POST" style="display: inline;" class="mt-2">
+                                                    @csrf
+
+                                                    <button type="button" class="btn btn-sm btn-outline-warning ms-2"
+                                                        onclick="confirmUnpaid('{{ $applicant->id }}')"
+                                                        data-bs-toggle="tooltip" data-bs-placement="top"
+                                                        title="Set as Unpaid">
+                                                        <i class="fa fa-exclamation-triangle"></i> Set as Unpaid
+                                                    </button>
+                                                </form>
+                                            @endif
+                                        </div>
+                                        <div id="challan-date-edit" class="d-none">
+                                            <form action="{{ route('applicants.updateChallanDate', $applicant->id) }}" onsubmit="updateChallanDate(event, this, 'update-challan-date-form')"
+                                                method="POST">
+                                                <input type="date" class="form-control form-control-sm mb-2"
+                                                    id="challan-date-input" name="challan_date" value="{{ $applicant->challan_date }}">
+                                                <button type="submit" class="btn btn-sm btn-success">
+                                                    <i class="fa fa-check"></i> Save
+                                                </button>
+                                                <button type="button" class="btn btn-sm btn-secondary"
+                                                    onclick="showHideItems(['#challan-date-display'], ['#challan-date-edit'])">
+                                                    <i class="fa fa-times"></i> Cancel
+                                                </button>
+                                            </form>
+                                        </div>
                                     </div>
                                 @endif
+
+                                <h6 class="text-start">Challan Form</h6>
                                 @if ($applicant->challan_image)
 
                                     @if ($applicant->challan_image && file_exists(public_path('uploads/challans/' . $applicant->challan_image)))
