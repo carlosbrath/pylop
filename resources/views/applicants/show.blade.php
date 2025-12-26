@@ -182,7 +182,7 @@
                                                     method="POST" style="display: inline;" class="mt-2">
                                                     @csrf
 
-                                                    <button type="button" class="btn btn-sm btn-outline-warning ms-2"
+                                                    <button type="button" class="btn btn-sm btn-outline-warning ms-2 mt-2"
                                                         onclick="confirmUnpaid('{{ $applicant->id }}')"
                                                         data-bs-toggle="tooltip" data-bs-placement="top"
                                                         title="Set as Unpaid">
