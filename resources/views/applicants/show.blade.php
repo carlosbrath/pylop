@@ -84,7 +84,7 @@
                                     <div id="approve-section">
                                         @if ($applicant->status === 'Approved' || $applicant->status === 'Pending' || $applicant->status === 'Approved')
                                             <button type="button"
-                                                onclick="remarks('{{ route('applicants.reject', $applicant->id) }}','approveForm', 'approve-section')"
+                                                onclick="remarks('{{ route('applicants.reject', $applicant->id) }}','approveForm', 'approve-section', 'remarksLabel', 'Rejection Remarks')"
                                                 class="btn btn-danger d-inline" id="approveBtn" data-bs-toggle="tooltip"
                                                 data-bs-placement="top" title="Reject"><i class="fa fa-close"></i></button>
                                         @endif
@@ -96,7 +96,7 @@
 
                                         @if ($applicant->status === 'Pending')
                                             <button type="button" class="btn btn-info d-inline"
-                                                onclick="remarks('{{ route('applicants.forward', $applicant->id) }}','approveForm', 'approve-section')"
+                                                onclick="remarks('{{ route('applicants.forward', $applicant->id) }}','approveForm', 'approve-section', 'remarksLabel', 'Forword to Bank Remarks')"
                                                 id="forwordbtnBtn" data-bs-toggle="tooltip" data-bs-placement="top"
                                                 title="Forword to Bank"><i class="fa fa-building-columns"></i> </button>
                                         @endif
@@ -106,6 +106,7 @@
                                     </div>
                                     <div id="remarks-section">
                                         <!-- Hidden form -->
+                                        <label id="remarksLabel" style="    display: flex; justify-content: flex-start;" class="remarksLabel text-start mb-2 d-none"></label>
                                         <form action="{{ route('applicants.approve', $applicant->id) }}" method="POST"
                                             id="approveForm" class="mt-2 d-none">
                                             @csrf
@@ -191,10 +192,12 @@
                                             @endif
                                         </div>
                                         <div id="challan-date-edit" class="d-none">
-                                            <form action="{{ route('applicants.updateChallanDate', $applicant->id) }}" onsubmit="updateChallanDate(event, this, 'update-challan-date-form')"
+                                            <form action="{{ route('applicants.updateChallanDate', $applicant->id) }}"
+                                                onsubmit="updateChallanDate(event, this, 'update-challan-date-form')"
                                                 method="POST">
                                                 <input type="date" class="form-control form-control-sm mb-2"
-                                                    id="challan-date-input" name="challan_date" value="{{ $applicant->challan_date }}">
+                                                    id="challan-date-input" name="challan_date"
+                                                    value="{{ $applicant->challan_date }}">
                                                 <button type="submit" class="btn btn-sm btn-success">
                                                     <i class="fa fa-check"></i> Save
                                                 </button>
@@ -228,9 +231,14 @@
     </main>
     @push('scripts')
         <script>
-            function remarks(url, targetId, targetId2) {
+            function remarks(url, targetId, targetId2, labelId, labelText) {
                 const form = document.getElementById(targetId);
                 const approveSection = document.getElementById(targetId2);
+                const label = document.getElementById(labelId);
+                if (label) {
+                    label.textContent = labelText;
+                    label.classList.remove("d-none");
+                }
                 form.action = url;
                 form.classList.remove("d-none");
                 approveSection.classList.add("d-none");
