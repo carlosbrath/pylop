@@ -1,6 +1,7 @@
 <?php
 
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 if (!function_exists("pd")) {
     function pd($obj, $d = true)
@@ -41,7 +42,7 @@ function applicant_status_badge($applicant)
         case 'Forwarded':
             return '<span class="badge bg-info text-white">Forwarded</span>';
         case 'Rejected':
-            if (Carbon::now()->lt($cutoffDate)) {
+            if (!Auth::check() && Carbon::now()->lt($cutoffDate)) {
                 return '<span class="badge bg-warning text-white">Pending</span>';
             }
             return '<span class="badge bg-danger">Rejected</span>';
@@ -91,7 +92,7 @@ function applicant_status_message($applicant)
             ';
 
         case 'Rejected':
-            if (Carbon::now()->lt($cutoffDate)) {
+            if (!Auth::check() && Carbon::now()->lt($cutoffDate)) {
                 return '
                     <div class="mt-1">
                         <strong>
