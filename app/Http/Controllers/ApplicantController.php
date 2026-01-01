@@ -421,7 +421,7 @@ class ApplicantController extends Controller
         $applicant = Applicant::findOrFail($id);
 
         // Only allow setting to unpaid if status is Pending
-        if ($applicant->status !== 'Pending') {
+        if ($applicant->status !== 'Pending' || $applicant->status !== 'Rejected') {
             return back()->with('error', 'Only pending applications can be set to unpaid.');
         }
 
