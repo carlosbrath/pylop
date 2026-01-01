@@ -1,5 +1,7 @@
 <?php
 
+use Carbon\Carbon;
+
 if (!function_exists("pd")) {
     function pd($obj, $d = true)
     {
@@ -32,12 +34,16 @@ function challanFee($tier)
 }
 function applicant_status_badge($applicant)
 {
+    $cutoffDate = Carbon::parse('2026-01-21');
     switch ($applicant->status) {
         case 'Pending':
             return '<span class="badge bg-warning text-white">Pending</span>';
         case 'Forwarded':
             return '<span class="badge bg-info text-white">Forwarded</span>';
         case 'Rejected':
+            if (Carbon::now()->lt($cutoffDate)) {
+                return '<span class="badge bg-warning text-white">Pending</span>';
+            }
             return '<span class="badge bg-danger">Rejected</span>';
         case 'Approved':
             return '<span class="badge bg-success">Approved</span>';
@@ -47,6 +53,9 @@ function applicant_status_badge($applicant)
 }
 function applicant_status_message($applicant)
 {
+
+    $cutoffDate = Carbon::parse('2026-01-21');
+
     switch ($applicant->status) {
 
         case 'NotCompleted':
@@ -82,6 +91,17 @@ function applicant_status_message($applicant)
             ';
 
         case 'Rejected':
+            if (Carbon::now()->lt($cutoffDate)) {
+                return '
+                    <div class="mt-1">
+                        <strong>
+                            Your application has been received and is currently under process.
+                            After verification, it will be forwarded to Bank of AJK for further
+                            processing.
+                        </strong>
+                    </div>
+                ';
+            }
             return '
                 <div class="mt-1 text-danger">
                     <strong>

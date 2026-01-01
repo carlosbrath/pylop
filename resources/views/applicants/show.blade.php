@@ -170,7 +170,7 @@
                                 @if ($applicant->fee_status === 'paid')
                                     <div class="mb-3">
                                         <div id="challan-date-display">
-                                            <x-info-row label="Challan Date:" :value="\Carbon\Carbon::parse($applicant->challan_date)->format('d-M-Y')" />
+                                            <x-info-row label="Challan Date:" :value="$applicant->challan_date ? \Carbon\Carbon::parse($applicant->challan_date)->format('d-M-Y') : 'Null'" />
                                             @if (($applicant->status === 'Pending' || $applicant->status === 'NotCompleted') && $applicant->fee_status === 'paid')
                                                 <button type="button" class="btn btn-sm btn-outline-primary ms-2 mt-2"
                                                     onclick="showHideItems(['#challan-date-edit'], ['#challan-date-display'])">
