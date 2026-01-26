@@ -26,13 +26,13 @@ class PublicController extends Controller
 
                 // List of route names to block
                 $blockedRoutes = [
-                    // 'loan.application',
-                    // 'loan.application.form',
+                    'loan.application',
+                    'loan.application.form',
                 ];
 
                 // If the current route is in the blocked list, show inauguration page
                 if (in_array($currentRoute, $blockedRoutes)) {
-                    return response()->view('public.inauguration');
+                    return response()->view('public.application-closed');
                 }
 
                 // Otherwise, continue normally
@@ -91,7 +91,7 @@ class PublicController extends Controller
     {
         // ps($request->all());
         // Step 1: Just redirect to step2 with validated values
-        // abort(403, 'Applications are not open yet. Please wait for the official inauguration.');
+        abort(403, 'Applications are not are Closed.');
         //  Recaptcha on Form
         // $captcha = verifyRecaptcha($request->input('g-recaptcha-response'));
 
