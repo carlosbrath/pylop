@@ -430,7 +430,7 @@ class ApplicantController extends Controller
         $applicant->save();
 
         // Log the status change
-        $applicant->updateStatus('Pending', 'Fee status changed from paid to unpaid by admin');
+        $applicant->updateStatus($applicant->status, 'Fee status changed from paid to unpaid by admin');
 
         return back()->with('success', 'Application fee status set to Unpaid successfully.');
     }
