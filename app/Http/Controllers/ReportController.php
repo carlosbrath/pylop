@@ -91,6 +91,8 @@ class ReportController extends Controller
                     $class = $row->fee_status === 'paid' ? 'success' : 'danger';
                     return '<span class="badge bg-' . $class . '">' . ucfirst($row->fee_status ?? 'Unpaid') . '</span>';
                 })
+                ->addColumn('raw_status', fn($row) => $row->status)
+                ->addColumn('raw_fee_status', fn($row) => $row->fee_status)
                 ->addColumn('action', fn($row) => view('reports.actions', compact('row'))->render())
                 ->rawColumns(['status_badge', 'fee_status_badge', 'action'])
                 ->make(true);

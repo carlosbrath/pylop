@@ -99,11 +99,18 @@
                 </div>
             </div>
 
+            @include('include.alerts')
+
             <!-- Data Table Card -->
             <div class="card card-header-actions mb-4">
-                <div class="card-header">
-                    <i class="fas fa-table me-1"></i>
-                    Applications Report
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <div>
+                        <i class="fas fa-table me-1"></i>
+                        Applications Report
+                    </div>
+                    <button id="bulk-forward-btn" class="btn btn-info btn-sm d-none">
+                        <i class="fas fa-building-columns"></i> Forward to Bank (<span id="selected-count">0</span>)
+                    </button>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -111,6 +118,7 @@
                             style="width: 100%;">
                             <thead class="table-light">
                                 <tr>
+                                    <th><input type="checkbox" id="select-all"></th>
                                     <th>Sr.No</th>
                                     <th>App No</th>
                                     <th>Created Date</th>
@@ -135,6 +143,11 @@
                 </div>
             </div>
         </div>
+        <!-- Hidden form for bulk forward -->
+        <form id="bulk-forward-form" action="{{ route('applicants.bulkForwardPreview') }}" method="POST" class="d-none">
+            @csrf
+            <div id="bulk-forward-ids"></div>
+        </form>
     </main>
 @endsection
 
@@ -237,6 +250,19 @@
                 });
             }
 
+            // Bulk selection tracking
+            var selectedIds = new Set();
+
+            function updateBulkButton() {
+                var count = selectedIds.size;
+                $('#selected-count').text(count);
+                if (count > 0) {
+                    $('#bulk-forward-btn').removeClass('d-none');
+                } else {
+                    $('#bulk-forward-btn').addClass('d-none');
+                }
+            }
+
             // Initialize DataTable
             let table = $('#reports-table').DataTable({
                 processing: true,
@@ -254,6 +280,18 @@
                     }
                 },
                 columns: [{
+                        data: 'id',
+                        orderable: false,
+                        searchable: false,
+                        render: function(data, type, row) {
+                            if (row.raw_status === 'Pending' && row.raw_fee_status === 'paid') {
+                                var checked = selectedIds.has(data) ? ' checked' : '';
+                                return '<input type="checkbox" class="row-checkbox" value="' + data + '"' + checked + '>';
+                            }
+                            return '';
+                        }
+                    },
+                    {
                         data: 'DT_RowIndex',
                         name: 'DT_RowIndex',
                         orderable: false,
@@ -330,31 +368,31 @@
                     {
                         extend: 'copy',
                         exportOptions: {
-                            columns: ':not(:last-child)' // Exclude action column
+                            columns: ':not(:first-child):not(:last-child)'
                         }
                     },
                     {
                         extend: 'csv',
                         exportOptions: {
-                            columns: ':not(:last-child)'
+                            columns: ':not(:first-child):not(:last-child)'
                         }
                     },
                     {
                         extend: 'excel',
                         exportOptions: {
-                            columns: ':not(:last-child)'
+                            columns: ':not(:first-child):not(:last-child)'
                         }
                     },
                     {
                         extend: 'pdf',
                         exportOptions: {
-                            columns: ':not(:last-child)'
+                            columns: ':not(:first-child):not(:last-child)'
                         }
                     },
                     {
                         extend: 'print',
                         exportOptions: {
-                            columns: ':not(:last-child)'
+                            columns: ':not(:first-child):not(:last-child)'
                         }
                     }
                 ],
@@ -366,7 +404,7 @@
                 scrollCollapse: true,
                 pageLength: 10,
                 order: [
-                    [1, 'desc']
+                    [2, 'desc']
                 ], // Order by Application No descending
             });
 
@@ -377,6 +415,55 @@
                 if (e.keyCode === 13) {
                     table.search(this.value).draw();
                 }
+            });
+
+            // Checkbox: individual row selection
+            $('#reports-table').on('change', '.row-checkbox', function() {
+                var id = parseInt($(this).val());
+                if ($(this).is(':checked')) {
+                    selectedIds.add(id);
+                } else {
+                    selectedIds.delete(id);
+                }
+                updateBulkButton();
+            });
+
+            // Select All checkbox: toggle all visible checkboxes
+            $('#select-all').on('change', function() {
+                var isChecked = $(this).is(':checked');
+                $('#reports-table .row-checkbox').each(function() {
+                    var id = parseInt($(this).val());
+                    $(this).prop('checked', isChecked);
+                    if (isChecked) {
+                        selectedIds.add(id);
+                    } else {
+                        selectedIds.delete(id);
+                    }
+                });
+                updateBulkButton();
+            });
+
+            // On DataTable page draw, restore checked state and reset select-all
+            table.on('draw', function() {
+                $('#select-all').prop('checked', false);
+                $('#reports-table .row-checkbox').each(function() {
+                    var id = parseInt($(this).val());
+                    if (selectedIds.has(id)) {
+                        $(this).prop('checked', true);
+                    }
+                });
+                updateBulkButton();
+            });
+
+            // Bulk Forward button click
+            $('#bulk-forward-btn').on('click', function() {
+                if (selectedIds.size === 0) return;
+                var container = $('#bulk-forward-ids');
+                container.empty();
+                selectedIds.forEach(function(id) {
+                    container.append('<input type="hidden" name="ids[]" value="' + id + '">');
+                });
+                $('#bulk-forward-form').submit();
             });
 
             // Apply Filters

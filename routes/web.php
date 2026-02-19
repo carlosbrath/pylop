@@ -69,6 +69,10 @@ Route::middleware('auth:sanctum')->group(function () {
     // ---------------Reports----------------------------------------------------------
     Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
 
+    // ---------------Bulk Forward to Bank---------------------------------------------
+    Route::post('/applicants/bulk-forward-preview', [ApplicantController::class, 'bulkForwardPreview'])->name('applicants.bulkForwardPreview');
+    Route::post('/applicants/bulk-forward', [ApplicantController::class, 'bulkForward'])->name('applicants.bulkForward');
+
     // ----------------------Ajax Loads------------------------------------------------------
     Route::get('/ajax/gender-quota', [\App\Http\Controllers\AjaxController::class, 'genderQuota'])->name('ajax.gender-quota');
     Route::get('/ajax/tier-quota', [\App\Http\Controllers\AjaxController::class, 'tierQuota'])->name('ajax.tier-quota');

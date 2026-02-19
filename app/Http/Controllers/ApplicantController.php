@@ -463,6 +463,77 @@ class ApplicantController extends Controller
         }
     }
 
+    public function bulkForwardPreview(Request $request)
+    {
+        $request->validate([
+            'ids' => 'required|array|min:1',
+            'ids.*' => 'integer|exists:applicants,id',
+        ]);
+
+        $applicants = Applicant::with(['district', 'tehsil', 'businessCategory'])
+            ->whereIn('id', $request->ids)
+            ->get();
+
+        $valid = $applicants->filter(function ($a) {
+            return $a->status === 'Pending' && $a->fee_status === 'paid';
+        });
+
+        $skipped = $applicants->filter(function ($a) {
+            return $a->status !== 'Pending' || $a->fee_status !== 'paid';
+        });
+
+        $title = 'Bulk Forward to Bank';
+        $page_title = 'Bulk Forward to Bank';
+
+        return view('applicants.bulk-forward', compact('valid', 'skipped', 'title', 'page_title'));
+    }
+
+    public function bulkForward(Request $request)
+    {
+        $request->validate([
+            'ids' => 'required|array|min:1',
+            'ids.*' => 'integer|exists:applicants,id',
+            'remarks' => 'required|string|max:1000',
+        ]);
+
+        $applicants = Applicant::whereIn('id', $request->ids)->get();
+        $success = 0;
+        $failed = 0;
+
+        foreach ($applicants as $applicant) {
+            // Same validation as single forwardToBank
+            if ($applicant->status !== 'Pending') {
+                $failed++;
+                continue;
+            }
+            if ($applicant->fee_status !== 'paid') {
+                $failed++;
+                continue;
+            }
+            if (empty($applicant->cnic_front) || empty($applicant->cnic_back) || empty($applicant->challan_image)) {
+                $failed++;
+                continue;
+            }
+            $yearsSinceIssued = Carbon::parse($applicant->cnic_issue_date)->diffInYears(now());
+            if ($yearsSinceIssued > 10) {
+                $failed++;
+                continue;
+            }
+
+            $applicant->updateStatus('Forwarded', $request->remarks);
+            $applicant->status = 'Forwarded';
+            $applicant->save();
+            $success++;
+        }
+
+        $message = "{$success} applicant(s) forwarded to bank successfully.";
+        if ($failed > 0) {
+            $message .= " {$failed} applicant(s) could not be forwarded due to validation issues.";
+        }
+
+        return redirect()->route('reports.index')->with('success', $message);
+    }
+
     public function destroy($id)
     {
         // return response()->json(['error' => 'Unauthorized'], 403);
