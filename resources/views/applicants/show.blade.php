@@ -52,6 +52,7 @@
                                 <x-info-row label="Date of Birth" :value="\Carbon\Carbon::parse($applicant->dob)->format('d-M-Y')" />
                                 <x-info-row label="Phone" :value="$applicant->phone" />
                                 <x-info-row label="Permanent Address" :value="$applicant->permanentAddress" />
+                                <x-info-row label="Chosen Branch" :value="$applicant->choosedBranch ? 'Bank of AJK - ' . $applicant->choosedBranch->branch_name : '-'" />
 
                                 <h5 class="mt-4">Business Information</h5>
                                 <x-info-row label="Business Name" :value="$applicant->businessName" />

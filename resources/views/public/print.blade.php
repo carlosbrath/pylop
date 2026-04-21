@@ -170,6 +170,15 @@
                 </div>
             </div>
 
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="info-row">
+                        <div class="info-label">Chosen Branch:</div>
+                        <div class="info-value">{{ $applicant->choosedBranch ? 'Bank of AJK - ' . $applicant->choosedBranch->branch_name : '-' }}</div>
+                    </div>
+                </div>
+            </div>
+
             {{-- Business Information --}}
             <div class="section-title">Business Information</div>
             <div class="row">

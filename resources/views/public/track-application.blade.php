@@ -239,6 +239,10 @@
                             <div class="info-label">Address:</div>
                             <div class="info-value">{{ $applicant->permanentAddress }}</div>
                         </div>
+                        <div class="info-row">
+                            <div class="info-label">Chosen Branch:</div>
+                            <div class="info-value">{{ $applicant->choosedBranch ? 'Bank of AJK - ' . $applicant->choosedBranch->branch_name : '-' }}</div>
+                        </div>
 
                         <div class="section-title">Business Information</div>
                         <div class="info-row">
