@@ -108,9 +108,16 @@
                         <i class="fas fa-table me-1"></i>
                         Applications Report
                     </div>
-                    <button id="bulk-forward-btn" class="btn btn-info btn-sm d-none">
-                        <i class="fas fa-building-columns"></i> Forward to Bank (<span id="selected-count">0</span>)
-                    </button>
+                    <div class="d-flex gap-2">
+                        <button id="bulk-forward-btn" class="btn btn-info btn-sm d-none">
+                            <i class="fas fa-building-columns"></i> Forward to Bank (<span id="selected-count">0</span>)
+                        </button>
+                        @if(auth()->check() && in_array(auth()->user()->role_id, [1, 2]))
+                        <button id="bulk-approve-consent-btn" class="btn btn-success btn-sm d-none">
+                            <i class="fas fa-check-circle"></i> Approve Consent (<span id="approve-consent-count">0</span>)
+                        </button>
+                        @endif
+                    </div>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -147,6 +154,12 @@
         <form id="bulk-forward-form" action="{{ route('applicants.bulkForwardPreview') }}" method="POST" class="d-none">
             @csrf
             <div id="bulk-forward-ids"></div>
+        </form>
+
+        <!-- Hidden form for bulk approve consent -->
+        <form id="bulk-approve-consent-form" action="{{ route('applicants.bulkApproveConsentPreview') }}" method="POST" class="d-none">
+            @csrf
+            <div id="bulk-approve-consent-ids"></div>
         </form>
     </main>
 @endsection
@@ -251,15 +264,24 @@
             }
 
             // Bulk selection tracking
-            var selectedIds = new Set();
+            var selectedIds = new Set();           // Pending + paid
+            var selectedForwardedIds = new Set();  // Forwarded
 
-            function updateBulkButton() {
-                var count = selectedIds.size;
-                $('#selected-count').text(count);
-                if (count > 0) {
+            function updateBulkButtons() {
+                var pendingCount = selectedIds.size;
+                $('#selected-count').text(pendingCount);
+                if (pendingCount > 0) {
                     $('#bulk-forward-btn').removeClass('d-none');
                 } else {
                     $('#bulk-forward-btn').addClass('d-none');
+                }
+
+                var forwardedCount = selectedForwardedIds.size;
+                $('#approve-consent-count').text(forwardedCount);
+                if (forwardedCount > 0) {
+                    $('#bulk-approve-consent-btn').removeClass('d-none');
+                } else {
+                    $('#bulk-approve-consent-btn').addClass('d-none');
                 }
             }
 
@@ -286,7 +308,11 @@
                         render: function(data, type, row) {
                             if (row.raw_status === 'Pending' && row.raw_fee_status === 'paid') {
                                 var checked = selectedIds.has(data) ? ' checked' : '';
-                                return '<input type="checkbox" class="row-checkbox" value="' + data + '"' + checked + '>';
+                                return '<input type="checkbox" class="row-checkbox row-checkbox-pending" value="' + data + '"' + checked + '>';
+                            }
+                            if (row.raw_status === 'Forwarded') {
+                                var checked = selectedForwardedIds.has(data) ? ' checked' : '';
+                                return '<input type="checkbox" class="row-checkbox row-checkbox-forwarded" value="' + data + '"' + checked + '>';
                             }
                             return '';
                         }
@@ -418,41 +444,52 @@
             });
 
             // Checkbox: individual row selection
-            $('#reports-table').on('change', '.row-checkbox', function() {
+            $('#reports-table').on('change', '.row-checkbox-pending', function() {
                 var id = parseInt($(this).val());
                 if ($(this).is(':checked')) {
                     selectedIds.add(id);
                 } else {
                     selectedIds.delete(id);
                 }
-                updateBulkButton();
+                updateBulkButtons();
+            });
+
+            $('#reports-table').on('change', '.row-checkbox-forwarded', function() {
+                var id = parseInt($(this).val());
+                if ($(this).is(':checked')) {
+                    selectedForwardedIds.add(id);
+                } else {
+                    selectedForwardedIds.delete(id);
+                }
+                updateBulkButtons();
             });
 
             // Select All checkbox: toggle all visible checkboxes
             $('#select-all').on('change', function() {
                 var isChecked = $(this).is(':checked');
-                $('#reports-table .row-checkbox').each(function() {
+                $('#reports-table .row-checkbox-pending').each(function() {
                     var id = parseInt($(this).val());
                     $(this).prop('checked', isChecked);
-                    if (isChecked) {
-                        selectedIds.add(id);
-                    } else {
-                        selectedIds.delete(id);
-                    }
+                    if (isChecked) { selectedIds.add(id); } else { selectedIds.delete(id); }
                 });
-                updateBulkButton();
+                $('#reports-table .row-checkbox-forwarded').each(function() {
+                    var id = parseInt($(this).val());
+                    $(this).prop('checked', isChecked);
+                    if (isChecked) { selectedForwardedIds.add(id); } else { selectedForwardedIds.delete(id); }
+                });
+                updateBulkButtons();
             });
 
             // On DataTable page draw, restore checked state and reset select-all
             table.on('draw', function() {
                 $('#select-all').prop('checked', false);
-                $('#reports-table .row-checkbox').each(function() {
-                    var id = parseInt($(this).val());
-                    if (selectedIds.has(id)) {
-                        $(this).prop('checked', true);
-                    }
+                $('#reports-table .row-checkbox-pending').each(function() {
+                    if (selectedIds.has(parseInt($(this).val()))) $(this).prop('checked', true);
                 });
-                updateBulkButton();
+                $('#reports-table .row-checkbox-forwarded').each(function() {
+                    if (selectedForwardedIds.has(parseInt($(this).val()))) $(this).prop('checked', true);
+                });
+                updateBulkButtons();
             });
 
             // Bulk Forward button click
@@ -464,6 +501,17 @@
                     container.append('<input type="hidden" name="ids[]" value="' + id + '">');
                 });
                 $('#bulk-forward-form').submit();
+            });
+
+            // Bulk Approve Consent button click
+            $('#bulk-approve-consent-btn').on('click', function() {
+                if (selectedForwardedIds.size === 0) return;
+                var container = $('#bulk-approve-consent-ids');
+                container.empty();
+                selectedForwardedIds.forEach(function(id) {
+                    container.append('<input type="hidden" name="ids[]" value="' + id + '">');
+                });
+                $('#bulk-approve-consent-form').submit();
             });
 
             // Apply Filters

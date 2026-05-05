@@ -9,6 +9,7 @@
             <div class="card card-header-actions mb-4">
                 <div class="card-header">
                     Applicants
+                    <a href="{{ route('applicant.create') }}" class="btn btn-outline-teal"><i data-feather="file-plus" class="me-2"></i></a>
                 </div>
                 <div class="card-body">
                     <table id="applicants-table" class="table table-bordered table-striped">

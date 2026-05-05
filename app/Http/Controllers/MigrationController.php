@@ -20,10 +20,6 @@ class MigrationController extends Controller
         }
 
         Artisan::call('migrate', ['--force' => true]);
-        // Artisan::call('db:seed', [
-        //     '--class' => 'RoleSeeder',
-        // ]);
-        // return response()->json(['success' => 'Seeding Succefully ran successfully']);
         return response()->json(['success' => 'Migrations ran successfully']);
     }
     public function runComposer(Request $request)

@@ -72,6 +72,8 @@ Route::middleware('auth:sanctum')->group(function () {
     // ---------------Bulk Forward to Bank---------------------------------------------
     Route::post('/applicants/bulk-forward-preview', [ApplicantController::class, 'bulkForwardPreview'])->name('applicants.bulkForwardPreview');
     Route::post('/applicants/bulk-forward', [ApplicantController::class, 'bulkForward'])->name('applicants.bulkForward');
+    Route::post('/applicants/bulk-approve-consent-preview', [ApplicantController::class, 'bulkApproveConsentPreview'])->name('applicants.bulkApproveConsentPreview');
+    Route::post('/applicants/bulk-approve-consent', [ApplicantController::class, 'bulkApproveConsent'])->name('applicants.bulkApproveConsent');
 
     // ----------------------Ajax Loads------------------------------------------------------
     Route::get('/ajax/gender-quota', [\App\Http\Controllers\AjaxController::class, 'genderQuota'])->name('ajax.gender-quota');

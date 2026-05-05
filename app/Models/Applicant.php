@@ -13,6 +13,8 @@ class Applicant extends Model
     use LogsActivity;
     use HasStatusTracking;
     protected $fillable = [
+        'type',
+        'application_no',
         'cnic',
         'cnic_issue_date',
         'tier',

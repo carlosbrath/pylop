@@ -13,18 +13,21 @@
                         @include('include.alerts')
                         <div class="card mb-4">
                             <div class="card-body page">
-                                @if ($applicant->status == 'Pending' || $applicant->status == 'NotCompleted')
+                                @php $isAdminOrSuper = auth()->check() && in_array(auth()->user()->role_id, [1, 2]); @endphp
+                                @if (in_array($applicant->status, ['Pending', 'NotCompleted']) || ($isAdminOrSuper && in_array($applicant->status, ['Forwarded', 'Rejected'])))
                                     <div class="d-flex gap-3 justify-content-end mb-2 no-print">
                                         <a href="{{ route('applicant.edit', $applicant->id) }}"
                                             class="btn btn-outline-teal mr-2" data-bs-toggle="tooltip" data-bs-placement="top"
                                             title="Edit Application">
                                             <i data-feather="edit-2"></i>
                                         </a>
-                                        <button data-href="{{ route('applicant.destroy', $applicant->id) }}"
-                                            class="btn btn-outline-danger delete-btn" data-bs-toggle="tooltip"
-                                            data-bs-placement="top" title="Delete Application">
-                                            <i data-feather="trash-2"></i>
-                                        </button>
+                                        @if (in_array($applicant->status, ['Pending', 'NotCompleted']))
+                                            <button data-href="{{ route('applicant.destroy', $applicant->id) }}"
+                                                class="btn btn-outline-danger delete-btn" data-bs-toggle="tooltip"
+                                                data-bs-placement="top" title="Delete Application">
+                                                <i data-feather="trash-2"></i>
+                                            </button>
+                                        @endif
                                     </div>
                                 @endif
                                 <div class="appno-container">

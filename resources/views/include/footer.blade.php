@@ -157,7 +157,7 @@
                      }
                  }
                  if (input.name == 'phone') {
-                     if (!phoneValidation(input, input.name, input.value)) {
+                     if (input.value !== '' && !phoneValidation(input, input.name, input.value)) {
                          isValid = false
                      }
                  }
@@ -173,14 +173,14 @@
                  }
              }
              if (input.name === 'dob') {
-                 if (!dateofBirth(input)) {
+                 if (input.value && !dateofBirth(input)) {
                      isValid = false;
                  }
              }
 
              // ✅ CNIC Issue Date validation (not older than 10 years)
              if (input.name === 'cnic_issue_date') {
-                 if (!cnicIssueDate(input)) {
+                 if (input.value && !cnicIssueDate(input)) {
                      isValid = false;
                  }
              }

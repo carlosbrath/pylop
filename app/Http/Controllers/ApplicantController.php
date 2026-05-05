@@ -138,59 +138,70 @@ class ApplicantController extends Controller
      */
     public function store(Request $request)
     {
+        $request->merge(['amount' => str_replace(',', '', $request->amount ?? '')]);
 
-        $request->merge(['amount' => str_replace(',', '', $request->amount)]);
-        $request->merge(['challan_fee' => str_replace(',', '', $request->challan_fee)]);
+        $challanFee = str_replace(',', '', $request->challan_fee ?? '');
+        $request->merge(['challan_fee' => $challanFee !== '' ? $challanFee : null]);
+
+        // Strip empty education rows so validation doesn't fire on blank first row
+        if ($request->has('educations')) {
+            $educations = array_values(array_filter($request->educations ?? [], fn($e) => !empty($e['education_level'])));
+            $request->merge(['educations' => $educations ?: null]);
+        }
 
         $validated = $request->validate([
-            'cnic'  => ['required', 'regex:/^\d{5}-\d{7}-\d{1}$/', 'unique:applicants,cnic'],
-            'cnic_issue_date' => 'required|date',
-            'tier' => 'required|in:1,2,3',
-            'name' => 'required|string|max:255',
-            'fatherName' => 'required|string|max:255',
-            'dob' => 'required|date',
-            'phone' => 'required|regex:/^03\d{9}$/',
-            'businessName' => 'required|string|max:255',
-            'businessType' => 'required|in:New,Running',
-            'district_id' => 'required|exists:locations,id',
-            'tehsil_id' => 'required|exists:locations,id',
-            'quota' => 'required|in:Men,Women,Disabled,Transgender',
-            'business_category_id' => 'required|exists:business_categories,id',
-            'business_sub_category_id' => 'required|exists:business_categories,id',
-            'applicant_choosed_branch' => 'required',
-            'permanentAddress' => 'required|string|max:500',
-            'businessAddress' => 'required|string|max:500',
-            'amount' => 'required|integer|min:1',
-            'applicant_choosed_branch' => 'nullable|integer|exists:branches,id',
-            'cnic_front' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
-            'cnic_back'  => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
-            'educations' => 'nullable|array',
+            'type'                         => 'nullable|in:manual,online',
+            'application_no'               => 'nullable|string|max:100|unique:applicants,application_no',
+            'cnic'                         => ['required', 'regex:/^\d{5}-\d{7}-\d{1}$/', 'unique:applicants,cnic'],
+            'cnic_issue_date'              => 'nullable|date',
+            'tier'                         => 'required|in:1,2,3',
+            'name'                         => 'required|string|max:255',
+            'fatherName'                   => 'required|string|max:255',
+            'dob'                          => 'nullable|date',
+            'phone'                        => ['nullable', 'regex:/^03\d{9}$/'],
+            'businessName'                 => 'nullable|string|max:255',
+            'businessType'                 => 'required|in:New,Running',
+            'district_id'                  => 'required|exists:locations,id',
+            'tehsil_id'                    => 'nullable|exists:locations,id',
+            'quota'                        => 'required|in:Men,Women,Disabled,Transgender',
+            'business_category_id'         => 'required|exists:business_categories,id',
+            'business_sub_category_id'     => 'nullable|exists:business_categories,id',
+            'applicant_choosed_branch'     => 'nullable|integer|exists:branches,id',
+            'permanentAddress'             => 'nullable|string|max:500',
+            'businessAddress'              => 'nullable|string|max:500',
+            'amount'                       => 'required|integer|min:1',
+            'cnic_front'                   => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'cnic_back'                    => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'educations'                   => 'nullable|array',
             'educations.*.education_level' => 'required_with:educations|string|max:255',
             'educations.*.degree_title'    => 'nullable|string|max:255',
             'educations.*.institute'       => 'nullable|string|max:255',
-            'branch_id' => 'required',
-            'challan_fee' => 'required|integer|min:1',
-            'challan_image' => 'nullable|mimes:jpeg,png,jpg|image|max:2048',
+            'branch_id'                    => 'nullable',
+            'challan_fee'                  => 'nullable|integer|min:1',
+            'challan_image'                => 'nullable|mimes:jpeg,png,jpg|image|max:2048',
         ]);
 
-        // ✅ Age & CNIC Issue Date Checks (same as public form)
-        //  ps($request->all());
-        $issueDateCarbon = Carbon::parse($validated['cnic_issue_date']);
-        if ($issueDateCarbon->lt(Carbon::now()->subYears(10))) {
-            return back()->withErrors(['cnic_issue_date' => 'CNIC is expired (older than 10 years).'])->withInput();
+        // CNIC issue date check — only if provided
+        if ($request->filled('cnic_issue_date')) {
+            $issueDateCarbon = Carbon::parse($validated['cnic_issue_date']);
+            if ($issueDateCarbon->lt(Carbon::now()->subYears(10))) {
+                return back()->withErrors(['cnic_issue_date' => 'CNIC is expired (older than 10 years).'])->withInput();
+            }
         }
 
-        $dobCarbon = Carbon::parse($validated['dob']);
-        $age = $dobCarbon->age;
-        if ($age < 18 || $age > 40) {
-            return back()->withErrors(['dob' => 'Age must be between 18 and 40 years.'])->withInput();
+        // Age check — only if DOB provided
+        if ($request->filled('dob')) {
+            $age = Carbon::parse($validated['dob'])->age;
+            if ($age < 18 || $age > 40) {
+                return back()->withErrors(['dob' => 'Age must be between 18 and 40 years.'])->withInput();
+            }
         }
 
-        // ✅ File uploads
+        // File uploads
         if ($request->hasFile('cnic_front')) {
             $front = uniqid('cnic_front_', true) . '.' . $request->cnic_front->extension();
             $request->cnic_front->move(public_path('uploads/cnic'), $front);
-            $validated['cnic_back'] = $front;
+            $validated['cnic_front'] = $front;
         }
         if ($request->hasFile('cnic_back')) {
             $back = uniqid('cnic_back_', true) . '.' . $request->cnic_back->extension();
@@ -198,43 +209,62 @@ class ApplicantController extends Controller
             $validated['cnic_back'] = $back;
         }
 
-        // ✅ Create Applicant
         $validated['status'] = 'Pending';
+        $validated['type']   = $request->input('type', 'manual');
+
         $applicant = Applicant::create($validated);
 
-        // ✅ Education Records
+        // Education records
         if (!empty($request->educations)) {
             foreach ($request->educations as $education) {
+                if (empty($education['education_level'])) continue;
                 ApplicantEducation::create([
-                    'applicant_id' => $applicant->id,
-                    'education_level' => $education['education_level'],
-                    'degree_title' => $education['degree_title'] ?? null,
-                    'institute' => $education['institute'] ?? null,
-                    'passing_year' => $education['passing_year'] ?? null,
+                    'applicant_id'        => $applicant->id,
+                    'education_level'     => $education['education_level'],
+                    'degree_title'        => $education['degree_title'] ?? null,
+                    'institute'           => $education['institute'] ?? null,
+                    'passing_year'        => $education['passing_year'] ?? null,
                     'grade_or_percentage' => $education['grade_or_percentage'] ?? null,
                 ]);
             }
         }
 
-        // ✅ Generate Application Number
-        $applicant->application_no = generateApplicationNo($applicant->id);
+        // Application number — use manual entry or auto-generate
+        $applicant->application_no = $request->filled('application_no')
+            ? $request->application_no
+            : generateApplicationNo($applicant->id);
         $applicant->save();
-        $applicant->updateStatus('Created', 'Manual Application added in system ');
-        $fileName = '';
+
+        $applicant->updateStatus('Pending', 'Application added in system');
+
+        // Challan info — only save if at least branch or image is provided
+        $challanImage = '';
         if ($request->hasFile('challan_image')) {
-            $fileName = time() . '.' . $request->challan_image->extension();
-            $request->challan_image->move(public_path('uploads/challans'), $fileName);
+            $challanImage = time() . '.' . $request->challan_image->extension();
+            $request->challan_image->move(public_path('uploads/challans'), $challanImage);
+        }
+        if ($request->filled('branch_id') || $challanImage) {
+            $applicant->update([
+                'challan_branch_id' => $request->branch_id ?: null,
+                'challan_fee'       => $request->challan_fee ?: null,
+                'challan_image'     => $challanImage ?: null,
+                'fee_status'        => 'paid',
+            ]);
         }
 
-        $applicant->update([
-            'challan_branch_id' => $request->branch_id,
-            'challan_fee' => $request->challan_fee,
-            'challan_image' => $fileName,
-            'fee_status' => 'paid',
-        ]);
+        // If already forwarded to bank — mark fee paid, auto-set challan fee from tier, forward status
+        if ($request->boolean('already_forwarded')) {
+            $applicant->update([
+                'fee_status'  => 'paid',
+                'challan_fee' => challanFee($applicant->tier),
+            ]);
+            $applicant->updateStatus('Forwarded', 'Application already forwarded to bank manually');
+            $applicant->status = 'Forwarded';
+            $applicant->save();
+        }
 
         return redirect()->route('applicant.show', $applicant->id)
-            ->with('success', 'Manual Application added successfully.');
+            ->with('success', 'Application added successfully.');
     }
 
     /**
@@ -284,6 +314,13 @@ class ApplicantController extends Controller
     public function update(Request $request, $id)
     {
         $applicant = Applicant::find($id);
+
+        // Only admin/super-admin can update Forwarded or Rejected applications
+        $user = Auth::user();
+        if (in_array($applicant->status, ['Forwarded', 'Rejected']) && !in_array($user->role_id, [1, 2])) {
+            return back()->with('error', 'You are not authorized to update this application.');
+        }
+
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'fatherName' => 'required|string|max:255',
@@ -305,7 +342,8 @@ class ApplicantController extends Controller
             'cnic_front' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
             'cnic_back' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
         ]);
-        // ps($validated);
+
+        $oldStatus = $applicant->status;
 
         // Handle CNIC images
         if ($request->hasFile('cnic_front')) {
@@ -318,7 +356,28 @@ class ApplicantController extends Controller
             $request->cnic_back->move(public_path('uploads/cnic'), $back);
             $validated['cnic_back'] = $back;
         }
+
+        if ($oldStatus === 'Rejected') {
+            // Reset to Pending after editing a rejected application
+            $validated['status'] = 'Pending';
+        }
+        // Forwarded status is preserved — not included in $validated, so it won't change
+
         $applicant->update($validated);
+
+        // Log the update action
+        if ($oldStatus === 'Rejected') {
+            $applicant->updateStatus('Pending', 'Application data updated after rejection — status reset to Pending');
+        } elseif ($oldStatus === 'Forwarded') {
+            ApplicantStatusLog::create([
+                'applicant_id'    => $applicant->id,
+                'old_status'      => 'Forwarded',
+                'new_status'      => 'Forwarded',
+                'changed_by_type' => 'User',
+                'changed_by_id'   => Auth::id(),
+                'remarks'         => 'Application data updated while status remains Forwarded',
+            ]);
+        }
 
         return redirect()->route('applicant.show', $applicant->id)->with('success', 'Applicant updated successfully.');
     }
@@ -529,6 +588,67 @@ class ApplicantController extends Controller
         $message = "{$success} applicant(s) forwarded to bank successfully.";
         if ($failed > 0) {
             $message .= " {$failed} applicant(s) could not be forwarded due to validation issues.";
+        }
+
+        return redirect()->route('reports.index')->with('success', $message);
+    }
+
+    public function bulkApproveConsentPreview(Request $request)
+    {
+        if (!in_array(Auth::user()->role_id, [1, 2])) {
+            return redirect()->back()->with('error', 'Unauthorized action.');
+        }
+
+        $request->validate([
+            'ids'   => 'required|array|min:1',
+            'ids.*' => 'integer|exists:applicants,id',
+        ]);
+
+        $applicants = Applicant::with(['district', 'tehsil', 'businessCategory'])
+            ->whereIn('id', $request->ids)
+            ->get();
+
+        $valid = $applicants->filter(fn($a) => $a->status === 'Forwarded');
+        $skipped = $applicants->filter(fn($a) => $a->status !== 'Forwarded');
+
+        $title = 'Bulk Approve Consent';
+        $page_title = 'Bulk Approve Consent';
+
+        return view('applicants.bulk-approve-consent', compact('valid', 'skipped', 'title', 'page_title'));
+    }
+
+    public function bulkApproveConsent(Request $request)
+    {
+        if (!in_array(Auth::user()->role_id, [1, 2])) {
+            return redirect()->back()->with('error', 'Unauthorized action.');
+        }
+
+        $request->validate([
+            'ids'     => 'required|array|min:1',
+            'ids.*'   => 'integer|exists:applicants,id',
+            'remarks' => 'nullable|string|max:1000',
+        ]);
+
+        $applicants = Applicant::whereIn('id', $request->ids)->get();
+        $success = 0;
+        $failed  = 0;
+
+        foreach ($applicants as $applicant) {
+            if ($applicant->status !== 'Forwarded') {
+                $failed++;
+                continue;
+            }
+
+            $applicant->updateStatus('Approved', $request->remarks ?? 'Bank consent approved');
+            $applicant->status      = 'Approved';
+            $applicant->bank_status = 'Approved Consent';
+            $applicant->save();
+            $success++;
+        }
+
+        $message = "{$success} application(s) approved with bank consent.";
+        if ($failed > 0) {
+            $message .= " {$failed} skipped (not in Forwarded status).";
         }
 
         return redirect()->route('reports.index')->with('success', $message);

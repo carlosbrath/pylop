@@ -26,98 +26,113 @@
                     {{-- Left Column --}}
                     <div class="col-lg-8">
                         <div class="card mb-4">
-                            <div class="card-header">Create New Application</div>
+                            <div class="card-header d-flex align-items-center justify-content-between">
+                                <span>Create New Application</span>
+                                {{-- Application Type Radio --}}
+                                <div class="d-flex gap-4">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="type" id="typeManual"
+                                            value="manual" {{ old('type', 'manual') === 'manual' ? 'checked' : '' }}>
+                                        <label class="form-check-label fw-semibold" for="typeManual">Manual</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="type" id="typeOnline"
+                                            value="online" {{ old('type') === 'online' ? 'checked' : '' }}>
+                                        <label class="form-check-label fw-semibold" for="typeOnline">Online</label>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="card-body">
 
                                 <div class="mb-3">
-                                    <label class="form-label">Applicant Name</label>
+                                    <label class="form-label">Application No
+                                        <small class="text-muted">(leave blank to auto-generate)</small>
+                                    </label>
+                                    <input class="form-control" type="text" name="application_no"
+                                        value="{{ old('application_no') }}" placeholder="e.g. 00123">
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label">Applicant Name <span class="text-danger">*</span></label>
                                     <input class="form-control required" type="text" name="name"
                                         value="{{ old('name') }}">
                                 </div>
 
                                 <div class="mb-3">
-                                    <label class="form-label">Father's Name</label>
+                                    <label class="form-label">Father's Name <span class="text-danger">*</span></label>
                                     <input class="form-control required" type="text" name="fatherName"
                                         value="{{ old('fatherName') }}">
                                 </div>
 
                                 <div class="mb-3">
-                                    <label class="form-label">CNIC</label>
+                                    <label class="form-label">CNIC <span class="text-danger">*</span></label>
                                     <input class="form-control required" type="text" name="cnic"
                                         value="{{ old('cnic') }}" placeholder="12345-1234567-1">
                                 </div>
 
                                 <div class="mb-3">
                                     <label class="form-label">CNIC Issue Date</label>
-                                    <input class="form-control required" type="date" name="cnic_issue_date"
+                                    <input class="form-control" type="date" name="cnic_issue_date"
                                         value="{{ old('cnic_issue_date') }}">
                                 </div>
 
                                 <div class="mb-3">
                                     <label class="form-label">Date of Birth</label>
-                                    <input class="form-control required" type="date" name="dob"
+                                    <input class="form-control" type="date" name="dob"
                                         value="{{ old('dob') }}">
                                 </div>
 
                                 <div class="mb-3">
                                     <label class="form-label">Phone</label>
-                                    <input class="form-control required" type="text" name="phone"
+                                    <input class="form-control" type="text" name="phone"
                                         value="{{ old('phone') }}" placeholder="03XXXXXXXXX">
                                 </div>
 
                                 <div class="mb-3">
-                                    <label class="form-label">Tier</label>
+                                    <label class="form-label">Tier <span class="text-danger">*</span></label>
                                     <select class="form-control required" name="tier">
                                         <option value="">Select Tier</option>
-                                        <option value="1" {{ old('tier') == '1' ? 'selected' : '' }}>Tier 1 (Up to 5
-                                            Lakh)</option>
-                                        <option value="2" {{ old('tier') == '2' ? 'selected' : '' }}>Tier 2 (5 - 10
-                                            Lakh)</option>
-                                        <option value="3" {{ old('tier') == '3' ? 'selected' : '' }}>Tier 3 (10 - 20
-                                            Lakh)</option>
+                                        <option value="1" {{ old('tier') == '1' ? 'selected' : '' }}>Tier 1 (Up to 5 Lakh)</option>
+                                        <option value="2" {{ old('tier') == '2' ? 'selected' : '' }}>Tier 2 (5 - 10 Lakh)</option>
+                                        <option value="3" {{ old('tier') == '3' ? 'selected' : '' }}>Tier 3 (10 - 20 Lakh)</option>
                                     </select>
                                 </div>
 
                                 <div class="mb-3">
-                                    <label class="form-label">Loan Amount</label>
+                                    <label class="form-label">Loan Amount <span class="text-danger">*</span></label>
                                     <input class="form-control required" type="text" name="amount" id="amount"
                                         value="{{ old('amount') }}">
                                 </div>
 
                                 <div class="mb-3">
                                     <label class="form-label">Business Name</label>
-                                    <input class="form-control required" type="text" name="businessName"
+                                    <input class="form-control" type="text" name="businessName"
                                         value="{{ old('businessName') }}">
                                 </div>
 
                                 <div class="mb-3">
-                                    <label class="form-label">Business Type</label>
+                                    <label class="form-label">Business Type <span class="text-danger">*</span></label>
                                     <select class="form-control required" name="businessType">
                                         <option value="">Select Type</option>
-                                        <option value="New" {{ old('businessType') == 'New' ? 'selected' : '' }}>New
-                                        </option>
-                                        <option value="Running" {{ old('businessType') == 'Running' ? 'selected' : '' }}>
-                                            Running</option>
+                                        <option value="New" {{ old('businessType') == 'New' ? 'selected' : '' }}>New</option>
+                                        <option value="Running" {{ old('businessType') == 'Running' ? 'selected' : '' }}>Running</option>
                                     </select>
                                 </div>
 
                                 <div class="mb-3">
-                                    <label class="form-label">Quota</label>
+                                    <label class="form-label">Quota <span class="text-danger">*</span></label>
                                     <select class="form-control required" name="quota">
                                         <option value="">Select Quota</option>
                                         <option value="Men" {{ old('quota') == 'Men' ? 'selected' : '' }}>Men</option>
-                                        <option value="Women" {{ old('quota') == 'Women' ? 'selected' : '' }}>Women
-                                        </option>
-                                        <option value="Disabled" {{ old('quota') == 'Disabled' ? 'selected' : '' }}>
-                                            Disabled</option>
-                                        <option value="Transgender" {{ old('quota') == 'Transgender' ? 'selected' : '' }}>
-                                            Transgender</option>
+                                        <option value="Women" {{ old('quota') == 'Women' ? 'selected' : '' }}>Women</option>
+                                        <option value="Disabled" {{ old('quota') == 'Disabled' ? 'selected' : '' }}>Disabled</option>
+                                        <option value="Transgender" {{ old('quota') == 'Transgender' ? 'selected' : '' }}>Transgender</option>
                                     </select>
                                 </div>
 
                                 <div class="mb-3">
-                                    <label for="business_category_id" class="small mb-1">Business Category</label>
-                                    <select class="form-select" name="business_category_id" id="business_category_id">
+                                    <label for="business_category_id" class="small mb-1">Business Category <span class="text-danger">*</span></label>
+                                    <select class="form-select required" name="business_category_id" id="business_category_id">
                                         <option value="">Select Category</option>
                                         @foreach ($categories as $cat)
                                             <option value="{{ $cat->id }}"
@@ -130,16 +145,14 @@
 
                                 <div class="mb-3">
                                     <label for="business_sub_category_id" class="small mb-1">Business Subcategory</label>
-                                    <select class="form-select" name="business_sub_category_id"
-                                        id="business_sub_category_id">
+                                    <select class="form-select" name="business_sub_category_id" id="business_sub_category_id">
                                         <option value="">Select Subcategory</option>
-                                        {{-- Will populate via AJAX --}}
                                     </select>
                                 </div>
 
                                 <div class="mb-3">
-                                    <label for="district_id" class="small mb-1">District</label>
-                                    <select class="form-select" name="district_id" id="district_id">
+                                    <label for="district_id" class="small mb-1">District <span class="text-danger">*</span></label>
+                                    <select class="form-select required" name="district_id" id="district_id">
                                         <option value="">Select District</option>
                                         @foreach ($districts as $district)
                                             <option value="{{ $district->id }}"
@@ -154,26 +167,24 @@
                                     <label for="tehsil_id" class="small mb-1">Tehsil</label>
                                     <select class="form-select" name="tehsil_id" id="tehsil_id">
                                         <option value="">Select Tehsil</option>
-                                        {{-- Will populate via AJAX --}}
                                     </select>
                                 </div>
+
                                 <div class="mb-3">
                                     <label for="applicant_choosed_branch" class="small mb-1">Selected Branch</label>
-                                    <select class="form-select" name="applicant_choosed_branch"
-                                        id="applicant_choosed_branch">
+                                    <select class="form-select" name="applicant_choosed_branch" id="applicant_choosed_branch">
                                         <option value="">Branch</option>
-                                        {{-- Will populate via AJAX --}}
                                     </select>
                                 </div>
 
                                 <div class="mb-3">
                                     <label class="form-label">Business Address</label>
-                                    <textarea class="form-control required" name="businessAddress" rows="3">{{ old('businessAddress') }}</textarea>
+                                    <textarea class="form-control" name="businessAddress" rows="3">{{ old('businessAddress') }}</textarea>
                                 </div>
 
                                 <div class="mb-3">
                                     <label class="form-label">Permanent Address</label>
-                                    <textarea class="form-control required" name="permanentAddress" rows="3">{{ old('permanentAddress') }}</textarea>
+                                    <textarea class="form-control" name="permanentAddress" rows="3">{{ old('permanentAddress') }}</textarea>
                                 </div>
 
                                 <div class="col-md-12 mt-4">
@@ -183,18 +194,16 @@
 
                                     <div class="border rounded p-3 bg-white" id="adminEducationSection">
                                         <span class="text-primary d-block mb-4">
-                                            * Add applicant’s highest level of education only.
+                                            * Add applicant's highest level of education only.
                                         </span>
 
                                         <div id="adminEducationRepeater">
                                             <div class="row g-3 mb-3 admin-education-entry">
-                                                {{-- Education Level --}}
                                                 <div class="col-md-4">
                                                     <div class="mb-3">
-                                                        <label class="small mb-1">Education Level<span
-                                                                class="text-danger">*</span></label>
+                                                        <label class="small mb-1">Education Level</label>
                                                         <select name="educations[0][education_level]"
-                                                            class="form-select required  admin-education-level">
+                                                            class="form-select admin-education-level">
                                                             <option value="">Select</option>
                                                             <option value="Illiterate">Illiterate / ناخواندہ</option>
                                                             <option value="Primary">Primary / پرائمری</option>
@@ -202,42 +211,32 @@
                                                             <option value="Matric">Matric / میٹرک</option>
                                                             <option value="Intermediate">Intermediate / انٹرمیڈیٹ</option>
                                                             <option value="Diploma">Diploma / ڈپلومہ</option>
-                                                            <option value="Bachelor 14 Years">Bachelor (14 Years) / بیچلر
-                                                                (14 سال)</option>
-                                                            <option value="Bachelor 16 Years">Bachelor (16 Years) / بیچلر
-                                                                (16 سال)</option>
-                                                            <option value="Master 16 Years">Master (16 Years) / ماسٹر (16
-                                                                سال)</option>
-                                                            <option value="Master 18 Years">Master (18 Years) / ماسٹر (18
-                                                                سال)</option>
+                                                            <option value="Bachelor 14 Years">Bachelor (14 Years)</option>
+                                                            <option value="Bachelor 16 Years">Bachelor (16 Years)</option>
+                                                            <option value="Master 16 Years">Master (16 Years)</option>
+                                                            <option value="Master 18 Years">Master (18 Years)</option>
                                                             <option value="MPhil">MPhil / ایم فل</option>
                                                             <option value="PhD">PhD / پی ایچ ڈی</option>
                                                         </select>
                                                     </div>
                                                 </div>
 
-                                                {{-- Degree Title --}}
                                                 <div class="col-md-4 admin-degree-fields">
                                                     <div class="mb-3">
-                                                        <label class="small mb-1">Degree/Diploma Title
-                                                            عنوان</label>
+                                                        <label class="small mb-1">Degree/Diploma Title</label>
                                                         <input type="text" name="educations[0][degree_title]"
-                                                            class="form-control "
-                                                            placeholder="Enter degree or diploma title">
+                                                            class="form-control" placeholder="Enter degree or diploma title">
                                                     </div>
                                                 </div>
 
-                                                {{-- Institute --}}
                                                 <div class="col-md-3 admin-degree-fields">
                                                     <div class="mb-3">
                                                         <label class="small mb-1">Institute / ادارہ</label>
                                                         <input type="text" name="educations[0][institute]"
-                                                            class="form-control "
-                                                            placeholder="Enter institute name">
+                                                            class="form-control" placeholder="Enter institute name">
                                                     </div>
                                                 </div>
 
-                                                {{-- Remove Button --}}
                                                 <div class="col-md-1 d-flex align-items-center">
                                                     <button type="button"
                                                         class="btn btn-danger remove-admin-education d-none">
@@ -248,78 +247,86 @@
                                         </div>
 
                                         <div class="text-end admin-degree-fields">
-                                            <button type="button" class="btn btn-success" id="addMoreAdminEducation"><i
-                                                    data-feather="plus-square"></i></button>
+                                            <button type="button" class="btn btn-success" id="addMoreAdminEducation">
+                                                <i data-feather="plus-square"></i>
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
+
                                 <div class="col-md-12 mt-4">
                                     <div class="card-header mb-3 d-flex justify-content-between">
-                                        <label class="form-label text-dark">Challan Information</label>
+                                        <label class="form-label text-dark">Challan Information <small class="text-muted fw-normal">(optional)</small></label>
                                     </div>
-                                    <div class="border rounded p-3 bg-white" id="adminEducationSection">
-                                        <div>
-                                            <div class="row g-3 mb-3 admin-education-entry">
-                                                <div class="col-md-6">
-                                                    <div class="mb-3">
-                                                        <label class="small mb-1">Branch Name<span
-                                                                class="text-danger">*</span></label>
-                                                        <select name="branch_id"
-                                                            class="form-select required custom-select2">
-                                                            <option value="" disabled selected hidden>Select Branch
+                                    <div class="border rounded p-3 bg-white">
+                                        <div class="row g-3 mb-3">
+                                            <div class="col-md-6">
+                                                <div class="mb-3">
+                                                    <label class="small mb-1">Branch Name</label>
+                                                    <select name="branch_id" class="form-select custom-select2">
+                                                        <option value="" disabled selected hidden>Select Branch</option>
+                                                        @foreach ($branches as $branch)
+                                                            <option value="{{ $branch->id }}">
+                                                                {{ $branch->branch_code . ' ' . $branch->branch_name }}
                                                             </option>
-                                                            @foreach ($branches as $branch)
-                                                                <option value="{{ $branch->id }}">
-                                                                    {{ $branch->branch_code . ' ' . $branch->branch_name }}
-                                                                </option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
+                                                        @endforeach
+                                                    </select>
                                                 </div>
-                                                <div class="col-md-6">
-                                                    <div class="mb-3">
-                                                        <label class="small mb-1">Challan Fee</label>
-                                                        <input type="text" name="challan_fee" id="challan_fee"
-                                                            class="form-control required"
-                                                            placeholder="Enter Challan Fee Amount">
-                                                    </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="mb-3">
+                                                    <label class="small mb-1">Challan Fee</label>
+                                                    <input type="text" name="challan_fee" id="challan_fee"
+                                                        class="form-control" placeholder="Enter Challan Fee Amount">
                                                 </div>
-
                                             </div>
                                         </div>
                                     </div>
                                 </div>
 
+                                {{-- Already Forwarded Checkbox --}}
+                                <div class="mt-4 p-3 border rounded bg-light">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="already_forwarded"
+                                            id="already_forwarded" value="1"
+                                            {{ old('already_forwarded') ? 'checked' : '' }}>
+                                        <label class="form-check-label fw-semibold text-warning" for="already_forwarded">
+                                            <i class="fa fa-building-columns me-1"></i>
+                                            This application has already been forwarded to the bank
+                                        </label>
+                                    </div>
+                                    <small class="text-muted d-block mt-1 ms-4">
+                                        If checked, the application status will be set to <strong>Forwarded</strong> immediately after saving.
+                                    </small>
+                                </div>
 
-                                <div class="text-end">
-                                    <button class="btn btn-primary" type="submit"><i data-feather="check-circle"></i>
-                                        Submit</button>
+                                <div class="text-end mt-3">
+                                    <button class="btn btn-primary" type="submit">
+                                        <i data-feather="check-circle"></i> Submit
+                                    </button>
                                 </div>
                             </div>
                         </div>
                     </div>
+
                     <div class="col-lg-4">
                         <div class="card mb-4">
-
-                            <div class="card-header">Upload Documents</div>
-                            <span class="text-primary d-block mb-4 small">
-                                * Only JPG, PNG files are allowed. Maximum size 1 MB.
+                            <div class="card-header">Upload Documents <small class="text-muted fw-normal">(optional)</small></div>
+                            <span class="text-primary d-block mb-4 small px-3 pt-2">
+                                * Only JPG, PNG files are allowed. Maximum size 2 MB.
                             </span>
                             <div class="card-body text-center">
                                 <div class="mb-3">
                                     <label class="form-label">CNIC Front</label>
-                                    <input type="file" name="cnic_front" class="form-control required mt-2"
-                                        accept="image/*">
+                                    <input type="file" name="cnic_front" class="form-control mt-2" accept="image/*">
                                 </div>
                                 <div class="mb-3">
-                                    <label class="form-label">CNIC Back </label>
-                                    <input type="file" name="cnic_back" class="form-control required  mt-2"
-                                        accept="image/*">
+                                    <label class="form-label">CNIC Back</label>
+                                    <input type="file" name="cnic_back" class="form-control mt-2" accept="image/*">
                                 </div>
                                 <div class="mb-3">
-                                    <label class="form-label">Upload Challan Image </label>
-                                    <input type="file" name="challan_image" class="form-control required mt-2"
-                                        accept="image/*">
+                                    <label class="form-label">Upload Challan Image</label>
+                                    <input type="file" name="challan_image" class="form-control mt-2" accept="image/*">
                                 </div>
                             </div>
                         </div>
@@ -340,15 +347,15 @@
 
                 districtSelect.addEventListener('change', function() {
                     fetchonChangeSelect(districtSelect, tehsilSelect, 'get.tehsils');
-                    fetchonChangeSelect(districtSelect, chosedBranch, 'get.branches'); // if branch needed
+                    fetchonChangeSelect(districtSelect, chosedBranch, 'get.branches');
                 });
 
                 categorySelect.addEventListener('change', function() {
                     fetchonChangeSelect(categorySelect, subcategorySelect, 'get.subcategories');
                 });
             });
+
             document.addEventListener('DOMContentLoaded', function() {
-                // Initial binding for the first select
                 document.querySelectorAll('.admin-education-level').forEach(bindAdminEducationSelect);
 
                 function bindAdminEducationSelect(selectEl) {
@@ -374,22 +381,18 @@
                     const clone = template.cloneNode(true);
                     const inputs = clone.querySelectorAll('input, select');
 
-                    // Update names & reset values
                     inputs.forEach(input => {
                         const name = input.getAttribute('name');
                         if (name) {
-                            input.setAttribute('name', name.replace(/\[\d+\]/,
-                                `[${adminEducationIndex}]`));
+                            input.setAttribute('name', name.replace(/\[\d+\]/, `[${adminEducationIndex}]`));
                             input.value = '';
                         }
                     });
 
-                    // Show & bind remove button
                     const removeBtn = clone.querySelector('.remove-admin-education');
                     removeBtn.classList.remove('d-none');
                     removeBtn.addEventListener('click', () => clone.remove());
 
-                    // Rebind select change event
                     const selectEl = clone.querySelector('.admin-education-level');
                     bindAdminEducationSelect(selectEl);
 
@@ -397,7 +400,6 @@
                     adminEducationIndex++;
                 });
 
-                // Remove handler for first row if needed
                 document.querySelectorAll('.remove-admin-education').forEach(btn => {
                     btn.addEventListener('click', () => btn.closest('.admin-education-entry').remove());
                 });
