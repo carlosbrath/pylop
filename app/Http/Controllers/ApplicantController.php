@@ -300,8 +300,9 @@ class ApplicantController extends Controller
         $tehsils = Location::where('type', 'Tehsil')->where('parent_id', $applicant->district_id)->get();
         $categories = BusinessCategory::where('parent_id', 0)->with('children')->get();
         $subcategories = BusinessCategory::where('parent_id', $applicant->business_category_id)->get();
+        $branches = Branch::get();
 
-        return view('applicants.edit', compact('applicant', 'districts', 'tehsils', 'categories', 'subcategories'));
+        return view('applicants.edit', compact('applicant', 'districts', 'tehsils', 'categories', 'subcategories', 'branches'));
     }
 
     /**
@@ -341,6 +342,7 @@ class ApplicantController extends Controller
             'tier' => 'required|in:1,2,3',
             'cnic_front' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
             'cnic_back' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'applicant_choosed_branch' => 'nullable|integer|exists:branches,id',
         ]);
 
         $oldStatus = $applicant->status;

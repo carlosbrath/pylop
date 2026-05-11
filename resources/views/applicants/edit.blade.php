@@ -150,6 +150,19 @@
                                     </select>
                                 </div>
                                 <div class="mb-3">
+                                    <label for="applicant_choosed_branch" class="small mb-1">Selected Branch</label>
+                                    <select class="form-select" name="applicant_choosed_branch" id="applicant_choosed_branch">
+                                        <option value="">-- Select Branch --</option>
+                                        @foreach ($branches as $branch)
+                                            <option value="{{ $branch->id }}"
+                                                {{ $applicant->applicant_choosed_branch == $branch->id ? 'selected' : '' }}>
+                                                {{ $branch->branch_code . ' ' . $branch->branch_name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                                <div class="mb-3">
                                     <label class="form-label">Business Address</label>
                                     <textarea class="form-control" name="businessAddress" rows="3" required>{{ old('businessAddress', $applicant->businessAddress) }}</textarea>
                                 </div>
