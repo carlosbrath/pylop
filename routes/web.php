@@ -24,6 +24,7 @@ use App\Models\User;
 */
 
 Route::get('/', [PublicController::class, 'home'])->name('home');
+Route::get('/pmylp', fn() => redirect('/'));
 Route::get('/loan/application', [PublicController::class, 'step1'])->name('loan.application');
 Route::get('loan/application/form', [PublicController::class, 'step2'])->name('loan.application.form');
 Route::post('/upload-challan', [PublicController::class, 'uploadChallan'])->name('upload.challan');
