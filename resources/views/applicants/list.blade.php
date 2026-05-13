@@ -9,7 +9,10 @@
             <div class="card card-header-actions mb-4">
                 <div class="card-header">
                     Applicants
-                    <a href="{{ route('applicant.create') }}" class="btn btn-outline-teal"><i data-feather="file-plus" class="me-2"></i></a>
+                    <div class="d-flex gap-2">
+                        <a href="{{ route('applicant.create') }}" class="btn btn-outline-teal btn-sm"><i data-feather="file-plus" class="me-1"></i> Add</a>
+                        <a href="{{ route('applicants.importForm') }}" class="btn btn-outline-primary btn-sm"><i data-feather="upload" class="me-1"></i> Import CSV</a>
+                    </div>
                 </div>
                 <div class="card-body">
                     <table id="applicants-table" class="table table-bordered table-striped">

@@ -656,6 +656,289 @@ class ApplicantController extends Controller
         return redirect()->route('reports.index')->with('success', $message);
     }
 
+    public function importForm()
+    {
+        $title = 'Import Applications';
+        $page_title = 'Import Applications';
+        return view('applicants.import', compact('title', 'page_title'));
+    }
+
+    public function downloadSample()
+    {
+        $columns = [
+            'form_no', 'name', 'father_name', 'gender', 'disabled',
+            'cnic', 'branch_id', 'permanent_address', 'district',
+            'business_category', 'business_status', 'business_address',
+            'loan_amount', 'tier',
+        ];
+
+        $sample = [
+            [
+                '20161', 'Muhammad Ali', 'Muhammad Sharif', 'Male', 'No',
+                '81202-1234567-1', '5', 'House No 1 Main Road Kotli', 'Kotli',
+                'Hardware Store', 'Existing', 'Siddique Plaza Kotli', '500000', '1',
+            ],
+            [
+                '27522', 'Fatima Bibi', 'Khan Muhammad', 'Female', 'No',
+                '81301-7654321-2', '8', 'Near DC Office Mirpur', 'Mirpur',
+                'Cloth House', 'New', 'Main Bazar Mirpur', '1000000', '2',
+            ],
+        ];
+
+        $headers = [
+            'Content-Type'        => 'text/csv',
+            'Content-Disposition' => 'attachment; filename="applicants_import_template.csv"',
+        ];
+
+        $callback = function () use ($columns, $sample) {
+            $file = fopen('php://output', 'w');
+            fputcsv($file, $columns);
+            foreach ($sample as $row) {
+                fputcsv($file, $row);
+            }
+            fclose($file);
+        };
+
+        return response()->stream($callback, 200, $headers);
+    }
+
+    public function import(Request $request)
+    {
+        $request->validate([
+            'csv_file' => 'required|file|mimes:csv,txt|max:5120',
+        ]);
+
+        $expectedHeaders = [
+            'form_no', 'name', 'father_name', 'gender', 'disabled',
+            'cnic', 'branch_id', 'permanent_address', 'district',
+            'business_category', 'business_status', 'business_address',
+            'loan_amount', 'tier',
+        ];
+
+        $handle = fopen($request->file('csv_file')->getRealPath(), 'r');
+        if (!$handle) {
+            return back()->with('error', 'Could not open the uploaded file.');
+        }
+
+        // ── Validate column headers exactly ──────────────────────────────────
+        $fileHeaders = array_map('trim', fgetcsv($handle) ?: []);
+        if ($fileHeaders !== $expectedHeaders) {
+            fclose($handle);
+            return back()->with('error',
+                'Invalid CSV format. Column headers do not match the template. '
+                . 'Please download the sample template and use exact column names in the same order.'
+            );
+        }
+
+        // Pre-load relational data once
+        $districts  = Location::where('type', 'District')->get();
+        $categories = BusinessCategory::all();
+        $branches   = Branch::all()->keyBy('id');
+
+        // ════════════════════════════════════════════════════════════════════
+        // PASS 1 — Validate every row. Collect ALL errors. Import nothing yet.
+        // ════════════════════════════════════════════════════════════════════
+        $rowErrors   = [];   // ['row' => N, 'name' => '', 'cnic' => '', 'reason' => '']
+        $parsedRows  = [];   // validated + resolved data ready for insert
+        $seenCnics   = [];   // duplicate CNIC within the file
+        $seenFormNos = [];   // duplicate form_no within the file
+        $rowNum      = 1;
+
+        while (($row = fgetcsv($handle)) !== false) {
+            $rowNum++;
+
+            if (empty(array_filter(array_map('trim', $row)))) {
+                continue; // skip blank lines silently
+            }
+
+            if (count($row) < 14) {
+                $rowErrors[] = ['row' => $rowNum, 'name' => '-', 'cnic' => '-', 'reason' => 'Row has fewer columns than required (expected 14)'];
+                continue;
+            }
+
+            $d      = array_combine($expectedHeaders, array_map('trim', array_slice($row, 0, 14)));
+            $errors = [];
+
+            // ── Required text fields ──────────────────────────────────────
+            if (empty($d['form_no']))           $errors[] = 'Form No is required';
+            if (empty($d['name']))              $errors[] = 'Name is required';
+            if (empty($d['father_name']))       $errors[] = 'Father name is required';
+            if (empty($d['permanent_address'])) $errors[] = 'Permanent address is required';
+            if (empty($d['business_address']))  $errors[] = 'Business address is required';
+            if (empty($d['business_category'])) $errors[] = 'Business category is required';
+            if (empty($d['district']))          $errors[] = 'District is required';
+
+            // ── Form No: unique in DB + unique within file ────────────────
+            if (!empty($d['form_no'])) {
+                if (Applicant::where('application_no', $d['form_no'])->exists()) {
+                    $errors[] = "Form No '{$d['form_no']}' already exists in the system";
+                } elseif (in_array($d['form_no'], $seenFormNos)) {
+                    $errors[] = "Form No '{$d['form_no']}' is duplicated within this file";
+                } else {
+                    $seenFormNos[] = $d['form_no'];
+                }
+            }
+
+            // ── CNIC format + unique in DB + unique within file ───────────
+            if (empty($d['cnic'])) {
+                $errors[] = 'CNIC is required';
+            } elseif (!preg_match('/^\d{5}-\d{7}-\d{1}$/', $d['cnic'])) {
+                $errors[] = 'CNIC format must be NNNNN-NNNNNNN-N (e.g. 81202-1234567-1)';
+            } elseif (Applicant::where('cnic', $d['cnic'])->exists()) {
+                $errors[] = "CNIC {$d['cnic']} already exists in the system";
+            } elseif (in_array($d['cnic'], $seenCnics)) {
+                $errors[] = "CNIC {$d['cnic']} is duplicated within this file";
+            } else {
+                $seenCnics[] = $d['cnic'];
+            }
+
+            // ── Gender ────────────────────────────────────────────────────
+            if (!in_array(strtolower($d['gender']), ['male', 'female'])) {
+                $errors[] = 'Gender must be Male or Female';
+            }
+
+            // ── Disabled ──────────────────────────────────────────────────
+            if (!in_array(strtolower($d['disabled']), ['yes', 'no'])) {
+                $errors[] = 'Disabled must be Yes or No';
+            }
+
+            // ── Business status ───────────────────────────────────────────
+            if (!in_array(strtolower($d['business_status']), ['new', 'existing'])) {
+                $errors[] = 'Business status must be New or Existing';
+            }
+
+            // ── Loan amount ───────────────────────────────────────────────
+            $amount = (int) str_replace([',', ' '], '', $d['loan_amount']);
+            if ($amount < 1) {
+                $errors[] = 'Loan amount must be a positive number';
+            }
+
+            // ── Tier ──────────────────────────────────────────────────────
+            $tier = (int) $d['tier'];
+            if (!in_array($tier, [1, 2, 3])) {
+                $errors[] = 'Tier must be 1, 2, or 3';
+            }
+
+            // ── District ──────────────────────────────────────────────────
+            $district = $districts->first(fn($x) => strtolower($x->name) === strtolower($d['district']));
+            if (!$district) {
+                $district = $districts->first(fn($x) =>
+                    str_contains(strtolower($x->name), strtolower($d['district'])) ||
+                    str_contains(strtolower($d['district']), strtolower($x->name))
+                );
+            }
+            if (!$district) {
+                $errors[] = "District '{$d['district']}' not found in system";
+            }
+
+            // ── Branch ID ─────────────────────────────────────────────────
+            $branchId = null;
+            if (empty($d['branch_id'])) {
+                $errors[] = 'Branch ID is required';
+            } elseif (!is_numeric($d['branch_id'])) {
+                $errors[] = 'branch_id must be a numeric ID (get IDs from the Branches list)';
+            } elseif (!$branches->has((int) $d['branch_id'])) {
+                $errors[] = "Branch ID {$d['branch_id']} does not exist in the system";
+            } else {
+                $branchId = (int) $d['branch_id'];
+            }
+
+            if (!empty($errors)) {
+                $rowErrors[] = [
+                    'row'    => $rowNum,
+                    'name'   => $d['name'] ?: '-',
+                    'cnic'   => $d['cnic'] ?: '-',
+                    'reason' => implode('; ', $errors),
+                ];
+                continue;
+            }
+
+            // ── Resolve business category (no errors, just fallback) ──────
+            $category = $categories->first(fn($c) => strtolower($c->name) === strtolower($d['business_category']));
+            if (!$category) {
+                $category = $categories->first(fn($c) =>
+                    str_contains(strtolower($c->name), strtolower($d['business_category'])) ||
+                    str_contains(strtolower($d['business_category']), strtolower($c->name))
+                );
+            }
+            if (!$category) {
+                $category = $categories->first(fn($c) => strtolower($c->name) === 'others');
+            }
+            if (!$category) {
+                $rowErrors[] = [
+                    'row'    => $rowNum,
+                    'name'   => $d['name'],
+                    'cnic'   => $d['cnic'],
+                    'reason' => "Business category '{$d['business_category']}' not found and 'Others' category does not exist in the system",
+                ];
+                continue;
+            }
+
+            // Row is fully valid — store resolved data for pass 2
+            $parsedRows[] = [
+                'form_no'      => $d['form_no'],
+                'cnic'         => $d['cnic'],
+                'name'         => $d['name'],
+                'father_name'  => $d['father_name'],
+                'quota'        => strtolower($d['disabled']) === 'yes' ? 'Disabled'
+                                    : (strtolower($d['gender']) === 'female' ? 'Women' : 'Men'),
+                'businessType' => strtolower($d['business_status']) === 'existing' ? 'Running' : 'New',
+                'district_id'  => $district->id,
+                'category_id'  => $category->id,
+                'perm_address' => $d['permanent_address'],
+                'biz_address'  => $d['business_address'],
+                'amount'       => $amount,
+                'tier'         => $tier,
+                'branch_id'    => $branchId,
+            ];
+        }
+
+        fclose($handle);
+
+        // ── If any row failed — abort entirely, show all errors ───────────────
+        if (!empty($rowErrors)) {
+            return redirect()->route('applicants.importForm')->with([
+                'import_skipped' => $rowErrors,
+                'import_aborted' => true,
+            ]);
+        }
+
+        // ════════════════════════════════════════════════════════════════════
+        // PASS 2 — All rows valid. Insert everything.
+        // ════════════════════════════════════════════════════════════════════
+        $uploader = Auth::user()->name ?? 'Admin';
+        $imported = 0;
+
+        foreach ($parsedRows as $r) {
+            $applicant = Applicant::create([
+                'type'                     => 'manual',
+                'application_no'           => $r['form_no'],
+                'cnic'                     => $r['cnic'],
+                'name'                     => $r['name'],
+                'fatherName'               => $r['father_name'],
+                'quota'                    => $r['quota'],
+                'businessType'             => $r['businessType'],
+                'district_id'              => $r['district_id'],
+                'business_category_id'     => $r['category_id'],
+                'permanentAddress'         => $r['perm_address'],
+                'businessAddress'          => $r['biz_address'],
+                'amount'                   => $r['amount'],
+                'tier'                     => $r['tier'],
+                'status'                   => 'Forwarded',
+                'fee_status'               => 'paid',
+                'challan_fee'              => challanFee($r['tier']),
+                'applicant_choosed_branch' => $r['branch_id'],
+            ]);
+
+            $applicant->updateStatus('Forwarded', "Manual application uploaded via CSV import by {$uploader}");
+            $imported++;
+        }
+
+        return redirect()->route('applicants.importForm')->with([
+            'import_success' => $imported,
+        ]);
+    }
+
     public function destroy($id)
     {
         // return response()->json(['error' => 'Unauthorized'], 403);

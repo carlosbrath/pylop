@@ -76,6 +76,11 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/applicants/bulk-approve-consent-preview', [ApplicantController::class, 'bulkApproveConsentPreview'])->name('applicants.bulkApproveConsentPreview');
     Route::post('/applicants/bulk-approve-consent', [ApplicantController::class, 'bulkApproveConsent'])->name('applicants.bulkApproveConsent');
 
+    // ---------------CSV Import----------------------------------------------------------
+    Route::get('/applicants/import', [ApplicantController::class, 'importForm'])->name('applicants.importForm');
+    Route::post('/applicants/import', [ApplicantController::class, 'import'])->name('applicants.import');
+    Route::get('/applicants/import/sample', [ApplicantController::class, 'downloadSample'])->name('applicants.importSample');
+
     // ----------------------Ajax Loads------------------------------------------------------
     Route::get('/ajax/gender-quota', [\App\Http\Controllers\AjaxController::class, 'genderQuota'])->name('ajax.gender-quota');
     Route::get('/ajax/tier-quota', [\App\Http\Controllers\AjaxController::class, 'tierQuota'])->name('ajax.tier-quota');
